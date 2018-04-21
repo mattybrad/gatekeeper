@@ -2,19 +2,22 @@ require('normalize.css/normalize.css');
 require('styles/App.css');
 
 import React from 'react';
-import Test from './Test';
+import Channel from './Channel';
 
 class AppComponent extends React.Component {
   render() {
     return (
       <div className="index">
-        <Test/>
+        {this.props.channels.map(function(val,i){
+          return <Channel key={i} test={val} />;
+        })}
       </div>
     );
   }
 }
 
 AppComponent.defaultProps = {
+  channels: ['alpha','beta','gamma']
 };
 
 export default AppComponent;
