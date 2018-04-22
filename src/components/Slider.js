@@ -20,10 +20,6 @@ class AppComponent extends React.Component {
     }))
   }
 
-  componentDidMount() {
-
-  }
-
   render() {
     return (
       <div>
@@ -36,6 +32,7 @@ class AppComponent extends React.Component {
           defaultValue={0}
           value={this.state.sliderValue}
           onMouseMove={this.handleSliderChange.bind(this)}
+          onChange={this.handleSliderChange.bind(this)}
           />
         <span>{this.state.calculatedSliderValue}</span>
       </div>
