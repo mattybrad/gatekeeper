@@ -4,14 +4,24 @@ class AppComponent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      sliderValue: 0
+      rawSliderValue: 0,
+      calculatedSliderValue: this.calculateSliderValue(0)
     }
+  }
+
+  calculateSliderValue(raw) {
+    return this.props.min + (this.props.max-this.props.min) * raw / 10000
   }
 
   handleSliderChange() {
     this.setState(prevState => ({
-      sliderValue: this.props.min + (this.props.max-this.props.min) * this.refs.sliderInput.value / 10000
+      rawSliderValue: this.refs.sliderInput.value,
+      calculatedSliderValue: this.calculateSliderValue(this.refs.sliderInput.value)
     }))
+  }
+
+  componentDidMount() {
+
   }
 
   render() {
@@ -23,9 +33,11 @@ class AppComponent extends React.Component {
           type="range"
           min={0}
           max={10000}
+          defaultValue={0}
+          value={this.state.sliderValue}
           onMouseMove={this.handleSliderChange.bind(this)}
           />
-        <span>{this.state.sliderValue}</span>
+        <span>{this.state.calculatedSliderValue}</span>
       </div>
     );
   }
