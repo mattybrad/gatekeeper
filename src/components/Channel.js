@@ -1,6 +1,7 @@
 import React from 'react';
 import Slider from './Slider';
 import Selector from './Selector';
+import Timeline from './Timeline';
 
 class AppComponent extends React.Component {
   constructor(props) {
@@ -20,13 +21,14 @@ class AppComponent extends React.Component {
         <Slider label='sustain' min={0} max={1} />
         <Slider label='release' min={0} max={5} />
         <Selector label='filter' options={['LPF','BPF','HPF']} />
+        <Timeline />
       </div>
     );
   }
 }
 
 AppComponent.defaultProps = {
-  test: 'nothing'
+  test: 'default'
 };
 
 export default AppComponent;

@@ -14,10 +14,10 @@ class AppComponent extends React.Component {
   }
 
   handleSliderChange() {
-    this.setState(prevState => ({
+    this.setState({
       rawSliderValue: this.refs.sliderInput.value,
       calculatedSliderValue: this.calculateSliderValue(this.refs.sliderInput.value)
-    }))
+    })
   }
 
   render() {

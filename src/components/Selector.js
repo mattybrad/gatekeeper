@@ -9,9 +9,9 @@ class AppComponent extends React.Component {
   }
 
   handleSelectorChange() {
-    this.setState(prevState => ({
+    this.setState({
       selectorValue: this.refs.selectorInput.value
-    }))
+    })
   }
 
   render() {
