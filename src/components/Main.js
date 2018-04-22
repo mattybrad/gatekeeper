@@ -5,10 +5,24 @@ import React from 'react';
 import Channel from './Channel';
 
 class AppComponent extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      channels: []
+    }
+  }
+
+  handleAddChannelClick() {
+    this.setState(prevState => ({
+      channels: [...prevState.channels, 'x']
+    }));
+  }
+
   render() {
     return (
       <div className="index">
-        {this.props.channels.map(function(val,i){
+        <div id="addChannel" onClick={this.handleAddChannelClick.bind(this)}>Add Channel</div>
+        {this.state.channels.map(function(val,i){
           return <Channel key={i} test={val} />;
         })}
       </div>
@@ -16,8 +30,6 @@ class AppComponent extends React.Component {
   }
 }
 
-AppComponent.defaultProps = {
-  channels: ['alpha','beta','gamma']
-};
+AppComponent.defaultProps = {};
 
 export default AppComponent;

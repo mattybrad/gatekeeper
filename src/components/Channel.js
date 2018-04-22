@@ -1,5 +1,6 @@
 import React from 'react';
 import Slider from './Slider';
+import Selector from './Selector';
 
 class AppComponent extends React.Component {
   constructor(props) {
@@ -18,6 +19,7 @@ class AppComponent extends React.Component {
         <Slider label='decay' min={0} max={2} />
         <Slider label='sustain' min={0} max={1} />
         <Slider label='release' min={0} max={5} />
+        <Selector label='filter' />
       </div>
     );
   }
