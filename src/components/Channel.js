@@ -8,7 +8,7 @@ class AppComponent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      notes: [0,2,3]
+      notes: []
     }
   }
 
@@ -23,13 +23,18 @@ class AppComponent extends React.Component {
     this.props.audioSource.connect(this.ampEnv);
     this.ampEnv.connect(this.filter);
     this.filter.toMaster();
+
+    this.part = new Tone.Part(function(time){
+      this.ampEnv.triggerAttackRelease('0.5s', time);
+    }.bind(this), []);
+    this.part.start('0:0:0');
   }
 
   addNote(time) {
-    var c = this;
-    Tone.Transport.schedule(function(time){
-      c.ampEnv.triggerAttackRelease('0.5s', time);
-    },time)
+    this.part.add(time);
+    this.setState(prevState => ({
+      notes: [...prevState.notes, time]
+    }));
   }
 
   render() {
@@ -42,7 +47,7 @@ class AppComponent extends React.Component {
         <Slider label='sustain' min={0} max={1} />
         <Slider label='release' min={0} max={5} />
         <Selector label='filter' options={['LPF','BPF','HPF']} />
-        <Timeline notes={this.state.notes} />
+        <Timeline onNewNote={this.addNote.bind(this)} notes={this.state.notes} />
       </div>
     );
   }
