@@ -23,6 +23,10 @@ class AppComponent extends React.Component {
     })
   }
 
+  componentDidMount() {
+    this.handleSliderChange();
+  }
+
   render() {
     return (
       <div className='slider'>

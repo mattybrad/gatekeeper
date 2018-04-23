@@ -14,6 +14,10 @@ class AppComponent extends React.Component {
     })
   }
 
+  componentDidMount() {
+    this.handleSelectorChange();
+  }
+
   render() {
     return (
       <div className='selector'>

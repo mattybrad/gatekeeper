@@ -4,6 +4,7 @@ require('styles/App.css');
 import React from 'react';
 import Tone from 'tone';
 import Channel from './Channel';
+import Slider from './Slider';
 
 class AppComponent extends React.Component {
   constructor(props) {
@@ -40,11 +41,25 @@ class AppComponent extends React.Component {
     }.bind(this))
   }
 
+  updateParam(param, value) {
+    switch(param) {
+      case 'volume':
+      Tone.Master.volume.value = value;
+      break;
+
+      case 'tempo':
+      Tone.Transport.bpm.rampTo(value, 0.5);
+      break;
+    }
+  }
+
   render() {
 
     if(this.state.audioSourceReady) {
       return (
         <div className="index">
+          <Slider onChange={this.updateParam.bind(this)} label='volume' min={-100} max={0} />
+          <Slider onChange={this.updateParam.bind(this)} label='tempo' min={50} max={250} />
           <div id="addChannel" onClick={this.handleAddChannelClick.bind(this)}>Add Channel</div>
           {this.state.channels.map(function(val,i){
             return <Channel key={i} test={val} audioSource={this.audioSource} />;

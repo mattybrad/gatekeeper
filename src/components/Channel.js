@@ -10,9 +10,6 @@ class AppComponent extends React.Component {
     this.state = {
       notes: []
     }
-  }
-
-  componentDidMount() {
     this.ampEnv = new Tone.AmplitudeEnvelope({
       'attack': 0.001,
       'decay': 0.2,
