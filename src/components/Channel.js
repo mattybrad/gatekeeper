@@ -19,13 +19,14 @@ class AppComponent extends React.Component {
       'sustain': 0.5,
       'release': 1.5
     });
+    this.noteLength = 0.5;
     this.filter = new Tone.Filter(800, 'bandpass');
     this.props.audioSource.connect(this.ampEnv);
     this.ampEnv.connect(this.filter);
     this.filter.toMaster();
 
     this.part = new Tone.Part(function(time){
-      this.ampEnv.triggerAttackRelease('0.5s', time);
+      this.ampEnv.triggerAttackRelease(this.noteLength+'s', time);
     }.bind(this), []);
     this.part.start('0:0:0');
   }
@@ -42,6 +43,30 @@ class AppComponent extends React.Component {
       case 'frequency':
       this.filter.frequency.value = value;
       break;
+
+      case 'attack':
+      value = Math.max(0.0001, value);
+      this.ampEnv.attack = value;
+      break;
+
+      case 'decay':
+      value = Math.max(0.0001, value);
+      this.ampEnv.decay = value;
+      break;
+
+      case 'sustain':
+      this.ampEnv.sustain = value;
+      break;
+
+      case 'release':
+      value = Math.max(0.0001, value);
+      this.ampEnv.release = value;
+      break;
+
+      case 'note length':
+      value = Math.max(0.001, value);
+      this.noteLength = value;
+      break;
     }
   }
 
@@ -50,11 +75,12 @@ class AppComponent extends React.Component {
       <div>
         {'Channel ' + this.props.test}
         <Slider onChange={this.updateParam.bind(this)} label='frequency' min={20} max={10000} />
-        <Slider label='attack' min={0} max={2} />
-        <Slider label='decay' min={0} max={2} />
-        <Slider label='sustain' min={0} max={1} />
-        <Slider label='release' min={0} max={5} />
-        <Selector label='filter' options={['LPF','BPF','HPF']} />
+        <Slider onChange={this.updateParam.bind(this)} label='attack' min={0} max={2} />
+        <Slider onChange={this.updateParam.bind(this)} label='decay' min={0} max={2} />
+        <Slider onChange={this.updateParam.bind(this)} label='sustain' min={0} max={1} />
+        <Slider onChange={this.updateParam.bind(this)} label='release' min={0} max={5} />
+        <Slider onChange={this.updateParam.bind(this)} label='note length' min={0} max={2} />
+        <Selector onChange={this.updateParam.bind(this)} label='filter' options={['LPF','BPF','HPF']} />
         <Timeline onNewNote={this.addNote.bind(this)} notes={this.state.notes} />
       </div>
     );
