@@ -19,12 +19,10 @@ class AppComponent extends React.Component {
       'sustain': 0.5,
       'release': 1.5
     });
-    this.filter = new Tone.Filter(800, "bandpass");
+    this.filter = new Tone.Filter(800, 'bandpass');
     this.props.audioSource.connect(this.ampEnv);
     this.ampEnv.connect(this.filter);
     this.filter.toMaster();
-
-    this.addNote('0:0:0');
   }
 
   addNote(time) {

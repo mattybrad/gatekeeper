@@ -1,4 +1,5 @@
 import React from 'react';
+import Tone from 'tone';
 
 class AppComponent extends React.Component {
   constructor(props) {
@@ -26,6 +27,7 @@ class AppComponent extends React.Component {
     for(var i=0; i<this.props.notes.length; i++) {
       this.ctx.fillRect(this.props.notes[i]*this.ctx.canvas.width/4,0,5,this.ctx.canvas.height);
     }
+    this.ctx.fillRect(Tone.Transport.progress*this.ctx.canvas.width,0.9*this.ctx.canvas.height,2,this.ctx.canvas.height);
   }
 
   render() {
