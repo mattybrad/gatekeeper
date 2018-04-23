@@ -1,4 +1,5 @@
 import React from 'react';
+import Tone from 'tone';
 import Slider from './Slider';
 import Selector from './Selector';
 import Timeline from './Timeline';
@@ -9,6 +10,10 @@ class AppComponent extends React.Component {
     this.state = {
 
     }
+  }
+
+  componentDidMount() {
+    
   }
 
   render() {

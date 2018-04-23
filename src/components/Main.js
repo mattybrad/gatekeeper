@@ -9,7 +9,8 @@ class AppComponent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      channels: []
+      channels: [],
+      audioSourceReady: false
     }
   }
 
@@ -20,22 +21,41 @@ class AppComponent extends React.Component {
   }
 
   componentDidMount() {
-    //create a synth and connect it to the master output (your speakers)
-    var synth = new Tone.Synth().toMaster();
+    this.audioSource = new Tone.Player('../audio/source.mp3');
 
-    //play a middle 'C' for the duration of an 8th note
-    synth.triggerAttackRelease('C4', '8n');
+    Tone.Buffer.on('load', function() {
+
+      // once buffer (sound) is loaded, loop it
+      this.audioSource.loop = true;
+      this.audioSource.start();
+
+      Tone.Transport.loop = true;
+      Tone.Transport.loopStart = '0:0';
+      Tone.Transport.loopEnd = '1:0';
+      Tone.Transport.start();
+
+      this.setState({
+        audioSourceReady: true
+      })
+    }.bind(this))
   }
 
   render() {
-    return (
-      <div className="index">
-        <div id="addChannel" onClick={this.handleAddChannelClick.bind(this)}>Add Channel</div>
-        {this.state.channels.map(function(val,i){
-          return <Channel key={i} test={val} />;
-        })}
-      </div>
-    );
+
+    if(this.state.audioSourceReady) {
+      return (
+        <div className="index">
+          <div id="addChannel" onClick={this.handleAddChannelClick.bind(this)}>Add Channel</div>
+          {this.state.channels.map(function(val,i){
+            return <Channel key={i} test={val} audioSource={this.audioSource} />;
+          }.bind(this))}
+        </div>
+      );
+    } else {
+      return (
+        <div className="index"></div>
+      );
+    }
   }
 }
 
