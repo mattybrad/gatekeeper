@@ -14,9 +14,12 @@ class AppComponent extends React.Component {
   }
 
   handleSliderChange() {
+    var raw = this.refs.sliderInput.value;
+    var calculated = this.calculateSliderValue(this.refs.sliderInput.value);
+    this.props.onChange(this.props.label, calculated);
     this.setState({
-      rawSliderValue: this.refs.sliderInput.value,
-      calculatedSliderValue: this.calculateSliderValue(this.refs.sliderInput.value)
+      rawSliderValue: raw,
+      calculatedSliderValue: calculated
     })
   }
 
@@ -43,7 +46,8 @@ class AppComponent extends React.Component {
 AppComponent.defaultProps = {
   label: 'slider',
   min: 0,
-  max: 1
+  max: 1,
+  onChange: function(){}
 };
 
 export default AppComponent;

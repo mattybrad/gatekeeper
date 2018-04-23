@@ -37,11 +37,19 @@ class AppComponent extends React.Component {
     }));
   }
 
+  updateParam(param, value) {
+    switch(param) {
+      case 'frequency':
+      this.filter.frequency.value = value;
+      break;
+    }
+  }
+
   render() {
     return (
       <div>
         {'Channel ' + this.props.test}
-        <Slider label='frequency' min={20} max={10000} />
+        <Slider onChange={this.updateParam.bind(this)} label='frequency' min={20} max={10000} />
         <Slider label='attack' min={0} max={2} />
         <Slider label='decay' min={0} max={2} />
         <Slider label='sustain' min={0} max={1} />
