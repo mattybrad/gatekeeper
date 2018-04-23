@@ -25,19 +25,18 @@ class AppComponent extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className='slider'>
         <label>{this.props.label}</label>
         <input
           ref='sliderInput'
           type="range"
           min={0}
           max={10000}
-          defaultValue={0}
+          defaultValue={5000}
           value={this.state.sliderValue}
           onMouseMove={this.handleSliderChange.bind(this)}
           onChange={this.handleSliderChange.bind(this)}
           />
-        <span>{this.state.calculatedSliderValue}</span>
       </div>
     );
   }
@@ -47,6 +46,7 @@ AppComponent.defaultProps = {
   label: 'slider',
   min: 0,
   max: 1,
+  start: 0,
   onChange: function(){}
 };
 

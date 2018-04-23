@@ -1,5 +1,25 @@
 /* Base Application Styles */
 body {
-  color: turquoise;
+  font-family: monospace;
+  color: white;
   background: black;
+}
+
+.slider,.selector {
+  display: inline-block;
+  vertical-align: top;
+  margin: 5px;
+}
+
+.slider label, .selector label {
+  display: block;
+}
+
+.slider input {
+  width: 80px;
+}
+
+.timeline {
+  display: block;
+  margin: 5px;
 }

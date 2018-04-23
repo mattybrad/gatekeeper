@@ -25,7 +25,7 @@ class AppComponent extends React.Component {
 
   renderCanvas() {
     this.ctx.clearRect(0,0,this.ctx.canvas.width,this.ctx.canvas.height);
-    this.ctx.fillStyle = 'turquoise';
+    this.ctx.fillStyle = 'white';
     for(var i=0; i<16; i++) {
       this.ctx.fillRect(i*this.ctx.canvas.width/16,0,1,this.ctx.canvas.height);
     }
@@ -46,7 +46,7 @@ class AppComponent extends React.Component {
 
   render() {
     return (
-      <canvas ref='canvas' onClick={this.handleCanvasClick.bind(this)} width={800} height={50}></canvas>
+      <canvas className='timeline' ref='canvas' onClick={this.handleCanvasClick.bind(this)} width={800} height={50}></canvas>
     );
   }
 }

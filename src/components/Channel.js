@@ -73,7 +73,7 @@ class AppComponent extends React.Component {
   render() {
     return (
       <div>
-        {'Channel ' + this.props.test}
+        <Timeline onNewNote={this.addNote.bind(this)} notes={this.state.notes} />
         <Slider onChange={this.updateParam.bind(this)} label='frequency' min={20} max={10000} />
         <Slider onChange={this.updateParam.bind(this)} label='attack' min={0} max={2} />
         <Slider onChange={this.updateParam.bind(this)} label='decay' min={0} max={2} />
@@ -81,7 +81,6 @@ class AppComponent extends React.Component {
         <Slider onChange={this.updateParam.bind(this)} label='release' min={0} max={5} />
         <Slider onChange={this.updateParam.bind(this)} label='note length' min={0} max={2} />
         <Selector onChange={this.updateParam.bind(this)} label='filter' options={['LPF','BPF','HPF']} />
-        <Timeline onNewNote={this.addNote.bind(this)} notes={this.state.notes} />
       </div>
     );
   }
