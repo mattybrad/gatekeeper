@@ -6,6 +6,8 @@ import Tone from 'tone';
 import Channel from './Channel';
 import Slider from './Slider';
 
+var sourceFile = require('../audio/source.mp3');
+
 class AppComponent extends React.Component {
   constructor(props) {
     super(props);
@@ -22,7 +24,7 @@ class AppComponent extends React.Component {
   }
 
   componentDidMount() {
-    this.audioSource = new Tone.Player('../audio/source.mp3');
+    this.audioSource = new Tone.Player(sourceFile);
 
     Tone.Buffer.on('load', function() {
 
