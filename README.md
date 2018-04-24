@@ -14,4 +14,4 @@ This project uses the excellent [React Webpack Template](https://github.com/reac
 npm install
 npm start
 ```
-The drum machine should then be running at [http://localhost:8000].
+The drum machine should then be running at [http://localhost:8000](http://localhost:8000).
