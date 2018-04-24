@@ -64,6 +64,10 @@ class AppComponent extends React.Component {
       value = Math.max(0.001, value);
       this.noteLength = value;
       break;
+
+      case 'filter':
+      this.filter.type = value;
+      break;
     }
   }
 
@@ -77,7 +81,7 @@ class AppComponent extends React.Component {
         <Slider onChange={this.updateParam.bind(this)} label='sustain' min={0} max={1} />
         <Slider onChange={this.updateParam.bind(this)} label='release' min={0} max={5} />
         <Slider onChange={this.updateParam.bind(this)} label='note length' min={0} max={2} />
-        <Selector onChange={this.updateParam.bind(this)} label='filter' options={['LPF','BPF','HPF']} />
+        <Selector onChange={this.updateParam.bind(this)} label='filter' options={['lowpass','bandpass','highpass']} />
       </div>
     );
   }

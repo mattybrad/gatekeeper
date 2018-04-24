@@ -9,6 +9,7 @@ class AppComponent extends React.Component {
   }
 
   handleSelectorChange() {
+    this.props.onChange(this.props.label, this.refs.selectorInput.value);
     this.setState({
       selectorValue: this.refs.selectorInput.value
     })
@@ -34,7 +35,8 @@ class AppComponent extends React.Component {
 
 AppComponent.defaultProps = {
   label: 'selector',
-  options: ['default']
+  options: ['default'],
+  onChange: function(){}
 };
 
 export default AppComponent;
