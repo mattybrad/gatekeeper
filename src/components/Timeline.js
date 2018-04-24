@@ -26,14 +26,17 @@ class AppComponent extends React.Component {
   renderCanvas() {
     this.ctx.clearRect(0,0,this.ctx.canvas.width,this.ctx.canvas.height);
     this.ctx.fillStyle = 'white';
+    // draw lines to show where beats occur
+    this.ctx.globalAlpha = 0.2;
     for(var i=0; i<16; i++) {
       this.ctx.fillRect(i*this.ctx.canvas.width/16,0,1,this.ctx.canvas.height);
     }
+    this.ctx.globalAlpha = 1;
     for(var i=0; i<this.props.notes.length; i++) {
       this.ctx.fillRect(
         this.convertToBeatsOnly(this.props.notes[i])*this.ctx.canvas.width / 4,
         0,
-        5,
+        1,
         this.ctx.canvas.height
       );
     }
@@ -41,7 +44,23 @@ class AppComponent extends React.Component {
   }
 
   handleCanvasClick(ev) {
-    this.props.onNewNote('0:0:' + 16 * ev.nativeEvent.offsetX / this.ctx.canvas.width);
+    var canvasBeatPosition = 4 * ev.nativeEvent.offsetX / this.ctx.canvas.width;
+
+    // check for any previous notes
+    var closestNote = null;
+    var closestNoteDelta = Infinity;
+    for(var i=0; i<this.props.notes.length; i++) {
+      var noteDelta = Math.abs(canvasBeatPosition - this.convertToBeatsOnly(this.props.notes[i]));
+      // the noteDelta threshold below should ideally be directly linked to the visual width of a note
+      if(noteDelta < 0.03 && noteDelta < closestNoteDelta) closestNote = i;
+    }
+    if(closestNote != null) {
+      // remove note
+      this.props.onRemoveNote('0:0:' + 4 * this.convertToBeatsOnly(this.props.notes[closestNote]));
+    } else {
+      // add note
+      this.props.onNewNote('0:0:' + 4 * canvasBeatPosition);
+    }
   }
 
   render() {
@@ -53,7 +72,8 @@ class AppComponent extends React.Component {
 
 AppComponent.defaultProps = {
   notes: [],
-  onNewNote: function(){}
+  onNewNote: function(){},
+  onRemoveNote: function(){}
 };
 
 export default AppComponent;

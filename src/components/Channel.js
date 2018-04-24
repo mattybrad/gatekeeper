@@ -37,6 +37,17 @@ class AppComponent extends React.Component {
     }));
   }
 
+  removeNote(time) {
+    this.part.remove(time);
+    var newNoteArray = [];
+    for(var i = 0; i < this.state.notes.length; i++) {
+      if(this.state.notes[i] != time) newNoteArray.push(this.state.notes[i]);
+    }
+    this.setState({
+      notes: newNoteArray
+    })
+  }
+
   updateParam(param, value) {
     switch(param) {
       case 'volume':
@@ -80,7 +91,7 @@ class AppComponent extends React.Component {
   render() {
     return (
       <div>
-        <Timeline onNewNote={this.addNote.bind(this)} notes={this.state.notes} />
+        <Timeline onNewNote={this.addNote.bind(this)} onRemoveNote={this.removeNote.bind(this)} notes={this.state.notes} />
         <Slider onChange={this.updateParam.bind(this)} label='volume' min={-24} max={6} />
         <Slider onChange={this.updateParam.bind(this)} label='frequency' min={20} max={10000} />
         <Slider onChange={this.updateParam.bind(this)} label='attack' min={0} max={2} />
