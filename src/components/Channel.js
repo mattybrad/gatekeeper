@@ -20,7 +20,9 @@ class AppComponent extends React.Component {
     this.filter = new Tone.Filter(800, 'bandpass');
     this.props.audioSource.connect(this.ampEnv);
     this.ampEnv.connect(this.filter);
-    this.filter.toMaster();
+    this.volume = new Tone.Volume();
+    this.filter.connect(this.volume);
+    this.volume.toMaster();
 
     this.part = new Tone.Part(function(time){
       this.ampEnv.triggerAttackRelease(this.noteLength+'s', time);
@@ -37,6 +39,10 @@ class AppComponent extends React.Component {
 
   updateParam(param, value) {
     switch(param) {
+      case 'volume':
+      this.volume.volume.value = value;
+      break;
+
       case 'frequency':
       this.filter.frequency.value = value;
       break;
@@ -75,6 +81,7 @@ class AppComponent extends React.Component {
     return (
       <div>
         <Timeline onNewNote={this.addNote.bind(this)} notes={this.state.notes} />
+        <Slider onChange={this.updateParam.bind(this)} label='volume' min={-24} max={6} />
         <Slider onChange={this.updateParam.bind(this)} label='frequency' min={20} max={10000} />
         <Slider onChange={this.updateParam.bind(this)} label='attack' min={0} max={2} />
         <Slider onChange={this.updateParam.bind(this)} label='decay' min={0} max={2} />
