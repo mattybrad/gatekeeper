@@ -58,6 +58,10 @@ class AppComponent extends React.Component {
       this.filter.frequency.value = value;
       break;
 
+      case 'Q':
+      this.filter.Q.value = value;
+      break;
+
       case 'attack':
       value = Math.max(0.0001, value);
       this.ampEnv.attack = value;
@@ -94,6 +98,7 @@ class AppComponent extends React.Component {
         <Timeline onNewNote={this.addNote.bind(this)} onRemoveNote={this.removeNote.bind(this)} notes={this.state.notes} />
         <Slider onChange={this.updateParam.bind(this)} label='volume' min={-24} max={6} />
         <Slider onChange={this.updateParam.bind(this)} label='frequency' min={20} max={10000} />
+        <Slider onChange={this.updateParam.bind(this)} label='Q' min={0.0001} max={30} />
         <Slider onChange={this.updateParam.bind(this)} label='attack' min={0} max={2} />
         <Slider onChange={this.updateParam.bind(this)} label='decay' min={0} max={2} />
         <Slider onChange={this.updateParam.bind(this)} label='sustain' min={0} max={1} />
