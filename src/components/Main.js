@@ -5,8 +5,11 @@ import React from 'react';
 import Tone from 'tone';
 import Channel from './Channel';
 import Slider from './Slider';
+import Selector from './Selector';
 
-var sourceFile = require('../audio/source.mp3');
+var sourceFile1 = require('../audio/source1.mp3');
+var sourceFile2 = require('../audio/source2.mp3');
+var sourceFile3 = require('../audio/source3.mp3');
 
 class AppComponent extends React.Component {
   constructor(props) {
@@ -14,6 +17,11 @@ class AppComponent extends React.Component {
     this.state = {
       channels: [],
       audioSourceReady: false
+    }
+    this.audioSources = {
+      source1: sourceFile1,
+      source2: sourceFile2,
+      source3: sourceFile3
     }
   }
 
@@ -24,11 +32,10 @@ class AppComponent extends React.Component {
   }
 
   componentDidMount() {
-    this.audioSource = new Tone.Player(sourceFile);
-
-    Tone.Buffer.on('load', function() {
+    this.audioSourceGroup = new Tone.Players(this.audioSources, function() {
 
       // once buffer (sound) is loaded, loop it
+      this.audioSource = this.audioSourceGroup.get('source1');
       this.audioSource.loop = true;
       this.audioSource.start();
 
@@ -38,9 +45,9 @@ class AppComponent extends React.Component {
 
       this.sourceMixer = new Tone.Volume();
       this.audioSource.connect(this.sourceMixer);
-      this.noiseSource.connect(this.sourceMixer);
-      this.sineSource.connect(this.sourceMixer);
-      this.squareSource.connect(this.sourceMixer);
+      //this.noiseSource.connect(this.sourceMixer);
+      //this.sineSource.connect(this.sourceMixer);
+      //this.squareSource.connect(this.sourceMixer);
 
       Tone.Transport.loop = true;
       Tone.Transport.loopStart = '0:0';
@@ -52,6 +59,14 @@ class AppComponent extends React.Component {
       })
 
     }.bind(this))
+  }
+
+  switchSource(newSource) {
+    if(this.audioSource) this.audioSource.stop();
+    this.audioSource = this.audioSourceGroup.get(newSource);
+    this.audioSource.loop = true;
+    this.audioSource.start();
+    this.audioSource.connect(this.sourceMixer);
   }
 
   updateParam(param, value) {
@@ -84,6 +99,10 @@ class AppComponent extends React.Component {
       this.squareSource.volume.value = value;
       this.squareSource.mute = (value <= -24);
       break;
+
+      case 'mp3 source':
+      this.switchSource(value);
+      break;
     }
   }
 
@@ -94,6 +113,7 @@ class AppComponent extends React.Component {
         <div className="index">
           <Slider onChange={this.updateParam.bind(this)} label='volume' min={-24} max={2} />
           <Slider onChange={this.updateParam.bind(this)} label='tempo' min={50} max={250} />
+          <Selector onChange={this.updateParam.bind(this)} label='mp3 source' options={['source1','source2','source3']} />
           <Slider onChange={this.updateParam.bind(this)} label='mp3' min={-24} max={0} />
           <Slider onChange={this.updateParam.bind(this)} label='sine' min={-24} max={0} />
           <Slider onChange={this.updateParam.bind(this)} label='square' min={-24} max={-12} />
