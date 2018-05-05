@@ -6,6 +6,7 @@ import Tone from 'tone';
 import Channel from './Channel';
 import Slider from './Slider';
 import Selector from './Selector';
+import CassetteDeck from './CassetteDeck';
 
 var sourceFile1 = require('../audio/source1.mp3');
 var sourceFile2 = require('../audio/source2.mp3');
@@ -111,6 +112,15 @@ class AppComponent extends React.Component {
     if(this.state.audioSourceReady) {
       return (
         <div className="index">
+          <CassetteDeck />
+          <span className="led-red"></span>
+          <span className="led-red"></span>
+          <span className="led-red"></span>
+          <span className="led-red"></span>
+          <span className="led-red"></span>
+          <span className="led-red"></span>
+          <span className="led-red"></span>
+          <span className="led-red"></span>
           <Slider onChange={this.updateParam.bind(this)} label='volume' min={-24} max={2} />
           <Slider onChange={this.updateParam.bind(this)} label='tempo' min={50} max={250} />
           <Selector onChange={this.updateParam.bind(this)} label='mp3 source' options={['source1','source2','source3']} />
