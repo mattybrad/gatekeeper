@@ -2,7 +2,10 @@
 body {
   font-family: monospace;
   color: white;
-  background: black;
+  background-image: url('../images/wood.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-color: brown;
 }
 
 .slider,.selector {
