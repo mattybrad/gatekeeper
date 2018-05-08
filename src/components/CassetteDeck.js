@@ -21,22 +21,32 @@ class AppComponent extends React.Component {
   renderCanvas() {
     this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.width);
     this.drawSpool(100,100);
+    this.drawSpool(300,100);
   }
 
   drawSpool(x, y) {
-    var outerRadius = 50;
-    var innerRadius = 40;
-    var spikeLength = 10;
-    var spikeHeight = 10;
+    var tapeRadius = 80;
+    var outerRadius = 30;
+    var innerRadius = 25;
+    var spikeLength = 7;
+    var spikeHeight = 7;
     var spikeOverlap = (outerRadius - innerRadius) / 2;
+
+    this.ctx.beginPath();
+    this.ctx.arc(x, y, tapeRadius, 0, 2 * Math.PI);
+    this.ctx.fillStyle = '#000';
+    this.ctx.fill();
+
     this.ctx.beginPath();
     this.ctx.arc(x, y, outerRadius, 0, 2 * Math.PI);
     this.ctx.fillStyle = '#FFF';
     this.ctx.fill();
+
     this.ctx.beginPath();
     this.ctx.arc(x, y, innerRadius, 0, 2 * Math.PI);
-    this.ctx.fillStyle = '#000';
+    this.ctx.fillStyle = '#333';
     this.ctx.fill();
+
     this.ctx.fillStyle = '#FFF';
     this.ctx.save();
     var initAngle = (Date.now() / 1000) % (2 * Math.PI);
