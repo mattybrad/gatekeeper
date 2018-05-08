@@ -112,32 +112,23 @@ class AppComponent extends React.Component {
     if(this.state.audioSourceReady) {
       return (
         <div className="index">
-          <div className="ignore">
-            <div className='topLeft'>
-              <CassetteDeck />
-            </div>
-            <div className='bottomLeft'>
-              <Slider onChange={this.updateParam.bind(this)} label='volume' min={-24} max={2} />
-              <Slider onChange={this.updateParam.bind(this)} label='tempo' min={50} max={250} />
-              <Selector onChange={this.updateParam.bind(this)} label='mp3 source' options={['source1','source2','source3']} />
-              <Slider onChange={this.updateParam.bind(this)} label='mp3' min={-24} max={0} />
-              <Slider onChange={this.updateParam.bind(this)} label='sine' min={-24} max={0} />
-              <Slider onChange={this.updateParam.bind(this)} label='square' min={-24} max={-12} />
-              <Slider onChange={this.updateParam.bind(this)} label='noise' min={-24} max={-6} />
-              <div id="addChannel" onClick={this.handleAddChannelClick.bind(this)}>Add Channel</div>
-              {this.state.channels.map(function(val,i){
-                return <Channel key={i} test={val} audioSource={this.sourceMixer} />;
-              }.bind(this))}
-            </div>
+          <div className='topLeft'>
+            <CassetteDeck />
           </div>
-          <div className="topLeft">
-
+          <div className='bottomLeft'>
+            <Slider onChange={this.updateParam.bind(this)} label='volume' min={-24} max={2} />
+            <Slider onChange={this.updateParam.bind(this)} label='tempo' min={50} max={250} />
+            <Selector onChange={this.updateParam.bind(this)} label='mp3 source' options={['source1','source2','source3']} />
+            <Slider onChange={this.updateParam.bind(this)} label='mp3' min={-24} max={0} />
+            <Slider onChange={this.updateParam.bind(this)} label='sine' min={-24} max={0} />
+            <Slider onChange={this.updateParam.bind(this)} label='square' min={-24} max={-12} />
+            <Slider onChange={this.updateParam.bind(this)} label='noise' min={-24} max={-6} />
           </div>
-          <div className="bottomLeft">
-
-          </div>
-          <div className="right">
-
+          <div className='right'>
+            <div id="addChannel" onClick={this.handleAddChannelClick.bind(this)}>Add Channel</div>
+            {this.state.channels.map(function(val,i){
+              return <Channel key={i} test={val} audioSource={this.sourceMixer} />;
+            }.bind(this))}
           </div>
         </div>
       );
