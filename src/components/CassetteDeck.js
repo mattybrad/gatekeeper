@@ -24,19 +24,47 @@ class AppComponent extends React.Component {
 
   renderCanvas() {
     this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.width);
-    //this.drawSpool(100,100);
-    //this.drawSpool(300,100);
     this.ctx.save();
-    this.ctx.globalAlpha = 0.3;
+    this.drawCassette(0, 0, 340, 213);
+    this.ctx.globalAlpha = 0;
     this.ctx.drawImage(this.refImg, 0, 0);
     this.ctx.restore();
-    this.drawCassette(0, 0, 340, 213);
   }
 
   drawCassette(x, y, w, h) {
-    this.ctx.strokeStyle = 'white';
+    var spoolOffset = {x:0.29*w,y:0.45*h};
+    var spoolRadius = 0.06 * w;
+    this.drawSpool(x+spoolOffset.x,y+spoolOffset.y,spoolRadius,0.2*h);
+    this.drawSpool(x+w-spoolOffset.x,y+spoolOffset.y,spoolRadius,0.3*h);
+
+    this.ctx.fillStyle = 'rgba(128,128,128,0.5)';
+    this.ctx.strokeStyle = 'rgba(192,192,192,0.8)';
+
     this.drawRoundedRect(this.ctx, x, y, w, h, w/50);
     this.ctx.stroke();
+    this.ctx.fill();
+
+    var indentOffset = {x:0.056*w, y: 0.077*h};
+    this.drawRoundedRect(this.ctx, x+indentOffset.x, y+indentOffset.y, w-indentOffset.x*2, 0.63*h, w/50);
+    this.ctx.stroke();
+
+    var centreOffset1 = {x:0.2*w, y:0.31*h};
+    this.drawRoundedRect(this.ctx, x+centreOffset1.x, y+centreOffset1.y, w-centreOffset1.x*2, 0.26*h, w/100);
+    this.ctx.stroke();
+
+    var centreOffset2 = {x:0.38*w, y:0.35*h};
+    this.drawRoundedRect(this.ctx, x+centreOffset2.x, y+centreOffset2.y, w-centreOffset2.x*2, 0.18*h, w/100);
+    this.ctx.stroke();
+
+    var trapezoid = {x:0.15*w,y:0.76*h,x2:0.19*w};
+    this.ctx.beginPath();
+    this.ctx.moveTo(x+trapezoid.x, y+h);
+    this.ctx.lineTo(x+trapezoid.x2, y+trapezoid.y);
+    this.ctx.lineTo(x+w-trapezoid.x2, y+trapezoid.y);
+    this.ctx.lineTo(x+w-trapezoid.x, y+h);
+    this.ctx.stroke();
+
+    var circles = [];
   }
 
   drawRoundedRect(ctx, x, y, w, h, r) {
@@ -51,12 +79,12 @@ class AppComponent extends React.Component {
     ctx.closePath();
   }
 
-  drawSpool(x, y) {
-    var tapeRadius = 80;
-    var outerRadius = 30;
-    var innerRadius = 25;
-    var spikeLength = 7;
-    var spikeHeight = 7;
+  drawSpool(x, y, r, r2) {
+    var tapeRadius = r2;
+    var outerRadius = r;
+    var innerRadius = 0.8*r;
+    var spikeLength = 0.2*r;
+    var spikeHeight = 0.2*r;
     var spikeOverlap = (outerRadius - innerRadius) / 2;
 
     this.ctx.beginPath();
