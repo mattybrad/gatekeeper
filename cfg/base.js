@@ -8,7 +8,7 @@ let defaultSettings = require('./defaults');
 // let npmBase = path.join(__dirname, '../node_modules');
 // let additionalPaths = [ path.join(npmBase, 'react-bootstrap') ];
 let npmBase = path.join(__dirname, '../node_modules');
-let additionalPaths = [ path.join(npmBase, 'tone') ];
+let additionalPaths = [ path.join(npmBase, 'tone'), path.join(npmBase, 'react-bootstrap') ];
 
 module.exports = {
   additionalPaths: additionalPaths,
