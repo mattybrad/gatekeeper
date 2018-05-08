@@ -36,7 +36,6 @@ body {
   top: 0px;
   width: 50%;
   height: 50%;
-  background: green;
 }
 
 .bottomLeft {
@@ -44,7 +43,6 @@ body {
   top: 50%;
   width: 50%;
   height: 50%;
-  background: blue;
 }
 
 .right {
@@ -53,5 +51,4 @@ body {
   left: 50%;
   width: 50%;
   height: 100%;
-  background: yellow;
 }
