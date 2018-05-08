@@ -1,5 +1,7 @@
 import React from 'react';
 
+var cassetteReference = require('../images/cassette.jpg');
+
 class AppComponent extends React.Component {
   constructor(props) {
     super(props);
@@ -15,13 +17,38 @@ class AppComponent extends React.Component {
       self.renderCanvas();
       window.requestAnimationFrame(doRender);
     }
+    this.refImg = new Image();
+    this.refImg.src = cassetteReference;
     window.requestAnimationFrame(doRender);
   }
 
   renderCanvas() {
     this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.width);
-    this.drawSpool(100,100);
-    this.drawSpool(300,100);
+    //this.drawSpool(100,100);
+    //this.drawSpool(300,100);
+    this.ctx.save();
+    this.ctx.globalAlpha = 0.3;
+    this.ctx.drawImage(this.refImg, 0, 0);
+    this.ctx.restore();
+    this.drawCassette(0, 0, 340, 213);
+  }
+
+  drawCassette(x, y, w, h) {
+    this.ctx.strokeStyle = 'white';
+    this.drawRoundedRect(this.ctx, x, y, w, h, w/50);
+    this.ctx.stroke();
+  }
+
+  drawRoundedRect(ctx, x, y, w, h, r) {
+    if (w < 2 * r) r = w / 2;
+    if (h < 2 * r) r = h / 2;
+    ctx.beginPath();
+    ctx.moveTo(x+r, y);
+    ctx.arcTo(x+w, y,   x+w, y+h, r);
+    ctx.arcTo(x+w, y+h, x,   y+h, r);
+    ctx.arcTo(x,   y+h, x,   y,   r);
+    ctx.arcTo(x,   y,   x+w, y,   r);
+    ctx.closePath();
   }
 
   drawSpool(x, y) {
