@@ -7,7 +7,7 @@ class AppComponent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      
+
     }
   }
 
@@ -140,12 +140,25 @@ class AppComponent extends React.Component {
       <div className='cassetteDeck'>
         <canvas ref='canvas' width={width} height={coverHeight}></canvas>
         <div className='cassetteButtonHolder' style={{width:width}}>
-          <CassetteButton color='red'>Record</CassetteButton>
-          <CassetteButton color='green'>Play</CassetteButton>
-          <CassetteButton>Rewind</CassetteButton>
-          <CassetteButton>Fast-forward</CassetteButton>
-          <CassetteButton>Stop/Eject</CassetteButton>
-          <CassetteButton>Pause</CassetteButton>
+          <CassetteButton color='red'>
+            <i className="fas fa-circle"></i>
+          </CassetteButton>
+          <CassetteButton color='green'>
+            <i className="fas fa-play"></i>
+          </CassetteButton>
+          <CassetteButton>
+            <i className="fas fa-backward"></i>
+          </CassetteButton>
+          <CassetteButton>
+            <i className="fas fa-forward"></i>
+          </CassetteButton>
+          <CassetteButton>
+            <i className="fas fa-stop"></i>&nbsp;
+            <i className="fas fa-eject"></i>
+          </CassetteButton>
+          <CassetteButton>
+            <i className="fas fa-pause"></i>
+          </CassetteButton>
         </div>
       </div>
     );

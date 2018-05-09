@@ -5,7 +5,6 @@ body {
   background-image: url('../images/wood.jpg');
   background-repeat: no-repeat;
   background-size: cover;
-  background-color: brown;
 }
 
 .slider,.selector {
@@ -64,16 +63,21 @@ body {
 
 .cassetteDeck {
   text-align: center;
+  line-height: 0px;
 }
 
 .cassetteButtonHolder {
   display: flex;
-  height: 70px;
+  height: 50px;
   margin: 0px auto;
+  padding: 1px;
   background: black;
 }
 
 .cassetteButton {
   flex-basis: 100%;
-  margin: 2px;
+  margin: 1px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
