@@ -9,20 +9,21 @@ class AppComponent extends React.Component {
   }
 
   componentDidMount() {
-    
+
   }
 
   render() {
-    return (
-      <div className='cassetteButton'>
 
+    return (
+      <div className='cassetteButton' style={{background:this.props.color}}>
+        {this.props.children}
       </div>
     );
   }
 }
 
 AppComponent.defaultProps = {
-
+  color: '#999999'
 };
 
 export default AppComponent;

@@ -1,4 +1,5 @@
 import React from 'react';
+import CassetteButton from './CassetteButton';
 
 var cassetteReference = require('../images/cassette.jpg');
 
@@ -28,7 +29,8 @@ class AppComponent extends React.Component {
     //this.drawMechanism();
     // N.B. ideal cassette aspect ratio is 1.6
     var cassetteWidth = 0.8 * this.ctx.canvas.width;
-    this.drawCassette((this.ctx.canvas.width - cassetteWidth)/2, 0.1 * this.ctx.canvas.height, cassetteWidth, cassetteWidth / 1.6);
+    var cassetteHeight = cassetteWidth / 1.6;
+    this.drawCassette((this.ctx.canvas.width - cassetteWidth)/2, (this.ctx.canvas.height - cassetteHeight)/2, cassetteWidth, cassetteHeight);
     this.ctx.globalAlpha = 0;
     this.ctx.drawImage(this.refImg, 0, 0);
     this.ctx.restore();
@@ -131,9 +133,20 @@ class AppComponent extends React.Component {
   }
 
   render() {
+    var width = 350;
+    var coverHeight = 200;
+
     return (
       <div className='cassetteDeck'>
-        <canvas ref='canvas' width={400} height={250}></canvas>
+        <canvas ref='canvas' width={width} height={coverHeight}></canvas>
+        <div className='cassetteButtonHolder' style={{width:width}}>
+          <CassetteButton color='red'>Record</CassetteButton>
+          <CassetteButton color='green'>Play</CassetteButton>
+          <CassetteButton>Rewind</CassetteButton>
+          <CassetteButton>Fast-forward</CassetteButton>
+          <CassetteButton>Stop/Eject</CassetteButton>
+          <CassetteButton>Pause</CassetteButton>
+        </div>
       </div>
     );
   }

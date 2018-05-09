@@ -56,3 +56,15 @@ body {
 .cassetteDeck {
   text-align: center;
 }
+
+.cassetteButtonHolder {
+  display: flex;
+  height: 70px;
+  margin: 0px auto;
+  background: black;
+}
+
+.cassetteButton {
+  flex-basis: 100%;
+  margin: 2px;
+}
