@@ -33,6 +33,9 @@ body {
 
 .topLeft {
   position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   top: 0px;
   width: 50%;
   height: 50%;
@@ -40,6 +43,9 @@ body {
 
 .bottomLeft {
   position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   top: 50%;
   width: 50%;
   height: 50%;
@@ -47,6 +53,9 @@ body {
 
 .right {
   position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   top: 0px;
   left: 50%;
   width: 50%;
