@@ -25,13 +25,29 @@ class AppComponent extends React.Component {
   renderCanvas() {
     this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.width);
     this.ctx.save();
-    this.drawCassette(0, 0, 340, 213);
+    //this.drawMechanism();
+    // N.B. ideal cassette aspect ratio is 1.6
+    var cassetteWidth = 0.8 * this.ctx.canvas.width;
+    this.drawCassette((this.ctx.canvas.width - cassetteWidth)/2, 0.1 * this.ctx.canvas.height, cassetteWidth, cassetteWidth / 1.6);
     this.ctx.globalAlpha = 0;
     this.ctx.drawImage(this.refImg, 0, 0);
     this.ctx.restore();
+    this.drawCover();
+  }
+
+  drawMechanism() {
+    this.ctx.fillStyle = 'silver';
+    this.ctx.fillRect(0,0,this.ctx.canvas.width,this.ctx.canvas.height);
+  }
+
+  drawCover() {
+    this.ctx.fillStyle = 'rgba(32,32,32,0.7)';
+    this.ctx.fillRect(0,0,this.ctx.canvas.width,this.ctx.canvas.height);
   }
 
   drawCassette(x, y, w, h) {
+    this.ctx.lineWidth = Math.ceil(w/200);
+
     var spoolOffset = {x:0.29*w,y:0.45*h};
     var spoolRadius = 0.06 * w;
     this.drawSpool(x+spoolOffset.x,y+spoolOffset.y,spoolRadius,0.2*h);
@@ -64,7 +80,7 @@ class AppComponent extends React.Component {
     this.ctx.lineTo(x+w-trapezoid.x, y+h);
     this.ctx.stroke();
 
-    var circles = [];
+    //var circles = [];
   }
 
   drawRoundedRect(ctx, x, y, w, h, r) {
@@ -116,7 +132,9 @@ class AppComponent extends React.Component {
 
   render() {
     return (
-      <canvas ref='canvas' width={640} height={480}></canvas>
+      <div className='cassetteDeck'>
+        <canvas ref='canvas' width={400} height={250}></canvas>
+      </div>
     );
   }
 }
