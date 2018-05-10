@@ -94,7 +94,7 @@ class AppComponent extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className='channel'>
         <Timeline onNewNote={this.addNote.bind(this)} onRemoveNote={this.removeNote.bind(this)} notes={this.state.notes} />
         <Slider onChange={this.updateParam.bind(this)} label='volume' min={-24} max={6} />
         <Slider onChange={this.updateParam.bind(this)} label='frequency' min={20} max={10000} />

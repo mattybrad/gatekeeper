@@ -7,6 +7,10 @@ body {
   background-size: cover;
 }
 
+.channel {
+  display: inline-block;
+}
+
 .slider,.selector {
   display: inline-block;
   vertical-align: top;
@@ -36,7 +40,7 @@ body {
   align-items: center;
   justify-content: center;
   top: 0px;
-  width: 50%;
+  width: 40%;
   height: 50%;
 }
 
@@ -46,18 +50,15 @@ body {
   align-items: center;
   justify-content: center;
   top: 50%;
-  width: 50%;
+  width: 40%;
   height: 50%;
 }
 
 .right {
   position: fixed;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   top: 0px;
-  left: 50%;
-  width: 50%;
+  left: 40%;
+  width: 60%;
   height: 100%;
 }
 

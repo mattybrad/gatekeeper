@@ -16,7 +16,7 @@ class AppComponent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      channels: [],
+      channels: ['x','y','z'],
       audioSourceReady: false
     }
     this.audioSources = {
@@ -104,6 +104,10 @@ class AppComponent extends React.Component {
       case 'mp3 source':
       this.switchSource(value);
       break;
+
+      case 'tape speed':
+      this.audioSource.playbackRate = value;
+      break;
     }
   }
 
@@ -118,14 +122,10 @@ class AppComponent extends React.Component {
           <div className='bottomLeft'>
             <Slider onChange={this.updateParam.bind(this)} label='volume' min={-24} max={2} />
             <Slider onChange={this.updateParam.bind(this)} label='tempo' min={50} max={250} />
+            <Slider onChange={this.updateParam.bind(this)} label='tape speed' min={0.1} max={4} />
             <Selector onChange={this.updateParam.bind(this)} label='mp3 source' options={['source1','source2','source3']} />
-            <Slider onChange={this.updateParam.bind(this)} label='mp3' min={-24} max={0} />
-            <Slider onChange={this.updateParam.bind(this)} label='sine' min={-24} max={0} />
-            <Slider onChange={this.updateParam.bind(this)} label='square' min={-24} max={-12} />
-            <Slider onChange={this.updateParam.bind(this)} label='noise' min={-24} max={-6} />
           </div>
           <div className='right'>
-            <div id="addChannel" onClick={this.handleAddChannelClick.bind(this)}>Add Channel</div>
             {this.state.channels.map(function(val,i){
               return <Channel key={i} test={val} audioSource={this.sourceMixer} />;
             }.bind(this))}
