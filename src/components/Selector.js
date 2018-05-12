@@ -23,12 +23,12 @@ class AppComponent extends React.Component {
   render() {
     return (
       <div className='selector'>
-        <label className='embossedLabel'>{this.props.label}</label><br/>
         <select ref='selectorInput' value={this.state.selectorValue} onChange={this.handleSelectorChange.bind(this)}>
           {this.props.options.map(function(val,i){
             return <option key={i}>{val}</option>;
           })}
-        </select>
+        </select><br/>
+        <label className='embossedLabel'>{this.props.label}</label>
       </div>
     );
   }

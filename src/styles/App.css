@@ -54,6 +54,7 @@ body {
   display: inline-block;
   vertical-align: top;
   margin: 5px;
+  text-align: center;
 }
 
 .slider label, .selector label {
@@ -62,11 +63,10 @@ body {
 
 .slider input {
   width: 80px;
-  display: none;
 }
 
 .selector select {
-  display: none;
+
 }
 
 .timeline {

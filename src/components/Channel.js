@@ -4,6 +4,7 @@ import Slider from './Slider';
 import Selector from './Selector';
 import Timeline from './Timeline';
 import LedGroup from './LedGroup';
+import Knob from './Knob';
 
 class AppComponent extends React.Component {
   constructor(props) {
@@ -97,6 +98,9 @@ class AppComponent extends React.Component {
     return (
       <div className='channel'>
         <LedGroup onNewNote={this.addNote.bind(this)} onRemoveNote={this.removeNote.bind(this)} notes={this.state.notes} />
+        <Knob/>
+        <Knob/>
+        <Knob/>
         <Slider onChange={this.updateParam.bind(this)} label='volume' min={-24} max={6} start={this.props.volume} />
         <Slider onChange={this.updateParam.bind(this)} label='frequency' min={20} max={10000} start={this.props.frequency} />
         <Slider onChange={this.updateParam.bind(this)} label='Q' min={0.0001} max={30} start={this.props.Q} />
