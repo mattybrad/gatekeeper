@@ -3,8 +3,7 @@ body {
   font-family: monospace;
   color: white;
   background-image: url('../images/wood.jpg');
-  background-repeat: no-repeat;
-  background-size: cover;
+  background-repeat: repeat;
 }
 
 .channel {

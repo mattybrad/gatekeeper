@@ -96,22 +96,29 @@ class AppComponent extends React.Component {
     return (
       <div className='channel'>
         <Timeline onNewNote={this.addNote.bind(this)} onRemoveNote={this.removeNote.bind(this)} notes={this.state.notes} />
-        <Slider onChange={this.updateParam.bind(this)} label='volume' min={-24} max={6} />
-        <Slider onChange={this.updateParam.bind(this)} label='frequency' min={20} max={10000} />
-        <Slider onChange={this.updateParam.bind(this)} label='Q' min={0.0001} max={30} />
-        <Slider onChange={this.updateParam.bind(this)} label='attack' min={0} max={2} />
-        <Slider onChange={this.updateParam.bind(this)} label='decay' min={0} max={2} />
-        <Slider onChange={this.updateParam.bind(this)} label='sustain' min={0} max={1} />
-        <Slider onChange={this.updateParam.bind(this)} label='release' min={0} max={5} />
-        <Slider onChange={this.updateParam.bind(this)} label='note length' min={0} max={2} />
-        <Selector onChange={this.updateParam.bind(this)} label='filter' options={['lowpass','bandpass','highpass']} />
+        <Slider onChange={this.updateParam.bind(this)} label='volume' min={-24} max={6} start={this.props.volume} />
+        <Slider onChange={this.updateParam.bind(this)} label='frequency' min={20} max={10000} start={this.props.frequency} />
+        <Slider onChange={this.updateParam.bind(this)} label='Q' min={0.0001} max={30} start={this.props.Q} />
+        <Slider onChange={this.updateParam.bind(this)} label='attack' min={0} max={2} start={this.props.attack} />
+        <Slider onChange={this.updateParam.bind(this)} label='decay' min={0} max={2} start={this.props.decay} />
+        <Slider onChange={this.updateParam.bind(this)} label='sustain' min={0} max={1} start={this.props.sustain} />
+        <Slider onChange={this.updateParam.bind(this)} label='release' min={0} max={5} start={this.props.release} />
+        <Slider onChange={this.updateParam.bind(this)} label='note length' min={0} max={0.3} />
+        <Selector onChange={this.updateParam.bind(this)} label='filter' options={['lowpass','bandpass','highpass']} start={this.props.filter} />
       </div>
     );
   }
 }
 
 AppComponent.defaultProps = {
-  test: 'default'
+  volume: 0,
+  frequency: 500,
+  Q: 1,
+  attack: 0,
+  decay: 0.2,
+  sustain: 0.5,
+  release: 0.7,
+  filter: 'bandpass'
 };
 
 export default AppComponent;

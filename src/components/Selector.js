@@ -3,8 +3,9 @@ import React from 'react';
 class AppComponent extends React.Component {
   constructor(props) {
     super(props);
+    var startIndex = this.props.options.indexOf(this.props.start);
     this.state = {
-      selectorValue: this.props.options[0]
+      selectorValue: this.props.options[startIndex>=0?startIndex:0]
     }
   }
 

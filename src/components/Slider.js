@@ -13,6 +13,10 @@ class AppComponent extends React.Component {
     return this.props.min + (this.props.max-this.props.min) * raw / 10000
   }
 
+  calculateRawValue(sliderValue) {
+    return 10000 * (sliderValue - this.props.min) / (this.props.max - this.props.min);
+  }
+
   handleSliderChange() {
     var raw = this.refs.sliderInput.value;
     var calculated = this.calculateSliderValue(this.refs.sliderInput.value);
@@ -36,7 +40,7 @@ class AppComponent extends React.Component {
           type="range"
           min={0}
           max={10000}
-          defaultValue={5000}
+          defaultValue={this.calculateRawValue(this.props.start)}
           value={this.state.sliderValue}
           onMouseMove={this.handleSliderChange.bind(this)}
           onChange={this.handleSliderChange.bind(this)}

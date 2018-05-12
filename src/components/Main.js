@@ -16,7 +16,6 @@ class AppComponent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      channels: ['x','y','z'],
       audioSourceReady: false
     }
     this.audioSources = {
@@ -24,12 +23,6 @@ class AppComponent extends React.Component {
       source2: sourceFile2,
       source3: sourceFile3
     }
-  }
-
-  handleAddChannelClick() {
-    this.setState(prevState => ({
-      channels: [...prevState.channels, 'x']
-    }));
   }
 
   componentDidMount() {
@@ -120,15 +113,13 @@ class AppComponent extends React.Component {
             <CassetteDeck />
           </div>
           <div className='bottomLeft'>
-            <Slider onChange={this.updateParam.bind(this)} label='volume' min={-24} max={2} />
-            <Slider onChange={this.updateParam.bind(this)} label='tempo' min={50} max={250} />
-            <Slider onChange={this.updateParam.bind(this)} label='tape speed' min={0.1} max={4} />
+            <Slider onChange={this.updateParam.bind(this)} label='volume' min={-24} max={2} start={0} />
+            <Slider onChange={this.updateParam.bind(this)} label='tempo' min={50} max={250} start={120} />
+            <Slider onChange={this.updateParam.bind(this)} label='tape speed' min={0.1} max={4} start={1} />
             <Selector onChange={this.updateParam.bind(this)} label='mp3 source' options={['source1','source2','source3']} />
           </div>
           <div className='right'>
-            {this.state.channels.map(function(val,i){
-              return <Channel key={i} test={val} audioSource={this.sourceMixer} />;
-            }.bind(this))}
+            <Channel audioSource={this.sourceMixer} />
           </div>
         </div>
       );
