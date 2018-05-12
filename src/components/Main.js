@@ -119,7 +119,22 @@ class AppComponent extends React.Component {
             <Selector onChange={this.updateParam.bind(this)} label='mp3 source' options={['source1','source2','source3']} />
           </div>
           <div className='right'>
-            <Channel audioSource={this.sourceMixer} />
+            <Channel
+              audioSource={this.sourceMixer}
+              frequency={150}
+              filter={'lowpass'}
+            />
+            <Channel
+              audioSource={this.sourceMixer}
+              frequency={600}
+              Q={20}
+              filter={'bandpass'}
+            />
+            <Channel
+              audioSource={this.sourceMixer}
+              frequency={2000}
+              filter={'highpass'}
+            />
           </div>
         </div>
       );

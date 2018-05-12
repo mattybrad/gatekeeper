@@ -6,6 +6,29 @@ body {
   background-repeat: repeat;
 }
 
+@font-face {
+  font-family:"Impact Label Reversed";
+  src: url("../fonts/Impact Label Reversed.ttf")
+}
+
+@font-face {
+  font-family:"PermanentMarker-Regular";
+  src: url("../fonts/PermanentMarker-Regular.ttf")
+}
+
+.embossedLabel {
+  font-family: "Impact Label Reversed", monospace;
+  color: white;
+  background: black;
+  text-align: center;
+  padding: 0px 0.2em 0px 0.2em;
+  white-space: nowrap;
+}
+
+.cassetteLabel {
+  font-family: "PermanentMarker-Regular", cursive, sans-serif;
+}
+
 .channel {
   display: inline-block;
 }
@@ -17,7 +40,7 @@ body {
 }
 
 .slider label, .selector label {
-  display: block;
+  display: inline-block;
 }
 
 .slider input {

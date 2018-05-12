@@ -34,7 +34,7 @@ class AppComponent extends React.Component {
   render() {
     return (
       <div className='slider'>
-        <label>{this.props.label}</label>
+        <label className='embossedLabel'>{this.props.label}</label><br/>
         <input
           ref='sliderInput'
           type="range"
