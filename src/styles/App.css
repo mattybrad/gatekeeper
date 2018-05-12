@@ -29,8 +29,25 @@ body {
   font-family: "PermanentMarker-Regular", cursive, sans-serif;
 }
 
-.channel {
+.led {
   display: inline-block;
+  width: 20px;
+  height: 20px;
+  background: #660000;
+  border-radius: 10px;
+  border-color: black;
+  border-style: solid;
+  border-width: 2px;
+  box-sizing: border-box;
+  margin: 4px;
+}
+
+.ledGroup {
+  display: block;
+}
+
+.channel {
+  display: block;
 }
 
 .slider,.selector {
@@ -45,6 +62,11 @@ body {
 
 .slider input {
   width: 80px;
+  display: none;
+}
+
+.selector select {
+  display: none;
 }
 
 .timeline {
@@ -82,6 +104,7 @@ body {
   left: 40%;
   width: 60%;
   height: 100%;
+  margin-top: 10px;
 }
 
 .cassetteDeck {
