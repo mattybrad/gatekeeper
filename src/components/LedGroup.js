@@ -17,7 +17,7 @@ class AppComponent extends React.Component {
   render() {
     var leds = [];
     for(var i=0;i<16;i++) {
-      leds.push(<Led/>);
+      leds.push(<Led key={i} />);
     }
 
     return (

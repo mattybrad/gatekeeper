@@ -2,7 +2,6 @@ import React from 'react';
 import Tone from 'tone';
 import Slider from './Slider';
 import Selector from './Selector';
-import Timeline from './Timeline';
 import LedGroup from './LedGroup';
 import Knob from './Knob';
 
