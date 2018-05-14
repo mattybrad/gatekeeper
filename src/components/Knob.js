@@ -8,7 +8,7 @@ class AppComponent extends React.Component {
       anchorX: null,
       anchorY: null,
       initDragValue: null,
-      value: 0
+      value: this.calculateRawValue(this.props.start)
     }
   }
 
@@ -21,6 +21,7 @@ class AppComponent extends React.Component {
       window.requestAnimationFrame(doRender);
     }
     window.requestAnimationFrame(doRender);
+    this.props.onChange(this.props.label, this.calculateKnobValue(this.state.value));
   }
 
   renderCanvas() {
@@ -36,7 +37,7 @@ class AppComponent extends React.Component {
     ctx.fillStyle = 'white';
     ctx.save();
     ctx.translate(ctx.canvas.width/2,ctx.canvas.width/2);
-    ctx.rotate(1.5*Math.PI*this.state.value/100);
+    ctx.rotate(1.5*Math.PI*(this.state.value-0.5));
     ctx.translate(-ctx.canvas.width/2,-ctx.canvas.width/2);
     ctx.beginPath();
     ctx.arc(ctx.canvas.width/2,ctx.canvas.width/10,3,0,2*Math.PI);
@@ -65,12 +66,20 @@ class AppComponent extends React.Component {
     })
   }
 
+  calculateKnobValue(raw) {
+    return this.props.min + (this.props.max-this.props.min) * raw;
+  }
+
+  calculateRawValue(knobValue) {
+    return (knobValue - this.props.min) / (this.props.max - this.props.min);
+  }
+
   handleMovement(ev) {
-    var newValue = Math.max(0, Math.min(100, this.state.initDragValue + -2 * (ev.clientY - this.state.anchorY)));
+    var newValue = Math.max(0, Math.min(1, this.state.initDragValue + -0.02 * (ev.clientY - this.state.anchorY)));
+    this.props.onChange(this.props.label, this.calculateKnobValue(newValue));
     this.setState({
       value: newValue
     })
-    console.log(newValue);
   }
 
   render() {
@@ -83,14 +92,18 @@ class AppComponent extends React.Component {
           height={knobSize}
           onMouseDown={this.startListening.bind(this)}
         ></canvas><br/>
-        <label className='embossedLabel'>knob</label>
+        <label className='embossedLabel'>{this.props.label}</label>
       </div>
     );
   }
 }
 
 AppComponent.defaultProps = {
-
+  onChange: function(){},
+  label: 'something',
+  min: 0,
+  max: 1,
+  start: 0
 };
 
 export default AppComponent;

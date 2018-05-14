@@ -1,6 +1,5 @@
 import React from 'react';
 import Tone from 'tone';
-import Slider from './Slider';
 import Selector from './Selector';
 import LedGroup from './LedGroup';
 import Knob from './Knob';
@@ -31,6 +30,15 @@ class AppComponent extends React.Component {
     this.part.start('0:0:0');
   }
 
+  componentDidMount() {
+    if(this.props.filter=='lowpass') {
+      this.addNote('0:0:0');
+      this.addNote('0:1:0');
+      this.addNote('0:2:0');
+      this.addNote('0:3:0');
+    }
+  }
+
   addNote(time) {
     this.part.add(time);
     this.setState(prevState => ({
@@ -55,7 +63,7 @@ class AppComponent extends React.Component {
       this.volume.volume.value = value;
       break;
 
-      case 'frequency':
+      case 'freq':
       this.filter.frequency.value = value;
       break;
 
@@ -82,7 +90,7 @@ class AppComponent extends React.Component {
       this.ampEnv.release = value;
       break;
 
-      case 'note length':
+      case 'gate':
       value = Math.max(0.001, value);
       this.noteLength = value;
       break;
@@ -97,17 +105,14 @@ class AppComponent extends React.Component {
     return (
       <div className='channel'>
         <LedGroup onNewNote={this.addNote.bind(this)} onRemoveNote={this.removeNote.bind(this)} notes={this.state.notes} />
-        <Knob/>
-        <Knob/>
-        <Knob/>
-        <Slider onChange={this.updateParam.bind(this)} label='volume' min={-24} max={6} start={this.props.volume} />
-        <Slider onChange={this.updateParam.bind(this)} label='frequency' min={20} max={10000} start={this.props.frequency} />
-        <Slider onChange={this.updateParam.bind(this)} label='Q' min={0.0001} max={30} start={this.props.Q} />
-        <Slider onChange={this.updateParam.bind(this)} label='attack' min={0} max={2} start={this.props.attack} />
-        <Slider onChange={this.updateParam.bind(this)} label='decay' min={0} max={2} start={this.props.decay} />
-        <Slider onChange={this.updateParam.bind(this)} label='sustain' min={0} max={1} start={this.props.sustain} />
-        <Slider onChange={this.updateParam.bind(this)} label='release' min={0} max={5} start={this.props.release} />
-        <Slider onChange={this.updateParam.bind(this)} label='note length' min={0} max={0.3} />
+        <Knob onChange={this.updateParam.bind(this)} label='volume' min={-24} max={6} start={this.props.volume} />
+        <Knob onChange={this.updateParam.bind(this)} label='freq' min={20} max={10000} start={this.props.frequency} />
+        <Knob onChange={this.updateParam.bind(this)} label='Q' min={0.0001} max={30} start={this.props.Q} />
+        <Knob onChange={this.updateParam.bind(this)} label='attack' min={0} max={2} start={this.props.attack} />
+        <Knob onChange={this.updateParam.bind(this)} label='decay' min={0} max={2} start={this.props.decay} />
+        <Knob onChange={this.updateParam.bind(this)} label='sustain' min={0} max={1} start={this.props.sustain} />
+        <Knob onChange={this.updateParam.bind(this)} label='release' min={0} max={5} start={this.props.release} />
+        <Knob onChange={this.updateParam.bind(this)} label='gate' min={0} max={0.3} />
         <Selector onChange={this.updateParam.bind(this)} label='filter' options={['lowpass','bandpass','highpass']} start={this.props.filter} />
       </div>
     );

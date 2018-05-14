@@ -56,6 +56,7 @@ body {
 
 .channel {
   display: block;
+  margin-bottom: 20px;
 }
 
 .slider,.selector {
@@ -63,6 +64,7 @@ body {
   vertical-align: top;
   margin: 5px;
   text-align: center;
+  width: 80px;
 }
 
 .slider label, .selector label {

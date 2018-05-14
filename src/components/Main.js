@@ -4,7 +4,7 @@ require('styles/App.css');
 import React from 'react';
 import Tone from 'tone';
 import Channel from './Channel';
-import Slider from './Slider';
+import Knob from './Knob';
 import Selector from './Selector';
 import CassetteDeck from './CassetteDeck';
 
@@ -64,6 +64,7 @@ class AppComponent extends React.Component {
   }
 
   updateParam(param, value) {
+    console.log(param,value);
     switch(param) {
       case 'volume':
       Tone.Master.volume.value = value;
@@ -113,9 +114,9 @@ class AppComponent extends React.Component {
             <CassetteDeck />
           </div>
           <div className='bottomLeft'>
-            <Slider onChange={this.updateParam.bind(this)} label='volume' min={-24} max={2} start={0} />
-            <Slider onChange={this.updateParam.bind(this)} label='tempo' min={50} max={250} start={120} />
-            <Slider onChange={this.updateParam.bind(this)} label='tape speed' min={0.1} max={4} start={1} />
+            <Knob onChange={this.updateParam.bind(this)} label='volume' min={-24} max={2} start={0} />
+            <Knob onChange={this.updateParam.bind(this)} label='tempo' min={50} max={250} start={120} />
+            <Knob onChange={this.updateParam.bind(this)} label='tape speed' min={0.1} max={4} start={1} />
             <Selector onChange={this.updateParam.bind(this)} label='mp3 source' options={['source1','source2','source3']} />
           </div>
           <div className='right'>
