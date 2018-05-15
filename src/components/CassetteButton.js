@@ -15,7 +15,7 @@ class AppComponent extends React.Component {
   render() {
 
     return (
-      <div className='cassetteButton' style={{background:this.props.color}}>
+      <div onClick={this.props.onClick} className='cassetteButton' style={{background:this.props.color}}>
         {this.props.children}
       </div>
     );
@@ -23,7 +23,8 @@ class AppComponent extends React.Component {
 }
 
 AppComponent.defaultProps = {
-  color: '#999999'
+  color: '#999999',
+  onClick: function(){}
 };
 
 export default AppComponent;

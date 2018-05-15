@@ -103,13 +103,19 @@ class AppComponent extends React.Component {
     }
   }
 
+  chooseSource() {
+    alert("CHOOSE");
+  }
+
   render() {
 
     if(this.state.audioSourceReady) {
       return (
         <div className="index">
           <div className='topLeft'>
-            <CassetteDeck />
+            <CassetteDeck
+              onEject={this.chooseSource.bind(this)}
+            />
           </div>
           <div className='bottomLeft'>
             <Knob onChange={this.updateParam.bind(this)} label='volume' min={-24} max={2} start={0} />

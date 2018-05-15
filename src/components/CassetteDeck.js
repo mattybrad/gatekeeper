@@ -152,7 +152,7 @@ class AppComponent extends React.Component {
           <CassetteButton>
             <i className="fas fa-forward"></i>
           </CassetteButton>
-          <CassetteButton>
+          <CassetteButton onClick={this.props.onEject.bind(this)}>
             <i className="fas fa-stop"></i>&nbsp;
             <i className="fas fa-eject"></i>
           </CassetteButton>
@@ -166,7 +166,7 @@ class AppComponent extends React.Component {
 }
 
 AppComponent.defaultProps = {
-
+  onEject: function(){}
 };
 
 export default AppComponent;
