@@ -8,16 +8,22 @@ class AppComponent extends React.Component {
     }
   }
 
+  onClick() {
+    this.props.onClick();
+  }
+
   render() {
+    var className = 'led ' + (this.props.isOn?'on':'off');
     return (
-      <div className='led'></div>
+      <div style={{background:this.props.color}} onMouseUp={this.onClick.bind(this)} className={className}></div>
     );
   }
 }
 
 AppComponent.defaultProps = {
   color: '#FF0000',
-  isOn: false
+  isOn: false,
+  onClick: function(){}
 };
 
 export default AppComponent;

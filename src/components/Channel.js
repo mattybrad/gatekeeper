@@ -31,12 +31,7 @@ class AppComponent extends React.Component {
   }
 
   componentDidMount() {
-    if(this.props.filter=='lowpass') {
-      this.addNote('0:0:0');
-      this.addNote('0:1:0');
-      this.addNote('0:2:0');
-      this.addNote('0:3:0');
-    }
+
   }
 
   addNote(time) {

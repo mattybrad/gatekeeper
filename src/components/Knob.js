@@ -86,7 +86,7 @@ class AppComponent extends React.Component {
   render() {
     var knobSize = 70;
     return (
-      <div className='slider'>
+      <div className='knob'>
         <canvas
           ref='canvas'
           width={knobSize}

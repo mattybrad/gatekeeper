@@ -41,13 +41,17 @@ body {
   display: inline-block;
   width: 20px;
   height: 20px;
-  background: #660000;
   border-radius: 10px;
   border-color: black;
   border-style: solid;
   border-width: 2px;
   box-sizing: border-box;
   margin: 4px;
+  filter: brightness(20%);
+}
+
+.led.on {
+  filter: brightness(100%);
 }
 
 .ledGroup {
@@ -59,7 +63,7 @@ body {
   margin-bottom: 20px;
 }
 
-.slider,.selector {
+.knob,.slideSwitch {
   display: inline-block;
   vertical-align: bottom;
   margin: 5px;
@@ -67,16 +71,8 @@ body {
   width: 80px;
 }
 
-.slider label, .selector label {
-  display: inline-block;
-}
-
-.slider input {
-  width: 80px;
-}
-
-.selector select {
-
+.slideSwitch canvas {
+  margin-bottom: 20px;
 }
 
 .timeline {
