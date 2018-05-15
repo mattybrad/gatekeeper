@@ -5,7 +5,6 @@ import React from 'react';
 import Tone from 'tone';
 import Channel from './Channel';
 import Knob from './Knob';
-import Selector from './Selector';
 import CassetteDeck from './CassetteDeck';
 
 var sourceFile1 = require('../audio/source1.mp3');
@@ -64,7 +63,6 @@ class AppComponent extends React.Component {
   }
 
   updateParam(param, value) {
-    console.log(param,value);
     switch(param) {
       case 'volume':
       Tone.Master.volume.value = value;
@@ -99,7 +97,7 @@ class AppComponent extends React.Component {
       this.switchSource(value);
       break;
 
-      case 'tape speed':
+      case 'speed':
       this.audioSource.playbackRate = value;
       break;
     }
@@ -116,8 +114,7 @@ class AppComponent extends React.Component {
           <div className='bottomLeft'>
             <Knob onChange={this.updateParam.bind(this)} label='volume' min={-24} max={2} start={0} />
             <Knob onChange={this.updateParam.bind(this)} label='tempo' min={50} max={250} start={120} />
-            <Knob onChange={this.updateParam.bind(this)} label='tape speed' min={0.1} max={4} start={1} />
-            <Selector onChange={this.updateParam.bind(this)} label='mp3 source' options={['source1','source2','source3']} />
+            <Knob onChange={this.updateParam.bind(this)} label='speed' min={0.1} max={4} start={1} />
           </div>
           <div className='right'>
             <Channel

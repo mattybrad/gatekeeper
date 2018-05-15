@@ -1,4 +1,5 @@
 import React from 'react';
+import EmbossedLabel from './EmbossedLabel';
 
 class AppComponent extends React.Component {
   constructor(props) {
@@ -92,7 +93,7 @@ class AppComponent extends React.Component {
           height={knobSize}
           onMouseDown={this.startListening.bind(this)}
         ></canvas><br/>
-        <label className='embossedLabel'>{this.props.label}</label>
+        <EmbossedLabel>{this.props.label}</EmbossedLabel>
       </div>
     );
   }

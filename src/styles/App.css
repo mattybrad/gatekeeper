@@ -61,7 +61,7 @@ body {
 
 .slider,.selector {
   display: inline-block;
-  vertical-align: top;
+  vertical-align: bottom;
   margin: 5px;
   text-align: center;
   width: 80px;
