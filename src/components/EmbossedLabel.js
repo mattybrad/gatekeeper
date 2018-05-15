@@ -4,13 +4,16 @@ class AppComponent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      rotation: 4 * (1 - 2 * Math.random())
+      rotation: 3 * (1 - 2 * Math.random()),
+      translateY: 5 * Math.random(),
+      translateX: 5 * (1 - 2 * Math.random())
     }
   }
 
   render() {
+    var transform = 'rotate('+this.state.rotation+'deg) translate('+this.state.translateX+'px,'+this.state.translateY+'px)';
     return (
-      <label className='embossedLabel' style={{transform: 'rotate('+this.state.rotation+'deg)'}}>{this.props.children}</label>
+      <label className='embossedLabel' style={{transform: transform}}>{this.props.children}</label>
     );
   }
 }

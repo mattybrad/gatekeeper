@@ -1,6 +1,6 @@
 import React from 'react';
 import Tone from 'tone';
-import Selector from './Selector';
+import SlideSwitch from './SlideSwitch';
 import LedGroup from './LedGroup';
 import Knob from './Knob';
 
@@ -113,7 +113,7 @@ class AppComponent extends React.Component {
         <Knob onChange={this.updateParam.bind(this)} label='sustain' min={0} max={1} start={this.props.sustain} />
         <Knob onChange={this.updateParam.bind(this)} label='release' min={0} max={5} start={this.props.release} />
         <Knob onChange={this.updateParam.bind(this)} label='gate' min={0} max={0.3} />
-        <Selector onChange={this.updateParam.bind(this)} label='filter' options={['lowpass','bandpass','highpass']} start={this.props.filter} />
+        <SlideSwitch onChange={this.updateParam.bind(this)} label='filter' options={['lowpass','bandpass','highpass']} start={this.props.filter} />
       </div>
     );
   }
