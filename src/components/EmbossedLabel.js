@@ -4,9 +4,9 @@ class AppComponent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      rotation: 3 * (1 - 2 * Math.random()),
+      rotation: 2 * (1 - 2 * Math.random()),
       translateY: 5 * Math.random(),
-      translateX: 5 * (1 - 2 * Math.random())
+      translateX: 3 * (1 - 2 * Math.random())
     }
   }
 
