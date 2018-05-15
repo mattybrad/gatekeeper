@@ -16,6 +16,16 @@ body {
   src: url("../fonts/PermanentMarker-Regular.ttf")
 }
 
+.modalBackground {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0px;
+  top: 0px;
+  background: rgba(0,0,0,0.8);
+  z-index: 1;
+}
+
 .embossedLabel {
   display: inline-block;
   font-family: "Impact Label Reversed", monospace;

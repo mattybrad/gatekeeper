@@ -6,6 +6,7 @@ import Tone from 'tone';
 import Channel from './Channel';
 import Knob from './Knob';
 import CassetteDeck from './CassetteDeck';
+import Modal from './Modal';
 
 var sourceFile1 = require('../audio/source1.mp3');
 var sourceFile2 = require('../audio/source2.mp3');
@@ -112,6 +113,7 @@ class AppComponent extends React.Component {
     if(this.state.audioSourceReady) {
       return (
         <div className="index">
+          <Modal>hello</Modal>
           <div className='topLeft'>
             <CassetteDeck
               onEject={this.chooseSource.bind(this)}
