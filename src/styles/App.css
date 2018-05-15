@@ -17,6 +17,7 @@ body {
 }
 
 .embossedLabel {
+  display: inline-block;
   font-family: "Impact Label Reversed", monospace;
   color: white;
   background: black;
