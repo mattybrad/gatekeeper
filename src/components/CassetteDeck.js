@@ -82,6 +82,15 @@ class AppComponent extends React.Component {
     this.ctx.lineTo(x+w-trapezoid.x, y+h);
     this.ctx.stroke();
 
+    // draw Label
+    var label = {x:0.1*w,y:0.59*h,fontSize:0.09*h};
+    this.ctx.fillStyle = '#FED';
+    this.ctx.fillRect(x+label.x,y+label.y,0.8*w,0.1*h);
+    this.ctx.fillStyle = '#00C';
+    this.ctx.textAlign = 'center';
+    this.ctx.font = 'bold '+Math.round(label.fontSize)+'px PermanentMarker-Regular';
+    this.ctx.fillText(this.props.cassetteLabel, x+w/2, y+label.y+0.9*label.fontSize);
+
     //var circles = [];
   }
 
@@ -166,6 +175,7 @@ class AppComponent extends React.Component {
 }
 
 AppComponent.defaultProps = {
+  cassetteLabel: 'cassette',
   onEject: function(){}
 };
 

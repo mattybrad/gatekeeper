@@ -16,7 +16,9 @@ class AppComponent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      audioSourceReady: false
+      audioSourceReady: false,
+      sourceListVisible: false,
+      currentSource: 'storm'
     }
     this.audioSources = {
       source1: sourceFile1,
@@ -104,8 +106,24 @@ class AppComponent extends React.Component {
     }
   }
 
-  chooseSource() {
-    alert("CHOOSE");
+  showSources() {
+    this.setState({
+      sourceListVisible: true
+    })
+  }
+
+  chooseSource(newSource, ev) {
+    ev.stopPropagation();
+    this.setState({
+      currentSource: newSource,
+      sourceListVisible: false
+    })
+  }
+
+  hideSources() {
+    this.setState({
+      sourceListVisible: false
+    })
   }
 
   render() {
@@ -127,24 +145,24 @@ class AppComponent extends React.Component {
     ];
     var sourceItems = [];
     for(var i = 0; i < dummySourceList.length; i ++) {
-      sourceItems.push(<li>{dummySourceList[i]}</li>);
+      sourceItems.push(<li key={'sourceItem_'+i} onClick={this.chooseSource.bind(this,dummySourceList[i])}>{dummySourceList[i]}</li>);
     }
+
+    var modal = <Modal onDismiss={this.hideSources.bind(this)}><ul>{sourceItems}</ul></Modal>;
 
     if(this.state.audioSourceReady) {
       return (
         <div className="index">
-          <Modal>
-            <ul>
-              {sourceItems}
-            </ul>
-          </Modal>
+          {this.state.sourceListVisible?modal:null}
           <div className='topLeft'>
             <CassetteDeck
-              onEject={this.chooseSource.bind(this)}
+              onEject={this.showSources.bind(this)}
+              cassetteLabel={this.state.currentSource}
             />
           </div>
           <div className='bottomLeft'>
             <Knob onChange={this.updateParam.bind(this)} label='volume' min={-24} max={2} start={0} />
+            <Knob onChange={this.updateParam.bind(this)} label='mix' min={0} max={1} start={0.5} />
             <Knob onChange={this.updateParam.bind(this)} label='tempo' min={50} max={250} start={120} />
             <Knob onChange={this.updateParam.bind(this)} label='speed' min={0.1} max={4} start={1} />
           </div>

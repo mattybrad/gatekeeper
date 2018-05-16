@@ -8,9 +8,13 @@ class AppComponent extends React.Component {
     }
   }
 
+  handleBackgroundClick() {
+    this.props.onDismiss();
+  }
+
   render() {
     return(
-      <div className='modalBackground'>
+      <div className='modalBackground' onClick={this.handleBackgroundClick.bind(this)}>
         <div className='modalDialog'>
           <div className='modalScrollContent'>
             {this.props.children}
@@ -22,7 +26,7 @@ class AppComponent extends React.Component {
 }
 
 AppComponent.defaultProps = {
-
+  onDismiss: function(){}
 };
 
 export default AppComponent;
