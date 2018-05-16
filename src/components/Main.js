@@ -157,8 +157,8 @@ class AppComponent extends React.Component {
           {this.state.sourceListVisible?modal:null}
           <div className='topLeft'>
             <div>
-              <EmbossedLabel>Gatekeeper</EmbossedLabel><br/><br/>
-              <EmbossedLabel>Folktronica Drum Machine</EmbossedLabel><br/>
+              <EmbossedLabel rotation={-2}>Gatekeeper</EmbossedLabel><br/><br/>
+              <EmbossedLabel rotation={3}>Folktronica Drum Machine</EmbossedLabel><br/>
               <br/><br/><br/>
               <CassetteDeck
                 onEject={this.showSources.bind(this)}

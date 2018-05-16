@@ -102,7 +102,7 @@ class AppComponent extends React.Component {
         <LedGroup onNewNote={this.addNote.bind(this)} onRemoveNote={this.removeNote.bind(this)} notes={this.state.notes} />
         <Knob onChange={this.updateParam.bind(this)} label='volume' min={-24} max={6} start={this.props.volume} />
         <Knob onChange={this.updateParam.bind(this)} label='freq' min={20} max={10000} start={this.props.frequency} />
-        <Knob onChange={this.updateParam.bind(this)} label='resonance' min={0.0001} max={30} start={this.props.Q} />
+        <Knob onChange={this.updateParam.bind(this)} label='q-factor' min={0.0001} max={30} start={this.props.Q} />
         <Knob onChange={this.updateParam.bind(this)} label='attack' min={0} max={2} start={this.props.attack} />
         <Knob onChange={this.updateParam.bind(this)} label='decay' min={0} max={2} start={this.props.decay} />
         <Knob onChange={this.updateParam.bind(this)} label='sustain' min={0} max={1} start={this.props.sustain} />
