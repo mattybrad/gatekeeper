@@ -8,6 +8,7 @@ import Knob from './Knob';
 import CassetteDeck from './CassetteDeck';
 import Modal from './Modal';
 import EmbossedLabel from './EmbossedLabel';
+import PatternSelector from './PatternSelector';
 
 var sourceFile1 = require('../audio/source1.mp3');
 var sourceFile2 = require('../audio/source2.mp3');
@@ -189,6 +190,7 @@ class AppComponent extends React.Component {
               frequency={2000}
               filter={'highpass'}
             />
+            <PatternSelector/>
           </div>
         </div>
       );
