@@ -41,13 +41,13 @@ class AppComponent extends React.Component {
     var leds = [];
     var noteExists;
 
-    for(var i=0;i<16;i++) {
+    for(var i=0;i<24;i++) {
       noteExists = false;
       for(var j=0;j<this.props.notes.length;j++){
         if(Math.round(this.convertToBeatsOnly(this.props.notes[j])*4)==i) noteExists = true;
       }
       leds.push(
-        <Led key={i} isOn={noteExists} onClick={this.onClick.bind(this,i)} color={i%4==0?'#FFBB00':'#EE0000'} />
+        <Led key={i} isOn={noteExists} onClick={this.onClick.bind(this,i)} color='#EE0000' />
       );
     }
 

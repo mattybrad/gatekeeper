@@ -99,6 +99,7 @@ body {
   border-width: 2px;
   box-sizing: border-box;
   margin: 4px;
+  margin-right: 7px;
   filter: brightness(20%);
 }
 
@@ -108,11 +109,13 @@ body {
 
 .ledGroup {
   display: block;
+  margin-bottom: 10px;
 }
 
 .channel {
   display: block;
-  margin-bottom: 20px;
+  margin-top: 10px;
+  margin-bottom: 30px;
 }
 
 .knob,.slideSwitch {
@@ -143,7 +146,11 @@ body {
   justify-content: center;
   top: 0px;
   width: 40%;
-  height: 50%;
+  height: 60%;
+}
+
+.topLeft>div {
+  text-align: center;
 }
 
 .bottomLeft {
@@ -151,9 +158,9 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  top: 50%;
+  top: 60%;
   width: 40%;
-  height: 50%;
+  height: 40%;
 }
 
 .right {

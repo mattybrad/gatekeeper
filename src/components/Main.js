@@ -7,6 +7,7 @@ import Channel from './Channel';
 import Knob from './Knob';
 import CassetteDeck from './CassetteDeck';
 import Modal from './Modal';
+import EmbossedLabel from './EmbossedLabel';
 
 var sourceFile1 = require('../audio/source1.mp3');
 var sourceFile2 = require('../audio/source2.mp3');
@@ -155,10 +156,15 @@ class AppComponent extends React.Component {
         <div className="index">
           {this.state.sourceListVisible?modal:null}
           <div className='topLeft'>
-            <CassetteDeck
-              onEject={this.showSources.bind(this)}
-              cassetteLabel={this.state.currentSource}
-            />
+            <div>
+              <EmbossedLabel>Gatekeeper</EmbossedLabel><br/><br/>
+              <EmbossedLabel>Folktronica Drum Machine</EmbossedLabel><br/>
+              <br/><br/><br/>
+              <CassetteDeck
+                onEject={this.showSources.bind(this)}
+                cassetteLabel={this.state.currentSource}
+              />
+            </div>
           </div>
           <div className='bottomLeft'>
             <Knob onChange={this.updateParam.bind(this)} label='volume' min={-24} max={2} start={0} />
