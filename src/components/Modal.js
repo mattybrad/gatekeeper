@@ -12,7 +12,9 @@ class AppComponent extends React.Component {
     return(
       <div className='modalBackground'>
         <div className='modalDialog'>
-          {this.props.children}
+          <div className='modalScrollContent'>
+            {this.props.children}
+          </div>
         </div>
       </div>
     )

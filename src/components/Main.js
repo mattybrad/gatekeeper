@@ -110,10 +110,34 @@ class AppComponent extends React.Component {
 
   render() {
 
+    var dummySourceList = [
+      'messy drums',
+      'mellotron choir',
+      'storm',
+      'acoustic guitar',
+      'classical guitar',
+      'big ben',
+      'mall',
+      'museum',
+      'distilled jazz',
+      'distilled rock',
+      'distilled indie',
+      'distilled pop',
+      'distilled classical'
+    ];
+    var sourceItems = [];
+    for(var i = 0; i < dummySourceList.length; i ++) {
+      sourceItems.push(<li>{dummySourceList[i]}</li>);
+    }
+
     if(this.state.audioSourceReady) {
       return (
         <div className="index">
-          <Modal>hello</Modal>
+          <Modal>
+            <ul>
+              {sourceItems}
+            </ul>
+          </Modal>
           <div className='topLeft'>
             <CassetteDeck
               onEject={this.chooseSource.bind(this)}
