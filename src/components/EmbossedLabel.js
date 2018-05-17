@@ -1,12 +1,14 @@
 import React from 'react';
+import seed from 'seed-random';
 
 class AppComponent extends React.Component {
+
   constructor(props) {
     super(props);
     this.state = {
-      rotation: this.props.rotation || 3 * (1 - 2 * Math.random()),
-      translateY: 5 * Math.random(),
-      translateX: 3 * (1 - 2 * Math.random())
+      rotation: this.props.rotation || 3 * (1 - 2 * AppComponent.seededRandom()),
+      translateY: 5 * AppComponent.seededRandom(),
+      translateX: 3 * (1 - 2 * AppComponent.seededRandom())
     }
   }
 
@@ -21,5 +23,7 @@ class AppComponent extends React.Component {
 AppComponent.defaultProps = {
   label: 'something'
 };
+
+AppComponent.seededRandom = seed('random seeds are cool');
 
 export default AppComponent;
