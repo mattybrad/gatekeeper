@@ -34,24 +34,6 @@ class AppComponent extends React.Component {
 
   }
 
-  addNote(time) {
-    this.part.add(time);
-    this.setState(prevState => ({
-      notes: [...prevState.notes, time]
-    }));
-  }
-
-  removeNote(time) {
-    this.part.remove(time);
-    var newNoteArray = [];
-    for(var i = 0; i < this.state.notes.length; i++) {
-      if(this.state.notes[i] != time) newNoteArray.push(this.state.notes[i]);
-    }
-    this.setState({
-      notes: newNoteArray
-    })
-  }
-
   updateParam(param, value) {
     switch(param) {
       case 'volume':
@@ -99,7 +81,7 @@ class AppComponent extends React.Component {
   render() {
     return (
       <div className='channel'>
-        <LedGroup onNewNote={this.addNote.bind(this)} onRemoveNote={this.removeNote.bind(this)} notes={this.state.notes} />
+        <LedGroup onNewNote={this.props.addNote.bind(this)} onRemoveNote={this.props.removeNote.bind(this)} notes={this.props.notes} />
         <Knob onChange={this.updateParam.bind(this)} label='volume' min={-24} max={6} start={this.props.volume} />
         <Knob onChange={this.updateParam.bind(this)} label='freq' min={20} max={10000} start={this.props.frequency} />
         <Knob onChange={this.updateParam.bind(this)} label='q-factor' min={0.0001} max={30} start={this.props.Q} />
@@ -122,7 +104,10 @@ AppComponent.defaultProps = {
   decay: 0.2,
   sustain: 0.5,
   release: 0.7,
-  filter: 'bandpass'
+  filter: 'bandpass',
+  addNote: function(){},
+  removeNote: function(){},
+  notes: []
 };
 
 export default AppComponent;

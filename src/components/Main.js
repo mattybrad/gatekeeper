@@ -35,12 +35,18 @@ var audioSources = {
 class AppComponent extends React.Component {
   constructor(props) {
     super(props);
+    var numPatterns = 3;
+    var patternArray = [];
+    for(var i = 0; i<numPatterns; i++) {
+      patternArray.push([]);
+    }
     this.state = {
       audioSourceReady: false,
       sourceListVisible: false,
       currentSource: 'one',
-      patterns: [],
-      patternIndex: 0
+      patterns: patternArray,
+      patternIndex: 0,
+      notes: ['0:0:0'] // temp
     }
     this.player = new Tone.Player();
     this.dryMix = new Tone.Volume().toMaster();
@@ -54,6 +60,24 @@ class AppComponent extends React.Component {
       this.player.loop = true;
       this.player.start();
     }.bind(this));
+  }
+
+  addNote(time) {
+    //this.part.add(time);
+    this.setState(prevState => ({
+      notes: [...prevState.notes, time]
+    }));
+  }
+
+  removeNote(time) {
+    //this.part.remove(time);
+    var newNoteArray = [];
+    for(var i = 0; i < this.state.notes.length; i++) {
+      if(this.state.notes[i] != time) newNoteArray.push(this.state.notes[i]);
+    }
+    this.setState({
+      notes: newNoteArray
+    })
   }
 
   componentDidMount() {
@@ -151,21 +175,30 @@ class AppComponent extends React.Component {
         <div className='right'>
           <Channel
             audioSource={this.wetMix}
+            addNote={this.addNote.bind(this)}
+            removeNote={this.removeNote.bind(this)}
+            notes={this.state.notes}
             frequency={150}
             filter={'lowpass'}
           />
           <Channel
             audioSource={this.wetMix}
+            addNote={this.addNote.bind(this)}
+            removeNote={this.removeNote.bind(this)}
+            notes={this.state.notes}
             frequency={600}
             Q={20}
             filter={'bandpass'}
           />
           <Channel
             audioSource={this.wetMix}
+            addNote={this.addNote.bind(this)}
+            removeNote={this.removeNote.bind(this)}
+            notes={this.state.notes}
             frequency={2000}
             filter={'highpass'}
           />
-          <PatternSelector activePattern={this.state.patternIndex} onChange={this.changePattern.bind(this)} />
+          <PatternSelector numPatterns={this.state.patterns.length} activePattern={this.state.patternIndex} onChange={this.changePattern.bind(this)} />
         </div>
       </div>
     );
