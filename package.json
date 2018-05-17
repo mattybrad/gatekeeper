@@ -80,6 +80,7 @@
     "normalize.css": "^4.0.0",
     "react": "^15.0.0",
     "react-dom": "^15.0.0",
+    "seed-random": "^2.2.0",
     "tone": "^0.12.80"
   }
 }

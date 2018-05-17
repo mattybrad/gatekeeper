@@ -159,7 +159,7 @@ class AppComponent extends React.Component {
           <div className='topLeft'>
             <div>
               <EmbossedLabel rotation={-2}>Gatekeeper</EmbossedLabel><br/><br/>
-              <EmbossedLabel rotation={3}>Folktronica Drum Machine</EmbossedLabel><br/>
+              <EmbossedLabel rotation={3}>Folktronic Drum Machine</EmbossedLabel><br/>
               <br/><br/><br/>
               <CassetteDeck
                 onEject={this.showSources.bind(this)}
