@@ -23,7 +23,8 @@ import PatternSelector from './PatternSelector';
   'distilled rock',
   'distilled indie',
   'distilled pop',
-  'distilled classical'
+  'distilled classical',
+  'train station'
 ];*/
 var audioSources = {
   one: require('../audio/source1.mp3'),
@@ -40,6 +41,10 @@ class AppComponent extends React.Component {
       currentSource: 'one'
     }
     this.player = new Tone.Player();
+    this.dryMix = new Tone.Volume().toMaster();
+    this.wetMix = new Tone.Volume();
+    this.player.connect(this.dryMix);
+    this.player.connect(this.wetMix);
   }
 
   loadAudioSource(sourceName) {
@@ -73,8 +78,9 @@ class AppComponent extends React.Component {
       Tone.Transport.bpm.rampTo(value, 0.5);
       break;
 
-      case 'mp3 source':
-      // sort this out later
+      case 'mix':
+      this.dryMix.volume.value = 36*(1-value) - 36;
+      this.wetMix.volume.value = 26*value - 24;
       break;
 
       case 'speed':
@@ -136,18 +142,18 @@ class AppComponent extends React.Component {
         </div>
         <div className='right'>
           <Channel
-            audioSource={this.player}
+            audioSource={this.wetMix}
             frequency={150}
             filter={'lowpass'}
           />
           <Channel
-            audioSource={this.player}
+            audioSource={this.wetMix}
             frequency={600}
             Q={20}
             filter={'bandpass'}
           />
           <Channel
-            audioSource={this.player}
+            audioSource={this.wetMix}
             frequency={2000}
             filter={'highpass'}
           />
