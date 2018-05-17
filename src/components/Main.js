@@ -46,7 +46,11 @@ class AppComponent extends React.Component {
       currentSource: 'one',
       patterns: patternArray,
       patternIndex: 0,
-      notes: ['0:0:0'] // temp
+      notes: [
+        ['0:0:0'],
+        ['0:0:3'],
+        []
+      ]
     }
     this.player = new Tone.Player();
     this.dryMix = new Tone.Volume().toMaster();
@@ -62,21 +66,28 @@ class AppComponent extends React.Component {
     }.bind(this));
   }
 
-  addNote(time) {
+  addNote(channelIndex, time) {
     //this.part.add(time);
-    this.setState(prevState => ({
-      notes: [...prevState.notes, time]
-    }));
+    var prevNotes = this.state.notes;
+    var newChannelNotes = prevNotes[channelIndex].slice();
+    newChannelNotes.push(time);
+    var newNotes = prevNotes.slice();
+    newNotes[channelIndex] = newChannelNotes;
+    this.setState({
+      notes: newNotes
+    })
   }
 
-  removeNote(time) {
+  removeNote(channelIndex, time) {
     //this.part.remove(time);
-    var newNoteArray = [];
-    for(var i = 0; i < this.state.notes.length; i++) {
-      if(this.state.notes[i] != time) newNoteArray.push(this.state.notes[i]);
+    var newChannelNotes = [];
+    for(var i = 0; i < this.state.notes[channelIndex].length; i++) {
+      if(this.state.notes[channelIndex][i] != time) newChannelNotes.push(this.state.notes[i]);
     }
+    var newNotes = this.state.notes.slice();
+    newNotes[channelIndex] = newChannelNotes;
     this.setState({
-      notes: newNoteArray
+      notes: newNotes
     })
   }
 
@@ -175,26 +186,26 @@ class AppComponent extends React.Component {
         <div className='right'>
           <Channel
             audioSource={this.wetMix}
-            addNote={this.addNote.bind(this)}
-            removeNote={this.removeNote.bind(this)}
-            notes={this.state.notes}
+            addNote={this.addNote.bind(this,0)}
+            removeNote={this.removeNote.bind(this,0)}
+            notes={this.state.notes[0]}
             frequency={150}
             filter={'lowpass'}
           />
           <Channel
             audioSource={this.wetMix}
-            addNote={this.addNote.bind(this)}
-            removeNote={this.removeNote.bind(this)}
-            notes={this.state.notes}
+            addNote={this.addNote.bind(this,1)}
+            removeNote={this.removeNote.bind(this,1)}
+            notes={this.state.notes[1]}
             frequency={600}
             Q={20}
             filter={'bandpass'}
           />
           <Channel
             audioSource={this.wetMix}
-            addNote={this.addNote.bind(this)}
-            removeNote={this.removeNote.bind(this)}
-            notes={this.state.notes}
+            addNote={this.addNote.bind(this,2)}
+            removeNote={this.removeNote.bind(this,2)}
+            notes={this.state.notes[2]}
             frequency={2000}
             filter={'highpass'}
           />
