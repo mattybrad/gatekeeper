@@ -12,8 +12,8 @@ class AppComponent extends React.Component {
 
   render() {
     return(
-      <div className='patternButtonHolder'>
-        <Led/><br/>
+      <div className='patternButtonHolder' onClick={this.props.onClick}>
+        <Led isOn={this.props.active} /><br/>
         <EmbossedLabel>{this.props.children}</EmbossedLabel>
       </div>
     )
@@ -21,7 +21,7 @@ class AppComponent extends React.Component {
 }
 
 AppComponent.defaultProps = {
-
+  active: false
 };
 
 export default AppComponent;

@@ -38,7 +38,9 @@ class AppComponent extends React.Component {
     this.state = {
       audioSourceReady: false,
       sourceListVisible: false,
-      currentSource: 'one'
+      currentSource: 'one',
+      patterns: [],
+      patternIndex: 0
     }
     this.player = new Tone.Player();
     this.dryMix = new Tone.Volume().toMaster();
@@ -110,6 +112,12 @@ class AppComponent extends React.Component {
     })
   }
 
+  changePattern(patternIndex) {
+    this.setState({
+      patternIndex: patternIndex
+    })
+  }
+
   render() {
     var sourceItems = [];
     for(var k in audioSources) {
@@ -157,7 +165,7 @@ class AppComponent extends React.Component {
             frequency={2000}
             filter={'highpass'}
           />
-          <PatternSelector/>
+          <PatternSelector activePattern={this.state.patternIndex} onChange={this.changePattern.bind(this)} />
         </div>
       </div>
     );
