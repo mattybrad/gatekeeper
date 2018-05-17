@@ -10,7 +10,26 @@ import Modal from './Modal';
 import EmbossedLabel from './EmbossedLabel';
 import PatternSelector from './PatternSelector';
 
-var testSource = require('../audio/source1.mp3');
+/*var refList = [
+  'messy drums',
+  'mellotron choir',
+  'storm',
+  'acoustic guitar',
+  'classical guitar',
+  'big ben',
+  'mall',
+  'museum',
+  'distilled jazz',
+  'distilled rock',
+  'distilled indie',
+  'distilled pop',
+  'distilled classical'
+];*/
+var audioSources = {
+  one: require('../audio/source1.mp3'),
+  two: require('../audio/source2.mp3'),
+  three: require('../audio/source3.mp3')
+};
 
 class AppComponent extends React.Component {
   constructor(props) {
@@ -18,16 +37,20 @@ class AppComponent extends React.Component {
     this.state = {
       audioSourceReady: false,
       sourceListVisible: false,
-      currentSource: 'storm'
+      currentSource: 'one'
     }
     this.player = new Tone.Player();
   }
 
-  componentDidMount() {
-    this.player.load(testSource, function(){
+  loadAudioSource(sourceName) {
+    this.player.load(audioSources[sourceName], function(){
       this.player.loop = true;
       this.player.start();
     }.bind(this));
+  }
+
+  componentDidMount() {
+    this.loadAudioSource(this.state.currentSource);
 
     Tone.Transport.loop = true;
     Tone.Transport.loopStart = '0:0';
@@ -68,6 +91,7 @@ class AppComponent extends React.Component {
 
   chooseSource(newSource, ev) {
     ev.stopPropagation();
+    this.loadAudioSource(newSource);
     this.setState({
       currentSource: newSource,
       sourceListVisible: false
@@ -81,25 +105,11 @@ class AppComponent extends React.Component {
   }
 
   render() {
-
-    var dummySourceList = [
-      'messy drums',
-      'mellotron choir',
-      'storm',
-      'acoustic guitar',
-      'classical guitar',
-      'big ben',
-      'mall',
-      'museum',
-      'distilled jazz',
-      'distilled rock',
-      'distilled indie',
-      'distilled pop',
-      'distilled classical'
-    ];
     var sourceItems = [];
-    for(var i = 0; i < dummySourceList.length; i ++) {
-      sourceItems.push(<li key={'sourceItem_'+i} onClick={this.chooseSource.bind(this,dummySourceList[i])}>{dummySourceList[i]}</li>);
+    for(var k in audioSources) {
+      if(audioSources.hasOwnProperty(k)) {
+        sourceItems.push(<li key={'sourceItem_'+k} onClick={this.chooseSource.bind(this,k)}>{k}</li>);
+      }
     }
 
     var modal = <Modal onDismiss={this.hideSources.bind(this)}><ul>{sourceItems}</ul></Modal>;
