@@ -82,13 +82,13 @@ class AppComponent extends React.Component {
     //this.part.remove(time);
     var newChannelNotes = [];
     for(var i = 0; i < this.state.notes[channelIndex].length; i++) {
-      if(this.state.notes[channelIndex][i] != time) newChannelNotes.push(this.state.notes[i]);
+      if(this.state.notes[channelIndex][i] != time) newChannelNotes.push(this.state.notes[channelIndex][i]);
     }
     var newNotes = this.state.notes.slice();
     newNotes[channelIndex] = newChannelNotes;
     this.setState({
       notes: newNotes
-    })
+    });
   }
 
   componentDidMount() {

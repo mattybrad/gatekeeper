@@ -78,6 +78,15 @@ class AppComponent extends React.Component {
     }
   }
 
+  componentDidUpdate(prevProps) {
+    if(prevProps.notes.toString() != this.props.notes.toString()) {
+      this.part.removeAll();
+      for(var i=0; i<this.props.notes.length; i++) {
+        this.part.add(this.props.notes[i]);
+      }
+    }
+  }
+
   render() {
     return (
       <div className='channel'>
