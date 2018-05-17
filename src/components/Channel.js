@@ -62,7 +62,7 @@ class AppComponent extends React.Component {
       this.filter.frequency.value = value;
       break;
 
-      case 'resonance':
+      case 'q-factor':
       this.filter.Q.value = value;
       break;
 
