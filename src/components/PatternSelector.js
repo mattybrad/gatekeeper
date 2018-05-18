@@ -23,7 +23,7 @@ class AppComponent extends React.Component {
       )
     }
     return(
-      <div>
+      <div className='patternSelector'>
         {patternButtons}
       </div>
     )

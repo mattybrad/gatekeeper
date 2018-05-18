@@ -200,6 +200,10 @@ body {
   cursor: pointer;
 }
 
+.patternSelector {
+  display: inline-block;
+}
+
 .patternButtonHolder {
   cursor: pointer;
   margin-right: 20px;

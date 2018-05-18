@@ -9,6 +9,7 @@ import CassetteDeck from './CassetteDeck';
 import Modal from './Modal';
 import EmbossedLabel from './EmbossedLabel';
 import PatternSelector from './PatternSelector';
+import SlideSwitch from './SlideSwitch';
 
 /*var refList = [
   'messy drums',
@@ -47,7 +48,8 @@ class AppComponent extends React.Component {
       sourceListVisible: false,
       currentSource: 'one',
       patternIndex: 0,
-      patterns: patternArray
+      patterns: patternArray,
+      timeSignature: 4
     }
     this.player = new Tone.Player();
     this.dryMix = new Tone.Volume().toMaster();
@@ -120,6 +122,11 @@ class AppComponent extends React.Component {
 
       case 'speed':
       this.player.playbackRate = value;
+      break;
+
+      case 'signature':
+      Tone.Transport.timeSignature = value;
+      Tone.Transport.loopEnd = '1:0';
       break;
     }
   }
@@ -208,6 +215,7 @@ class AppComponent extends React.Component {
             filter={'highpass'}
           />
           <PatternSelector numPatterns={this.state.patterns.length} activePattern={this.state.patternIndex} onChange={this.changePattern.bind(this)} />
+          <SlideSwitch onChange={this.updateParam.bind(this)} label='signature' options={[4,5,6]} start={this.props.timeSignature} />
         </div>
       </div>
     );
