@@ -38,19 +38,16 @@ class AppComponent extends React.Component {
     var numPatterns = 3;
     var patternArray = [];
     for(var i = 0; i<numPatterns; i++) {
-      patternArray.push([]);
+      patternArray[i] = [
+        [],[],[]
+      ];
     }
     this.state = {
       audioSourceReady: false,
       sourceListVisible: false,
       currentSource: 'one',
-      patterns: patternArray,
       patternIndex: 0,
-      notes: [
-        ['0:0:0'],
-        ['0:0:3'],
-        []
-      ]
+      patterns: patternArray
     }
     this.player = new Tone.Player();
     this.dryMix = new Tone.Volume().toMaster();
@@ -67,27 +64,28 @@ class AppComponent extends React.Component {
   }
 
   addNote(channelIndex, time) {
-    //this.part.add(time);
-    var prevNotes = this.state.notes;
-    var newChannelNotes = prevNotes[channelIndex].slice();
+    var newPatterns = this.state.patterns.slice();
+    var newPattern = newPatterns[this.state.patternIndex].slice();
+    var newChannelNotes = newPattern[channelIndex].slice();
     newChannelNotes.push(time);
-    var newNotes = prevNotes.slice();
-    newNotes[channelIndex] = newChannelNotes;
+    newPattern[channelIndex] = newChannelNotes;
+    newPatterns[this.state.patternIndex] = newPattern;
     this.setState({
-      notes: newNotes
+      patterns: newPatterns
     })
   }
 
   removeNote(channelIndex, time) {
-    //this.part.remove(time);
+    var newPatterns = this.state.patterns.slice();
+    var newPattern = newPatterns[this.state.patternIndex].slice();
     var newChannelNotes = [];
-    for(var i = 0; i < this.state.notes[channelIndex].length; i++) {
-      if(this.state.notes[channelIndex][i] != time) newChannelNotes.push(this.state.notes[channelIndex][i]);
+    for(var i = 0; i < this.state.patterns[this.state.patternIndex][channelIndex].length; i++) {
+      if(this.state.patterns[this.state.patternIndex][channelIndex][i] != time) newChannelNotes.push(this.state.patterns[this.state.patternIndex][channelIndex][i]);
     }
-    var newNotes = this.state.notes.slice();
-    newNotes[channelIndex] = newChannelNotes;
+    newPattern[channelIndex] = newChannelNotes;
+    newPatterns[this.state.patternIndex] = newPattern;
     this.setState({
-      notes: newNotes
+      patterns: newPatterns
     });
   }
 
@@ -188,7 +186,7 @@ class AppComponent extends React.Component {
             audioSource={this.wetMix}
             addNote={this.addNote.bind(this,0)}
             removeNote={this.removeNote.bind(this,0)}
-            notes={this.state.notes[0]}
+            notes={this.state.patterns[this.state.patternIndex][0]}
             frequency={150}
             filter={'lowpass'}
           />
@@ -196,7 +194,7 @@ class AppComponent extends React.Component {
             audioSource={this.wetMix}
             addNote={this.addNote.bind(this,1)}
             removeNote={this.removeNote.bind(this,1)}
-            notes={this.state.notes[1]}
+            notes={this.state.patterns[this.state.patternIndex][1]}
             frequency={600}
             Q={20}
             filter={'bandpass'}
@@ -205,7 +203,7 @@ class AppComponent extends React.Component {
             audioSource={this.wetMix}
             addNote={this.addNote.bind(this,2)}
             removeNote={this.removeNote.bind(this,2)}
-            notes={this.state.notes[2]}
+            notes={this.state.patterns[this.state.patternIndex][2]}
             frequency={2000}
             filter={'highpass'}
           />
