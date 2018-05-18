@@ -49,7 +49,8 @@ class AppComponent extends React.Component {
       currentSource: 'one',
       patternIndex: 0,
       patterns: patternArray,
-      timeSignature: 4
+      timeSignature: 4,
+      speed: 1
     }
     this.player = new Tone.Player();
     this.dryMix = new Tone.Volume().toMaster();
@@ -105,6 +106,8 @@ class AppComponent extends React.Component {
   }
 
   updateParam(param, value) {
+    // should probs be doing all of this stuff in componentDidUpdate
+    // will sort it out later, about to go to pub
     switch(param) {
       case 'volume':
       Tone.Master.volume.value = value;
@@ -121,6 +124,9 @@ class AppComponent extends React.Component {
       break;
 
       case 'speed':
+      this.setState({
+        speed: value
+      })
       this.player.playbackRate = value;
       break;
 
@@ -179,6 +185,7 @@ class AppComponent extends React.Component {
             <CassetteDeck
               onEject={this.showSources.bind(this)}
               cassetteLabel={this.state.currentSource}
+              speed={this.state.speed}
             />
           </div>
         </div>

@@ -131,7 +131,7 @@ class AppComponent extends React.Component {
 
     this.ctx.fillStyle = '#FFF';
     this.ctx.save();
-    var initAngle = (Date.now() / 1000) % (2 * Math.PI);
+    var initAngle = (this.props.speed * Date.now() / 1000) % (2 * Math.PI);
     for(var i = 0; i < 6; i ++) {
       this.ctx.translate(x, y);
       this.ctx.rotate(2 * Math.PI / 6 + (i == 0 ? initAngle : 0));
@@ -176,7 +176,8 @@ class AppComponent extends React.Component {
 
 AppComponent.defaultProps = {
   cassetteLabel: 'cassette',
-  onEject: function(){}
+  onEject: function(){},
+  speed: 1
 };
 
 export default AppComponent;
