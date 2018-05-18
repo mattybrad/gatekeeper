@@ -1,5 +1,6 @@
 import React from 'react';
 import Led from './Led';
+import EmbossedLabel from './EmbossedLabel';
 
 class AppComponent extends React.Component {
   constructor(props) {
@@ -40,14 +41,20 @@ class AppComponent extends React.Component {
   render() {
     var leds = [];
     var noteExists;
+    var numberNames = ['one','two','three','four','five','six','seven','eight','nine','ten'];
 
     for(var i=0;i<24;i++) {
       noteExists = false;
       for(var j=0;j<this.props.notes.length;j++){
         if(Math.round(this.convertToBeatsOnly(this.props.notes[j])*4)==i) noteExists = true;
       }
+      var label = null;
+      if(i%4==0) label = <EmbossedLabel>{numberNames[Math.round(i/4)]}</EmbossedLabel>;
       leds.push(
-        <Led key={i} isOn={noteExists} onClick={this.onClick.bind(this,i)} color='#EE0000' />
+        <div key={i}>
+          <Led isOn={noteExists} onClick={this.onClick.bind(this,i)} color='#EE0000' /><br/>
+          {label}
+        </div>
       );
     }
 

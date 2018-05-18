@@ -99,7 +99,6 @@ body {
   border-width: 2px;
   box-sizing: border-box;
   margin: 4px;
-  margin-right: 7px;
   filter: brightness(20%);
 }
 
@@ -110,6 +109,13 @@ body {
 .ledGroup {
   display: block;
   margin-bottom: 10px;
+}
+
+.ledGroup>div {
+  display: inline-block;
+  text-align: left;
+  vertical-align: top;
+  width: 30px;
 }
 
 .channel {
