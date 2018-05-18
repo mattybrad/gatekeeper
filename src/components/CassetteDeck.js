@@ -7,7 +7,8 @@ class AppComponent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-
+      lastRender: Date.now(),
+      spoolAngle: 0
     }
   }
 
@@ -24,17 +25,22 @@ class AppComponent extends React.Component {
   }
 
   renderCanvas() {
+    var newSpoolAngle = (this.state.spoolAngle + 0.002 * this.props.speed * (Date.now() - this.state.lastRender)) % (2 * Math.PI);
     this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.width);
     this.ctx.save();
     //this.drawMechanism();
     // N.B. ideal cassette aspect ratio is 1.6
     var cassetteWidth = 0.8 * this.ctx.canvas.width;
     var cassetteHeight = cassetteWidth / 1.6;
-    this.drawCassette((this.ctx.canvas.width - cassetteWidth)/2, (this.ctx.canvas.height - cassetteHeight)/2, cassetteWidth, cassetteHeight);
+    this.drawCassette((this.ctx.canvas.width - cassetteWidth)/2, (this.ctx.canvas.height - cassetteHeight)/2, cassetteWidth, cassetteHeight, newSpoolAngle);
     this.ctx.globalAlpha = 0;
     this.ctx.drawImage(this.refImg, 0, 0);
     this.ctx.restore();
     this.drawCover();
+    this.setState({
+      spoolAngle: newSpoolAngle,
+      lastRender: Date.now()
+    })
   }
 
   drawMechanism() {
@@ -47,13 +53,13 @@ class AppComponent extends React.Component {
     this.ctx.fillRect(0,0,this.ctx.canvas.width,this.ctx.canvas.height);
   }
 
-  drawCassette(x, y, w, h) {
+  drawCassette(x, y, w, h, spoolAngle) {
     this.ctx.lineWidth = Math.ceil(w/200);
 
     var spoolOffset = {x:0.29*w,y:0.45*h};
     var spoolRadius = 0.06 * w;
-    this.drawSpool(x+spoolOffset.x,y+spoolOffset.y,spoolRadius,0.2*h);
-    this.drawSpool(x+w-spoolOffset.x,y+spoolOffset.y,spoolRadius,0.3*h);
+    this.drawSpool(x+spoolOffset.x,y+spoolOffset.y,spoolRadius,0.2*h, spoolAngle);
+    this.drawSpool(x+w-spoolOffset.x,y+spoolOffset.y,spoolRadius,0.3*h, spoolAngle);
 
     this.ctx.fillStyle = 'rgba(128,128,128,0.5)';
     this.ctx.strokeStyle = 'rgba(192,192,192,0.8)';
@@ -106,7 +112,7 @@ class AppComponent extends React.Component {
     ctx.closePath();
   }
 
-  drawSpool(x, y, r, r2) {
+  drawSpool(x, y, r, r2, spoolAngle) {
     var tapeRadius = r2;
     var outerRadius = r;
     var innerRadius = 0.8*r;
@@ -131,7 +137,7 @@ class AppComponent extends React.Component {
 
     this.ctx.fillStyle = '#FFF';
     this.ctx.save();
-    var initAngle = (this.props.speed * Date.now() / 1000) % (2 * Math.PI);
+    var initAngle = spoolAngle;
     for(var i = 0; i < 6; i ++) {
       this.ctx.translate(x, y);
       this.ctx.rotate(2 * Math.PI / 6 + (i == 0 ? initAngle : 0));
