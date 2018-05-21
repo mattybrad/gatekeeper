@@ -10,6 +10,10 @@ import Modal from './Modal';
 import EmbossedLabel from './EmbossedLabel';
 import PatternSelector from './PatternSelector';
 import SlideSwitch from './SlideSwitch';
+import Markdown from 'react-remarkable';
+
+import testMD from '../markdown/test1.md';
+console.log(testMD);
 
 /*var refList = [
   'messy drums',
@@ -182,6 +186,7 @@ class AppComponent extends React.Component {
             <EmbossedLabel rotation={-2}>Gatekeeper</EmbossedLabel><br/><br/>
             <EmbossedLabel rotation={3}>Folktronic Drum Machine</EmbossedLabel><br/>
             <br/><br/><br/>
+            <Markdown source={testMD} />
             <CassetteDeck
               onEject={this.showSources.bind(this)}
               cassetteLabel={this.state.currentSource}

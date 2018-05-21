@@ -51,6 +51,10 @@ function getDefaultModules() {
       {
         test: /\.(mp3|mp4|ogg|svg)$/,
         loader: 'file-loader'
+      },
+      {
+        test: /\.(txt|md)$/,
+        loader: 'raw-loader'
       }
     ]
   };

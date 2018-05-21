@@ -8,7 +8,11 @@ let defaultSettings = require('./defaults');
 // let npmBase = path.join(__dirname, '../node_modules');
 // let additionalPaths = [ path.join(npmBase, 'react-bootstrap') ];
 let npmBase = path.join(__dirname, '../node_modules');
-let additionalPaths = [ path.join(npmBase, 'tone'), path.join(npmBase, 'seed-random')];
+let additionalPaths = [
+  path.join(npmBase, 'tone'),
+  path.join(npmBase, 'seed-random'),
+  path.join(npmBase, 'react-remarkable')
+];
 
 module.exports = {
   additionalPaths: additionalPaths,
