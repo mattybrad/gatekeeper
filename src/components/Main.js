@@ -167,6 +167,11 @@ class AppComponent extends React.Component {
 
     return (
       <div className="index">
+        <Modal ref='welcomeModal' startActive={true}>
+          <div className='modalText'>
+            <Markdown source={testMD} />
+          </div>
+        </Modal>
         <Modal ref='sourceModal'>
           <ul>
             {sourceItems}
@@ -177,7 +182,6 @@ class AppComponent extends React.Component {
             <EmbossedLabel rotation={-2}>Gatekeeper</EmbossedLabel><br/><br/>
             <EmbossedLabel rotation={3}>Folktronic Drum Machine</EmbossedLabel><br/>
             <br/><br/><br/>
-            <Markdown source={testMD} />
             <CassetteDeck
               onEject={this.showSources.bind(this)}
               cassetteLabel={this.state.currentSource}
@@ -187,7 +191,7 @@ class AppComponent extends React.Component {
         </div>
         <div className='bottomLeft'>
           <Knob onChange={this.updateParam.bind(this)} label='volume' min={-24} max={2} start={0} />
-          <Knob onChange={this.updateParam.bind(this)} label='mix' min={0} max={1} start={0.5} />
+          <Knob onChange={this.updateParam.bind(this)} label='mix' min={0} max={1} start={1} />
           <Knob onChange={this.updateParam.bind(this)} label='tempo' min={50} max={250} start={120} />
           <Knob onChange={this.updateParam.bind(this)} label='speed' min={0.1} max={4} start={1} />
         </div>

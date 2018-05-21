@@ -1,6 +1,6 @@
 /* Base Application Styles */
 body {
-  font-family: monospace;
+  font-family: sans-serif, monospace;
   color: white;
   background-image: url('../images/wood.jpg');
   background-repeat: repeat;
@@ -29,10 +29,15 @@ body {
   justify-content: center;
 }
 
+.modalText {
+  padding: 15px;
+}
+
 .modalDialog {
   color: black;
   background: white;
-  width: 400px;
+  width: 600px;
+  max-width: 95%;
   max-height: 90%;
   border-radius: 20px;
   border-width: 5px;

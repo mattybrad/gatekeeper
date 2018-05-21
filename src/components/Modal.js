@@ -4,7 +4,7 @@ class AppComponent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      active: true
+      active: this.props.startActive
     }
   }
 
@@ -38,7 +38,7 @@ class AppComponent extends React.Component {
 }
 
 AppComponent.defaultProps = {
-  onDismiss: function(){}
+  startActive: false
 };
 
 export default AppComponent;
