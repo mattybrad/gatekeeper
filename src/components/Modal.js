@@ -4,24 +4,36 @@ class AppComponent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-
+      active: true
     }
   }
 
-  handleBackgroundClick() {
-    this.props.onDismiss();
+  dismiss() {
+    this.setState({
+      active: false
+    })
+  }
+
+  activate() {
+    this.setState({
+      active: true
+    })
   }
 
   render() {
-    return(
-      <div className='modalBackground' onClick={this.handleBackgroundClick.bind(this)}>
-        <div className='modalDialog'>
-          <div className='modalScrollContent'>
-            {this.props.children}
+    if(this.state.active) {
+      return(
+        <div className='modalBackground' onClick={this.dismiss.bind(this)}>
+          <div className='modalDialog'>
+            <div className='modalScrollContent'>
+              {this.props.children}
+            </div>
           </div>
         </div>
-      </div>
-    )
+      )
+    } else {
+      return null;
+    }
   }
 }
 

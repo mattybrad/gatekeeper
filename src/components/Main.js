@@ -11,9 +11,7 @@ import EmbossedLabel from './EmbossedLabel';
 import PatternSelector from './PatternSelector';
 import SlideSwitch from './SlideSwitch';
 import Markdown from 'react-remarkable';
-
 import testMD from '../markdown/test1.md';
-console.log(testMD);
 
 /*var refList = [
   'messy drums',
@@ -49,7 +47,6 @@ class AppComponent extends React.Component {
     }
     this.state = {
       audioSourceReady: false,
-      sourceListVisible: false,
       currentSource: 'one',
       patternIndex: 0,
       patterns: patternArray,
@@ -141,25 +138,17 @@ class AppComponent extends React.Component {
     }
   }
 
-  showSources() {
-    this.setState({
-      sourceListVisible: true
-    })
-  }
-
   chooseSource(newSource, ev) {
     ev.stopPropagation();
     this.loadAudioSource(newSource);
     this.setState({
-      currentSource: newSource,
-      sourceListVisible: false
+      currentSource: newSource
     })
+    this.refs.sourceModal.dismiss();
   }
 
-  hideSources() {
-    this.setState({
-      sourceListVisible: false
-    })
+  showSources() {
+    this.refs.sourceModal.activate();
   }
 
   changePattern(patternIndex) {
@@ -176,11 +165,13 @@ class AppComponent extends React.Component {
       }
     }
 
-    var modal = <Modal onDismiss={this.hideSources.bind(this)}><ul>{sourceItems}</ul></Modal>;
-
     return (
       <div className="index">
-        {this.state.sourceListVisible?modal:null}
+        <Modal ref='sourceModal'>
+          <ul>
+            {sourceItems}
+          </ul>
+        </Modal>
         <div className='topLeft'>
           <div>
             <EmbossedLabel rotation={-2}>Gatekeeper</EmbossedLabel><br/><br/>
