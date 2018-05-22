@@ -83,19 +83,30 @@ body {
 
 .led {
   display: inline-block;
-  width: 20px;
-  height: 20px;
-  border-radius: 10px;
+  width: 14px;
+  height: 14px;
+  border-radius: 7px;
   border-color: black;
   border-style: solid;
   border-width: 2px;
   box-sizing: border-box;
-  margin: 4px;
   filter: brightness(20%);
 }
 
 .led.on {
   filter: brightness(100%);
+}
+
+.ledButton {
+  display: flex;
+  background: radial-gradient(#888,#666);
+  border-radius: 5px;
+  align-items: center;
+  justify-content: center;
+  margin: 4px;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
 }
 
 .ledGroup {
@@ -107,7 +118,7 @@ body {
   display: inline-block;
   text-align: left;
   vertical-align: top;
-  width: 30px;
+  width: 35px;
 }
 
 .channel {

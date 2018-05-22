@@ -15,7 +15,9 @@ class AppComponent extends React.Component {
   render() {
     var className = 'led ' + (this.props.isOn?'on':'off');
     return (
-      <div style={{background:this.props.color}} onMouseUp={this.onClick.bind(this)} className={className}></div>
+      <div className='ledButton' onClick={this.onClick.bind(this)}>
+        <div style={{background:this.props.color}} className={className} />
+      </div>
     );
   }
 }

@@ -52,7 +52,7 @@ class AppComponent extends React.Component {
       if(i%4==0) label = <EmbossedLabel>{numberNames[Math.round(i/4)]}</EmbossedLabel>;
       leds.push(
         <div key={i}>
-          <Led isOn={noteExists} onClick={this.onClick.bind(this,i)} color='#EE0000' /><br/>
+          <Led isOn={noteExists} onClick={this.onClick.bind(this,i)} color='#EE0000' />
           {label}
         </div>
       );
