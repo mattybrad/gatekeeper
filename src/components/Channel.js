@@ -3,12 +3,13 @@ import Tone from 'tone';
 import SlideSwitch from './SlideSwitch';
 import LedGroup from './LedGroup';
 import Knob from './Knob';
+import ToneUtils from './ToneUtils';
 
 class AppComponent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      notes: []
+      volume: 0
     }
     this.ampEnv = new Tone.AmplitudeEnvelope({
       'attack': 0.001,
@@ -37,53 +38,82 @@ class AppComponent extends React.Component {
   updateParam(param, value) {
     switch(param) {
       case 'volume':
-      this.volume.volume.value = value;
+      this.setState({
+        volume: value
+      });
       break;
 
       case 'freq':
+      this.setState({
+        frequency: value
+      })
       this.filter.frequency.value = value;
       break;
 
       case 'q-factor':
+      this.setState({
+        Q: value
+      })
       this.filter.Q.value = value;
       break;
 
       case 'attack':
+      this.setState({
+        attack: value
+      })
       value = Math.max(0.0001, value);
       this.ampEnv.attack = value;
       break;
 
       case 'decay':
+      this.setState({
+        decay: value
+      })
       value = Math.max(0.0001, value);
       this.ampEnv.decay = value;
       break;
 
       case 'sustain':
+      this.setState({
+        sustain: value
+      })
       this.ampEnv.sustain = value;
       break;
 
       case 'release':
+      this.setState({
+        release: value
+      })
       value = Math.max(0.0001, value);
       this.ampEnv.release = value;
       break;
 
       case 'gate':
+      this.setState({
+        gate: value
+      })
       value = Math.max(0.001, value);
       this.noteLength = value;
       break;
 
       case 'filter':
+      this.setState({
+        filterType: value
+      })
       this.filter.type = value;
       break;
     }
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps, prevState) {
     if(prevProps.notes.toString() != this.props.notes.toString()) {
       this.part.removeAll();
       for(var i=0; i<this.props.notes.length; i++) {
         this.part.add(this.props.notes[i]);
       }
+    }
+    if(prevState.volume != this.state.volume) {
+      this.volume.volume.value = ToneUtils.linearToDecibels(this.state.volume);
     }
   }
 
@@ -91,7 +121,7 @@ class AppComponent extends React.Component {
     return (
       <div className='channel'>
         <LedGroup onNewNote={this.props.addNote.bind(this)} onRemoveNote={this.props.removeNote.bind(this)} notes={this.props.notes} />
-        <Knob onChange={this.updateParam.bind(this)} label='volume' min={-24} max={6} start={this.props.volume} />
+        <Knob onChange={this.updateParam.bind(this)} label='volume' min={0} max={1} start={this.props.volume} />
         <Knob onChange={this.updateParam.bind(this)} label='freq' min={20} max={10000} start={this.props.frequency} />
         <Knob onChange={this.updateParam.bind(this)} label='q-factor' min={0.0001} max={30} start={this.props.Q} />
         <Knob onChange={this.updateParam.bind(this)} label='attack' min={0} max={2} start={this.props.attack} />
