@@ -11,6 +11,7 @@ import EmbossedLabel from './EmbossedLabel';
 import PatternSelector from './PatternSelector';
 import SlideSwitch from './SlideSwitch';
 import Markdown from 'react-remarkable';
+import ToneUtils from './ToneUtils';
 import welcomeText from '../markdown/welcome.md';
 import recordText from '../markdown/record.md';
 
@@ -53,6 +54,9 @@ class AppComponent extends React.Component {
       patternIndex: 0,
       patterns: patternArray,
       timeSignature: 4,
+      masterVolume: 1,
+      tempo: 120,
+      mix: 1,
       speed: 1,
       playing: false,
       backwards: false,
@@ -121,6 +125,22 @@ class AppComponent extends React.Component {
     if(prevState.backwards != this.state.backwards) {
       this.player.reverse = this.state.backwards;
     }
+    if(prevState.timeSignature != this.state.timeSignature) {
+      Tone.Transport.timeSignature = this.state.timeSignature;
+      Tone.Transport.loopEnd = '1:0';
+    }
+    if(prevState.masterVolume != this.state.masterVolume) {
+      Tone.Master.volume.value = ToneUtils.linearToDecibels(this.state.masterVolume);
+    }
+    if(prevState.mix != this.state.mix) {
+      var crossfadeWet = Math.min(this.state.mix * 2, 1);
+      var crossfadeDry = Math.min(2 - this.state.mix * 2, 1);
+      this.wetMix.volume.value = ToneUtils.linearToDecibels(crossfadeWet);
+      this.dryMix.volume.value = ToneUtils.linearToDecibels(0.2 * crossfadeDry);
+    }
+    if(prevState.tempo != this.state.tempo) {
+      Tone.Transport.bpm.rampTo(this.state.tempo, 0.5);
+    }
   }
 
   updateParam(param, value) {
@@ -128,28 +148,33 @@ class AppComponent extends React.Component {
     // will sort it out later, about to go to pub
     switch(param) {
       case 'volume':
-      Tone.Master.volume.value = value;
-      Tone.Master.mute = (value <= -24);
+      this.setState({
+        masterVolume: value
+      });
       break;
 
       case 'tempo':
-      Tone.Transport.bpm.rampTo(value, 0.5);
+      this.setState({
+        tempo: value
+      });
       break;
 
       case 'mix':
-      this.dryMix.volume.value = 36*(1-value) - 36;
-      this.wetMix.volume.value = 26*value - 24;
+      this.setState({
+        mix: value
+      });
       break;
 
       case 'speed':
       this.setState({
         speed: value
-      })
+      });
       break;
 
       case 'signature':
-      Tone.Transport.timeSignature = value;
-      Tone.Transport.loopEnd = '1:0';
+      this.setState({
+        timeSignature: value
+      });
       break;
     }
   }
@@ -259,7 +284,7 @@ class AppComponent extends React.Component {
           </div>
         </div>
         <div className='bottomLeft'>
-          <Knob onChange={this.updateParam.bind(this)} label='volume' min={-24} max={2} start={0} />
+          <Knob onChange={this.updateParam.bind(this)} label='volume' min={0} max={1} start={1} />
           <Knob onChange={this.updateParam.bind(this)} label='mix' min={0} max={1} start={1} />
           <Knob onChange={this.updateParam.bind(this)} label='tempo' min={50} max={250} start={120} />
           <Knob onChange={this.updateParam.bind(this)} label='speed' min={0.1} max={4} start={1} />
@@ -291,7 +316,7 @@ class AppComponent extends React.Component {
             filter={'highpass'}
           />
           <PatternSelector numPatterns={this.state.patterns.length} activePattern={this.state.patternIndex} onChange={this.changePattern.bind(this)} />
-          <SlideSwitch onChange={this.updateParam.bind(this)} label='signature' options={[4,5,6]} start={this.props.timeSignature} />
+          <SlideSwitch onChange={this.updateParam.bind(this)} label='signature' options={[4,5,6]} start={this.state.timeSignature} />
         </div>
       </div>
     );
