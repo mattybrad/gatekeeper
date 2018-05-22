@@ -25,7 +25,7 @@ class AppComponent extends React.Component {
   }
 
   renderCanvas() {
-    var newSpoolAngle = (this.state.spoolAngle + 0.002 * this.props.speed * (Date.now() - this.state.lastRender)) % (2 * Math.PI);
+    var newSpoolAngle = (this.state.spoolAngle + 0.002 * (this.props.playing?this.props.speed:0) * (Date.now() - this.state.lastRender)) % (2 * Math.PI);
     this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.width);
     this.ctx.save();
     //this.drawMechanism();
@@ -155,23 +155,23 @@ class AppComponent extends React.Component {
       <div className='cassetteDeck'>
         <canvas ref='canvas' width={width} height={coverHeight}></canvas>
         <div className='cassetteButtonHolder' style={{width:width}}>
-          <CassetteButton color='red'>
+          <CassetteButton color='red' onClick={this.props.onRecord.bind(this)}>
             <i className="fas fa-circle"></i>
           </CassetteButton>
-          <CassetteButton color='green'>
+          <CassetteButton color='green' onClick={this.props.onPlay.bind(this)}>
             <i className="fas fa-play"></i>
           </CassetteButton>
-          <CassetteButton>
+          <CassetteButton onClick={this.props.onRewind.bind(this)}>
             <i className="fas fa-backward"></i>
           </CassetteButton>
-          <CassetteButton>
+          <CassetteButton onClick={this.props.onFastForward.bind(this)}>
             <i className="fas fa-forward"></i>
           </CassetteButton>
           <CassetteButton onClick={this.props.onEject.bind(this)}>
             <i className="fas fa-stop"></i>&nbsp;
             <i className="fas fa-eject"></i>
           </CassetteButton>
-          <CassetteButton>
+          <CassetteButton onClick={this.props.onPause.bind(this)}>
             <i className="fas fa-pause"></i>
           </CassetteButton>
         </div>
@@ -182,8 +182,14 @@ class AppComponent extends React.Component {
 
 AppComponent.defaultProps = {
   cassetteLabel: 'cassette',
+  onRecord: function(){},
+  onPlay: function(){},
+  onRewind: function(){},
+  onFastForward: function(){},
   onEject: function(){},
-  speed: 1
+  onPause: function(){},
+  speed: 1,
+  playing: false
 };
 
 export default AppComponent;

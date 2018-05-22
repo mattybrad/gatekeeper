@@ -11,7 +11,8 @@ import EmbossedLabel from './EmbossedLabel';
 import PatternSelector from './PatternSelector';
 import SlideSwitch from './SlideSwitch';
 import Markdown from 'react-remarkable';
-import testMD from '../markdown/test1.md';
+import welcomeText from '../markdown/welcome.md';
+import recordText from '../markdown/record.md';
 
 /*var refList = [
   'messy drums',
@@ -32,7 +33,8 @@ import testMD from '../markdown/test1.md';
 var audioSources = {
   one: require('../audio/source1.mp3'),
   two: require('../audio/source2.mp3'),
-  three: require('../audio/source3.mp3')
+  three: require('../audio/source3.mp3'),
+  four: require('../audio/source4.mp3')
 };
 
 class AppComponent extends React.Component {
@@ -51,7 +53,10 @@ class AppComponent extends React.Component {
       patternIndex: 0,
       patterns: patternArray,
       timeSignature: 4,
-      speed: 1
+      speed: 1,
+      playing: false,
+      backwards: false,
+      fast: false
     }
     this.player = new Tone.Player();
     this.dryMix = new Tone.Volume().toMaster();
@@ -63,7 +68,6 @@ class AppComponent extends React.Component {
   loadAudioSource(sourceName) {
     this.player.load(audioSources[sourceName], function(){
       this.player.loop = true;
-      this.player.start();
     }.bind(this));
   }
 
@@ -106,6 +110,19 @@ class AppComponent extends React.Component {
     })
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    if(prevState.playing != this.state.playing) {
+      if(this.state.playing) this.player.start();
+      else this.player.stop();
+    }
+    if(prevState.speed != this.state.speed || prevState.fast != this.state.fast) {
+      this.player.playbackRate = this.state.speed * (this.state.fast ? 4 : 1);
+    }
+    if(prevState.backwards != this.state.backwards) {
+      this.player.reverse = this.state.backwards;
+    }
+  }
+
   updateParam(param, value) {
     // should probs be doing all of this stuff in componentDidUpdate
     // will sort it out later, about to go to pub
@@ -128,7 +145,6 @@ class AppComponent extends React.Component {
       this.setState({
         speed: value
       })
-      this.player.playbackRate = value;
       break;
 
       case 'signature':
@@ -149,6 +165,47 @@ class AppComponent extends React.Component {
 
   showSources() {
     this.refs.sourceModal.activate();
+    this.setState({
+      playing: false
+    })
+  }
+
+  showHelp() {
+    this.refs.welcomeModal.activate();
+  }
+
+  showRecordMessage() {
+    this.refs.recordModal.activate();
+  }
+
+  playTape() {
+    this.setState({
+      playing: true,
+      backwards: false,
+      fast: false
+    })
+  }
+
+  pauseTape() {
+    this.setState({
+      playing: false
+    })
+  }
+
+  rewindTape() {
+    this.setState({
+      playing: true,
+      backwards: true,
+      fast: false
+    })
+  }
+
+  fastForwardTape() {
+    this.setState({
+      playing: true,
+      backwards: false,
+      fast: true
+    })
   }
 
   changePattern(patternIndex) {
@@ -169,7 +226,12 @@ class AppComponent extends React.Component {
       <div className="index">
         <Modal ref='welcomeModal' startActive={true}>
           <div className='modalText'>
-            <Markdown source={testMD} />
+            <Markdown source={welcomeText} />
+          </div>
+        </Modal>
+        <Modal ref='recordModal'>
+          <div className='modalText'>
+            <Markdown source={recordText} />
           </div>
         </Modal>
         <Modal ref='sourceModal'>
@@ -179,13 +241,20 @@ class AppComponent extends React.Component {
         </Modal>
         <div className='topLeft'>
           <div>
-            <EmbossedLabel rotation={-2}>Gatekeeper</EmbossedLabel><br/><br/>
-            <EmbossedLabel rotation={3}>Folktronic Drum Machine</EmbossedLabel><br/>
-            <br/><br/><br/>
+            <div className='title' onClick={this.showHelp.bind(this)}>
+              <EmbossedLabel rotation={-2}>Gatekeeper</EmbossedLabel><br/><br/>
+              <EmbossedLabel rotation={3}>Folktronic Drum Machine</EmbossedLabel><br/>
+            </div>
             <CassetteDeck
+              onRecord={this.showRecordMessage.bind(this)}
+              onPlay={this.playTape.bind(this)}
+              onRewind={this.rewindTape.bind(this)}
+              onFastForward={this.fastForwardTape.bind(this)}
               onEject={this.showSources.bind(this)}
+              onPause={this.pauseTape.bind(this)}
               cassetteLabel={this.state.currentSource}
-              speed={this.state.speed}
+              speed={this.state.speed*(this.state.fast?3:1)*(this.state.backwards?-1:1)}
+              playing={this.state.playing}
             />
           </div>
         </div>
