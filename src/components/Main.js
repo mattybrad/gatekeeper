@@ -135,7 +135,7 @@ class AppComponent extends React.Component {
     if(prevState.mix != this.state.mix) {
       var crossfadeWet = Math.min(this.state.mix * 2, 1);
       var crossfadeDry = Math.min(2 - this.state.mix * 2, 1);
-      this.wetMix.volume.value = ToneUtils.linearToDecibels(crossfadeWet);
+      this.wetMix.volume.value = ToneUtils.linearToDecibels(1.5 * crossfadeWet);
       this.dryMix.volume.value = ToneUtils.linearToDecibels(0.2 * crossfadeDry);
     }
     if(prevState.tempo != this.state.tempo) {

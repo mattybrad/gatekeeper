@@ -9,7 +9,7 @@ class AppComponent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      volume: 0
+      noteLength: this.props.noteLength
     }
     this.ampEnv = new Tone.AmplitudeEnvelope({
       'attack': 0.001,
@@ -17,7 +17,6 @@ class AppComponent extends React.Component {
       'sustain': 0.5,
       'release': 1.5
     });
-    this.noteLength = 0.5;
     this.filter = new Tone.Filter(800, 'bandpass');
     this.props.audioSource.connect(this.ampEnv);
     this.ampEnv.connect(this.filter);
@@ -26,7 +25,7 @@ class AppComponent extends React.Component {
     this.volume.toMaster();
 
     this.part = new Tone.Part(function(time){
-      this.ampEnv.triggerAttackRelease(this.noteLength+'s', time);
+      this.ampEnv.triggerAttackRelease(this.state.noteLength+'s', time);
     }.bind(this), []);
     this.part.start('0:0:0');
   }
@@ -47,60 +46,48 @@ class AppComponent extends React.Component {
       this.setState({
         frequency: value
       })
-      this.filter.frequency.value = value;
       break;
 
       case 'q-factor':
       this.setState({
         Q: value
       })
-      this.filter.Q.value = value;
       break;
 
       case 'attack':
       this.setState({
         attack: value
       })
-      value = Math.max(0.0001, value);
-      this.ampEnv.attack = value;
       break;
 
       case 'decay':
       this.setState({
         decay: value
       })
-      value = Math.max(0.0001, value);
-      this.ampEnv.decay = value;
       break;
 
       case 'sustain':
       this.setState({
         sustain: value
       })
-      this.ampEnv.sustain = value;
       break;
 
       case 'release':
       this.setState({
         release: value
       })
-      value = Math.max(0.0001, value);
-      this.ampEnv.release = value;
       break;
 
       case 'gate':
       this.setState({
-        gate: value
+        noteLength: value
       })
-      value = Math.max(0.001, value);
-      this.noteLength = value;
       break;
 
       case 'filter':
       this.setState({
         filterType: value
       })
-      this.filter.type = value;
       break;
     }
   }
@@ -114,6 +101,27 @@ class AppComponent extends React.Component {
     }
     if(prevState.volume != this.state.volume) {
       this.volume.volume.value = ToneUtils.linearToDecibels(this.state.volume);
+    }
+    if(prevState.attack != this.state.attack) {
+      this.ampEnv.attack = Math.max(0.0001, this.state.attack)
+    }
+    if(prevState.decay != this.state.decay) {
+      this.ampEnv.decay = Math.max(0.0001, this.state.decay);
+    }
+    if(prevState.sustain != this.state.sustain) {
+      this.ampEnv.sustain = this.state.sustain;
+    }
+    if(prevState.release != this.state.release) {
+      this.ampEnv.release = Math.max(0.0001, this.state.release);
+    }
+    if(prevState.frequency != this.state.frequency) {
+      this.filter.frequency.value = this.state.frequency;
+    }
+    if(prevState.Q != this.state.Q) {
+      this.filter.Q.value = this.state.Q;
+    }
+    if(prevState.filterType != this.state.filterType) {
+      this.filter.type = this.state.filterType;
     }
   }
 
@@ -143,6 +151,7 @@ AppComponent.defaultProps = {
   decay: 0.2,
   sustain: 0.5,
   release: 0.7,
+  noteLength: 0.8,
   filter: 'bandpass',
   addNote: function(){},
   removeNote: function(){},
