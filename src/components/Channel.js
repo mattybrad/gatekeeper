@@ -9,7 +9,7 @@ class AppComponent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      noteLength: this.props.noteLength
+      hold: this.props.hold
     }
     this.ampEnv = new Tone.AmplitudeEnvelope({
       'attack': 0.001,
@@ -25,7 +25,8 @@ class AppComponent extends React.Component {
     this.volume.toMaster();
 
     this.part = new Tone.Part(function(time){
-      this.ampEnv.triggerAttackRelease(this.state.noteLength+'s', time);
+      var timeBeforeRelease = this.state.attack + this.state.decay + this.state.hold;
+      this.ampEnv.triggerAttackRelease(timeBeforeRelease+'s', time);
     }.bind(this), []);
     this.part.start('0:0:0');
   }
@@ -78,9 +79,9 @@ class AppComponent extends React.Component {
       })
       break;
 
-      case 'gate':
+      case 'hold':
       this.setState({
-        noteLength: value
+        hold: value
       })
       break;
 
@@ -132,11 +133,11 @@ class AppComponent extends React.Component {
         <Knob onChange={this.updateParam.bind(this)} label='volume' min={0} max={1} start={this.props.volume} />
         <Knob onChange={this.updateParam.bind(this)} label='freq' min={20} max={10000} start={this.props.frequency} />
         <Knob onChange={this.updateParam.bind(this)} label='q-factor' min={0.0001} max={30} start={this.props.Q} />
-        <Knob onChange={this.updateParam.bind(this)} label='attack' min={0} max={2} start={this.props.attack} />
-        <Knob onChange={this.updateParam.bind(this)} label='decay' min={0} max={2} start={this.props.decay} />
+        <Knob onChange={this.updateParam.bind(this)} label='attack' min={0} max={1} start={this.props.attack} />
+        <Knob onChange={this.updateParam.bind(this)} label='decay' min={0} max={1} start={this.props.decay} />
         <Knob onChange={this.updateParam.bind(this)} label='sustain' min={0} max={1} start={this.props.sustain} />
-        <Knob onChange={this.updateParam.bind(this)} label='release' min={0} max={5} start={this.props.release} />
-        <Knob onChange={this.updateParam.bind(this)} label='gate' min={0} max={0.3} />
+        <Knob onChange={this.updateParam.bind(this)} label='hold' min={0} max={1} start={this.props.hold} />
+        <Knob onChange={this.updateParam.bind(this)} label='release' min={0} max={4} start={this.props.release} />
         <SlideSwitch onChange={this.updateParam.bind(this)} label='filter' options={['lowpass','bandpass','highpass']} start={this.props.filter} />
       </div>
     );
@@ -151,7 +152,7 @@ AppComponent.defaultProps = {
   decay: 0.2,
   sustain: 0.5,
   release: 0.7,
-  noteLength: 0.8,
+  hold: 0.1,
   filter: 'bandpass',
   addNote: function(){},
   removeNote: function(){},
