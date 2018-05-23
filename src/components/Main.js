@@ -52,15 +52,7 @@ class AppComponent extends React.Component {
       audioSourceReady: false,
       currentSource: 'one',
       patternIndex: 0,
-      patterns: patternArray,
-      timeSignature: 4,
-      masterVolume: 1,
-      tempo: 120,
-      mix: 1,
-      speed: 1,
-      playing: false,
-      backwards: false,
-      fast: false
+      patterns: patternArray
     }
     this.player = new Tone.Player();
     this.dryMix = new Tone.Volume().toMaster();

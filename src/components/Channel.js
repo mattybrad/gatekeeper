@@ -145,7 +145,7 @@ class AppComponent extends React.Component {
 }
 
 AppComponent.defaultProps = {
-  volume: 0,
+  volume: 0.5,
   frequency: 500,
   Q: 1,
   attack: 0,
