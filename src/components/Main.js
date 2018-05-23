@@ -9,6 +9,7 @@ import CassetteDeck from './CassetteDeck';
 import Modal from './Modal';
 import EmbossedLabel from './EmbossedLabel';
 import PatternSelector from './PatternSelector';
+import ButtonWithLabel from './ButtonWithLabel';
 import SlideSwitch from './SlideSwitch';
 import Markdown from 'react-remarkable';
 import ToneUtils from './ToneUtils';
@@ -49,11 +50,14 @@ class AppComponent extends React.Component {
       ];
     }
     this.state = {
-      audioSourceReady: false,
-      currentSource: 'one',
+      audioSource: 'one',
       patternIndex: 0,
       patterns: patternArray
     }
+    this.initToneThings();
+  }
+
+  initToneThings() {
     this.player = new Tone.Player();
     this.dryMix = new Tone.Volume().toMaster();
     this.wetMix = new Tone.Volume();
@@ -64,6 +68,8 @@ class AppComponent extends React.Component {
   loadAudioSource(sourceName) {
     this.player.load(audioSources[sourceName], function(){
       this.player.loop = true;
+      this.player.stop();
+      if(this.state.playing) this.player.start();
     }.bind(this));
   }
 
@@ -94,16 +100,12 @@ class AppComponent extends React.Component {
   }
 
   componentDidMount() {
-    this.loadAudioSource(this.state.currentSource);
+    this.loadAudioSource(this.state.audioSource);
 
     Tone.Transport.loop = true;
     Tone.Transport.loopStart = '0:0';
     Tone.Transport.loopEnd = '1:0';
     Tone.Transport.start();
-
-    this.setState({
-      audioSourceReady: true
-    })
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -132,6 +134,9 @@ class AppComponent extends React.Component {
     }
     if(prevState.tempo != this.state.tempo) {
       Tone.Transport.bpm.rampTo(this.state.tempo, 0.5);
+    }
+    if(prevState.audioSource != this.state.audioSource) {
+      this.loadAudioSource(this.state.audioSource);
     }
   }
 
@@ -173,9 +178,8 @@ class AppComponent extends React.Component {
 
   chooseSource(newSource, ev) {
     ev.stopPropagation();
-    this.loadAudioSource(newSource);
     this.setState({
-      currentSource: newSource
+      audioSource: newSource
     })
     this.refs.sourceModal.dismiss();
   }
@@ -231,6 +235,34 @@ class AppComponent extends React.Component {
     })
   }
 
+  loadDemo() {
+    this.setState({
+      playing: true,
+      fast: false,
+      backwards: false,
+      speed: 1,
+      audioSource: 'three',
+      demo: true,
+      patterns: [
+        [
+          ['0:0:0','0:2:0','0:2:2'],
+          [],
+          ['0:1:0','0:3:0','0:3:3']
+        ],
+        [
+          [],
+          [],
+          []
+        ],
+        [
+          [],
+          [],
+          []
+        ]
+      ]
+    })
+  }
+
   render() {
     var sourceItems = [];
     for(var k in audioSources) {
@@ -269,17 +301,23 @@ class AppComponent extends React.Component {
               onFastForward={this.fastForwardTape.bind(this)}
               onEject={this.showSources.bind(this)}
               onPause={this.pauseTape.bind(this)}
-              cassetteLabel={this.state.currentSource}
+              cassetteLabel={this.state.audioSource}
               speed={this.state.speed*(this.state.fast?3:1)*(this.state.backwards?-1:1)}
               playing={this.state.playing}
             />
           </div>
         </div>
         <div className='bottomLeft'>
-          <Knob onChange={this.updateParam.bind(this)} label='volume' min={0} max={1} start={1} />
-          <Knob onChange={this.updateParam.bind(this)} label='mix' min={0} max={1} start={1} />
-          <Knob onChange={this.updateParam.bind(this)} label='tempo' min={50} max={250} start={120} />
-          <Knob onChange={this.updateParam.bind(this)} label='speed' min={0.1} max={4} start={1} />
+          <div>
+            <ButtonWithLabel onClick={this.loadDemo.bind(this)}>Demo</ButtonWithLabel>
+            <ButtonWithLabel>Reset</ButtonWithLabel>
+            <ButtonWithLabel>Help</ButtonWithLabel>
+            <br/><br/>
+            <Knob onChange={this.updateParam.bind(this)} label='volume' min={0} max={1} start={1} />
+            <Knob onChange={this.updateParam.bind(this)} label='mix' min={0} max={1} start={0.8} />
+            <Knob onChange={this.updateParam.bind(this)} label='tempo' min={50} max={250} start={120} />
+            <Knob onChange={this.updateParam.bind(this)} label='speed' min={0.1} max={4} start={1} />
+          </div>
         </div>
         <div className='right'>
           <Channel
