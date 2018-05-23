@@ -10,11 +10,9 @@ Next, add some beats to your pattern. Start with the channel one, and click the 
 
 Now try adjusting the knobs on each channel. Start with the frequency ("freq") - turn it slowly up and down and listen for the difference it makes. Next, try changing the attack and release knobs, and see how they affect the sound.
 
-If you get stuck, hit the "reset" button to put everything back to its original settings.
-
 ## Troubleshooting
 
-If you're having trouble getting Gatekeeper to work, and the "reset" button isn't helping, try refreshing the page. Also, make sure your speakers are turned on and your volume is not muted! If you think you've found an error, or if you have a suggestion for an improvement, please send me a message.
+If you're having trouble getting Gatekeeper to work, try reloading the page. Also, make sure your speakers are turned on and your volume is not muted! If you think you've found an error, or if you have a suggestion for an improvement, please send me a message.
 
 ## Source Code
 

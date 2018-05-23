@@ -76,7 +76,8 @@ class AppComponent extends React.Component {
   }
 
   handleMovement(ev) {
-    var newValue = Math.max(0, Math.min(1, this.state.initDragValue + -0.02 * (ev.clientY - this.state.anchorY)));
+    ev.preventDefault();
+    var newValue = Math.max(0, Math.min(1, this.state.initDragValue + -0.005 * (ev.clientY - this.state.anchorY)));
     this.props.onChange(this.props.label, this.calculateKnobValue(newValue));
     this.setState({
       value: newValue

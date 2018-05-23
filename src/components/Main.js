@@ -36,7 +36,9 @@ var audioSources = {
   one: require('../audio/source1.mp3'),
   two: require('../audio/source2.mp3'),
   three: require('../audio/source3.mp3'),
-  four: require('../audio/source4.mp3')
+  four: require('../audio/source4.mp3'),
+  drums: require('../audio/drums.mp3'),
+  strings: require('../audio/strings.mp3')
 };
 
 class AppComponent extends React.Component {
@@ -241,8 +243,9 @@ class AppComponent extends React.Component {
       fast: false,
       backwards: false,
       speed: 1,
-      audioSource: 'three',
+      audioSource: 'four',
       demo: true,
+      patternIndex: 0,
       patterns: [
         [
           ['0:0:0','0:2:0','0:2:2'],
@@ -261,6 +264,18 @@ class AppComponent extends React.Component {
         ]
       ]
     })
+  }
+
+  reset() {
+    this.setState({
+      audioSource: 'one',
+      patternIndex: 0,
+      patterns: [
+        [[],[],[]],
+        [[],[],[]],
+        [[],[],[]]
+      ]
+    });
   }
 
   render() {
@@ -310,7 +325,7 @@ class AppComponent extends React.Component {
         <div className='bottomLeft'>
           <div>
             <ButtonWithLabel onClick={this.loadDemo.bind(this)}>Demo</ButtonWithLabel>
-            <ButtonWithLabel>Reset</ButtonWithLabel>
+            <ButtonWithLabel onClick={this.reset.bind(this)}>Reset</ButtonWithLabel>
             <ButtonWithLabel>Help</ButtonWithLabel>
             <br/><br/>
             <Knob onChange={this.updateParam.bind(this)} label='volume' min={0} max={1} start={1} />
