@@ -95,7 +95,11 @@ class AppComponent extends React.Component {
     this.ctx.fillStyle = '#00C';
     this.ctx.textAlign = 'center';
     this.ctx.font = 'bold '+Math.round(label.fontSize)+'px PermanentMarker-Regular';
-    this.ctx.fillText(this.props.cassetteLabel, x+w/2, y+label.y+0.9*label.fontSize);
+    this.ctx.fillText(
+      this.props.loadingAudio?'loading...':this.props.cassetteLabel,
+      x+w/2,
+      y+label.y+0.9*label.fontSize
+    );
 
     //var circles = [];
   }

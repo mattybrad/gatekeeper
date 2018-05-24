@@ -154,7 +154,7 @@ body {
   align-items: center;
   justify-content: center;
   top: 0px;
-  width: 40%;
+  width: 35%;
   height: 60%;
 }
 
@@ -168,15 +168,15 @@ body {
   align-items: center;
   justify-content: center;
   top: 60%;
-  width: 40%;
+  width: 35%;
   height: 40%;
 }
 
 .right {
   position: fixed;
   top: 0px;
-  left: 40%;
-  width: 60%;
+  left: 35%;
+  width: 65%;
   height: 100%;
   margin-top: 10px;
 }

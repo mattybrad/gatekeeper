@@ -9,7 +9,6 @@ import CassetteDeck from './CassetteDeck';
 import Modal from './Modal';
 import EmbossedLabel from './EmbossedLabel';
 import PatternSelector from './PatternSelector';
-import ButtonWithLabel from './ButtonWithLabel';
 import SlideSwitch from './SlideSwitch';
 import Markdown from 'react-remarkable';
 import ToneUtils from './ToneUtils';
@@ -33,12 +32,8 @@ import recordText from '../markdown/record.md';
   'train station'
 ];*/
 var audioSources = {
-  one: require('../audio/source1.mp3'),
-  two: require('../audio/source2.mp3'),
-  three: require('../audio/source3.mp3'),
-  four: require('../audio/source4.mp3'),
-  drums: require('../audio/drums.mp3'),
-  strings: require('../audio/strings.mp3')
+  strings: require('../audio/strings.mp3'),
+  drums: require('../audio/drums.mp3')
 };
 
 class AppComponent extends React.Component {
@@ -52,9 +47,10 @@ class AppComponent extends React.Component {
       ];
     }
     this.state = {
-      audioSource: 'one',
+      audioSource: 'strings',
       patternIndex: 0,
-      patterns: patternArray
+      patterns: patternArray,
+      loadingAudio: true
     }
     this.initToneThings();
   }
@@ -68,7 +64,13 @@ class AppComponent extends React.Component {
   }
 
   loadAudioSource(sourceName) {
+    this.setState({
+      loadingAudio: true
+    })
     this.player.load(audioSources[sourceName], function(){
+      this.setState({
+        loadingAudio: false
+      })
       this.player.loop = true;
       this.player.stop();
       if(this.state.playing) this.player.start();
@@ -188,9 +190,6 @@ class AppComponent extends React.Component {
 
   showSources() {
     this.refs.sourceModal.activate();
-    this.setState({
-      playing: false
-    })
   }
 
   showHelp() {
@@ -319,15 +318,12 @@ class AppComponent extends React.Component {
               cassetteLabel={this.state.audioSource}
               speed={this.state.speed*(this.state.fast?3:1)*(this.state.backwards?-1:1)}
               playing={this.state.playing}
+              loadingAudio={this.state.loadingAudio}
             />
           </div>
         </div>
         <div className='bottomLeft'>
           <div>
-            <ButtonWithLabel onClick={this.loadDemo.bind(this)}>Demo</ButtonWithLabel>
-            <ButtonWithLabel onClick={this.reset.bind(this)}>Reset</ButtonWithLabel>
-            <ButtonWithLabel>Help</ButtonWithLabel>
-            <br/><br/>
             <Knob onChange={this.updateParam.bind(this)} label='volume' min={0} max={1} start={1} />
             <Knob onChange={this.updateParam.bind(this)} label='mix' min={0} max={1} start={0.8} />
             <Knob onChange={this.updateParam.bind(this)} label='tempo' min={50} max={250} start={120} />
