@@ -67,12 +67,12 @@ class AppComponent extends React.Component {
     this.setState({
       loadingAudio: true
     })
+    this.player.stop();
     this.player.load(audioSources[sourceName], function(){
       this.setState({
         loadingAudio: false
       })
       this.player.loop = true;
-      this.player.stop();
       if(this.state.playing) this.player.start();
     }.bind(this));
   }

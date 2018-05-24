@@ -1,7 +1,7 @@
 import React from 'react';
 import CassetteButton from './CassetteButton';
 
-var cassetteReference = require('../images/cassette.jpg');
+//var cassetteReference = require('../images/cassette.jpg');
 
 class AppComponent extends React.Component {
   constructor(props) {
@@ -19,8 +19,8 @@ class AppComponent extends React.Component {
       self.renderCanvas();
       window.requestAnimationFrame(doRender);
     }
-    this.refImg = new Image();
-    this.refImg.src = cassetteReference;
+    //this.refImg = new Image();
+    //this.refImg.src = cassetteReference;
     window.requestAnimationFrame(doRender);
   }
 
@@ -33,9 +33,9 @@ class AppComponent extends React.Component {
     var cassetteWidth = 0.8 * this.ctx.canvas.width;
     var cassetteHeight = cassetteWidth / 1.6;
     this.drawCassette((this.ctx.canvas.width - cassetteWidth)/2, (this.ctx.canvas.height - cassetteHeight)/2, cassetteWidth, cassetteHeight, newSpoolAngle);
-    this.ctx.globalAlpha = 0;
+    /*this.ctx.globalAlpha = 0;
     this.ctx.drawImage(this.refImg, 0, 0);
-    this.ctx.restore();
+    this.ctx.restore();*/
     this.drawCover();
     this.setState({
       spoolAngle: newSpoolAngle,
