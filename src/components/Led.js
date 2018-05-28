@@ -15,7 +15,7 @@ class AppComponent extends React.Component {
   render() {
     var className = 'led ' + (this.props.isOn?'on':'off');
     return (
-      <div className='ledButton' onClick={this.onClick.bind(this)}>
+      <div className='ledButton' onClick={this.onClick.bind(this)} style={{background:this.props.keyColor}}>
         <div style={{background:this.props.color}} className={className} />
       </div>
     );
@@ -24,6 +24,7 @@ class AppComponent extends React.Component {
 
 AppComponent.defaultProps = {
   color: '#FF0000',
+  keyColor: '#666',
   isOn: false,
   onClick: function(){}
 };

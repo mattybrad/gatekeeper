@@ -15,25 +15,12 @@ import ToneUtils from './ToneUtils';
 import welcomeText from '../markdown/welcome.md';
 import recordText from '../markdown/record.md';
 
-/*var refList = [
-  'messy drums',
-  'mellotron choir',
-  'storm',
-  'acoustic guitar',
-  'classical guitar',
-  'big ben',
-  'mall',
-  'museum',
-  'distilled jazz',
-  'distilled rock',
-  'distilled indie',
-  'distilled pop',
-  'distilled classical',
-  'train station'
-];*/
 var audioSources = {
-  strings: require('../audio/strings.mp3'),
-  drums: require('../audio/drums.mp3')
+  'strings': require('../audio/strings.mp3'),
+  'drums': require('../audio/drums.mp3'),
+  'drums (hectic)': require('../audio/drums2.mp3'),
+  'piano': require('../audio/piano.mp3'),
+  'electric piano': require('../audio/electricpiano.mp3')
 };
 
 class AppComponent extends React.Component {
@@ -320,44 +307,47 @@ class AppComponent extends React.Component {
               playing={this.state.playing}
               loadingAudio={this.state.loadingAudio}
             />
-          </div>
-        </div>
-        <div className='bottomLeft'>
-          <div>
-            <Knob onChange={this.updateParam.bind(this)} label='volume' min={0} max={1} start={1} />
-            <Knob onChange={this.updateParam.bind(this)} label='mix' min={0} max={1} start={0.8} />
+            <br/><br/>
+            <PatternSelector numPatterns={this.state.patterns.length} activePattern={this.state.patternIndex} onChange={this.changePattern.bind(this)} />
+            <SlideSwitch onChange={this.updateParam.bind(this)} label='signature' options={[4,5,6]} start={this.state.timeSignature} />
+            <br/><br/><br/>
+            <Knob onChange={this.updateParam.bind(this)} label='volume' min={0} max={2} start={1} />
+            <Knob onChange={this.updateParam.bind(this)} label='mix' min={0} max={1} start={1} />
             <Knob onChange={this.updateParam.bind(this)} label='tempo' min={50} max={250} start={120} />
             <Knob onChange={this.updateParam.bind(this)} label='speed' min={0.1} max={4} start={1} />
           </div>
         </div>
         <div className='right'>
-          <Channel
-            audioSource={this.wetMix}
-            addNote={this.addNote.bind(this,0)}
-            removeNote={this.removeNote.bind(this,0)}
-            notes={this.state.patterns[this.state.patternIndex][0]}
-            frequency={150}
-            filter={'lowpass'}
-          />
-          <Channel
-            audioSource={this.wetMix}
-            addNote={this.addNote.bind(this,1)}
-            removeNote={this.removeNote.bind(this,1)}
-            notes={this.state.patterns[this.state.patternIndex][1]}
-            frequency={600}
-            Q={20}
-            filter={'bandpass'}
-          />
-          <Channel
-            audioSource={this.wetMix}
-            addNote={this.addNote.bind(this,2)}
-            removeNote={this.removeNote.bind(this,2)}
-            notes={this.state.patterns[this.state.patternIndex][2]}
-            frequency={2000}
-            filter={'highpass'}
-          />
-          <PatternSelector numPatterns={this.state.patterns.length} activePattern={this.state.patternIndex} onChange={this.changePattern.bind(this)} />
-          <SlideSwitch onChange={this.updateParam.bind(this)} label='signature' options={[4,5,6]} start={this.state.timeSignature} />
+          <div>
+            <Channel
+              channelName='Channel One'
+              audioSource={this.wetMix}
+              addNote={this.addNote.bind(this,0)}
+              removeNote={this.removeNote.bind(this,0)}
+              notes={this.state.patterns[this.state.patternIndex][0]}
+              frequency={150}
+              filter={'lowpass'}
+            />
+            <Channel
+              channelName='Channel Two'
+              audioSource={this.wetMix}
+              addNote={this.addNote.bind(this,1)}
+              removeNote={this.removeNote.bind(this,1)}
+              notes={this.state.patterns[this.state.patternIndex][1]}
+              frequency={600}
+              Q={20}
+              filter={'bandpass'}
+            />
+            <Channel
+              channelName='Channel Three'
+              audioSource={this.wetMix}
+              addNote={this.addNote.bind(this,2)}
+              removeNote={this.removeNote.bind(this,2)}
+              notes={this.state.patterns[this.state.patternIndex][2]}
+              frequency={2000}
+              filter={'highpass'}
+            />
+          </div>
         </div>
       </div>
     );

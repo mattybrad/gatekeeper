@@ -159,9 +159,6 @@ class AppComponent extends React.Component {
       <div className='cassetteDeck'>
         <canvas ref='canvas' width={width} height={coverHeight}></canvas>
         <div className='cassetteButtonHolder' style={{width:width}}>
-          <CassetteButton color='red' onClick={this.props.onRecord.bind(this)}>
-            <i className="fas fa-circle"></i>
-          </CassetteButton>
           <CassetteButton color='green' onClick={this.props.onPlay.bind(this)}>
             <i className="fas fa-play"></i>
           </CassetteButton>

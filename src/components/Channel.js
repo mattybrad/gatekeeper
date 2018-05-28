@@ -4,6 +4,7 @@ import SlideSwitch from './SlideSwitch';
 import LedGroup from './LedGroup';
 import Knob from './Knob';
 import ToneUtils from './ToneUtils';
+import EmbossedLabel from './EmbossedLabel';
 
 class AppComponent extends React.Component {
   constructor(props) {
@@ -129,6 +130,7 @@ class AppComponent extends React.Component {
   render() {
     return (
       <div className='channel'>
+        <EmbossedLabel>{this.props.channelName}</EmbossedLabel><br/><br/>
         <LedGroup onNewNote={this.props.addNote.bind(this)} onRemoveNote={this.props.removeNote.bind(this)} notes={this.props.notes} />
         <Knob onChange={this.updateParam.bind(this)} label='volume' min={0} max={1} start={this.props.volume} />
         <Knob onChange={this.updateParam.bind(this)} label='freq' min={20} max={10000} start={this.props.frequency} />
@@ -156,7 +158,8 @@ AppComponent.defaultProps = {
   filter: 'bandpass',
   addNote: function(){},
   removeNote: function(){},
-  notes: []
+  notes: [],
+  channelName: 'channel'
 };
 
 export default AppComponent;

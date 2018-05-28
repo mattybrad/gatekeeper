@@ -24,6 +24,6 @@ AppComponent.defaultProps = {
   label: 'something'
 };
 
-AppComponent.seededRandom = seed('random seeds are cool');
+AppComponent.seededRandom = seed('random seeds are cool 789');
 
 export default AppComponent;

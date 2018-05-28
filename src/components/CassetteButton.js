@@ -15,7 +15,7 @@ class AppComponent extends React.Component {
   render() {
 
     return (
-      <div onClick={this.props.onClick} className='cassetteButton' style={{background:this.props.color}}>
+      <div onClick={this.props.onClick} className='cassetteButton'>
         {this.props.children}
       </div>
     );
