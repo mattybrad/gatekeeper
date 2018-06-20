@@ -206,7 +206,11 @@ body {
   justify-content: center;
   cursor: pointer;
   background: #333;
-  color: #fff;
+  color: #600;
+}
+
+.activeCassetteButton {
+  color: #f00;
 }
 
 .patternSelector {

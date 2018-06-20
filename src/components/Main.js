@@ -272,6 +272,15 @@ class AppComponent extends React.Component {
       }
     }
 
+    var activeButtons = [];
+    if(this.state.playing) {
+      if(this.state.backwards) activeButtons.push('rewind');
+      else if(this.state.fast) activeButtons.push('fastForward');
+      else activeButtons.push('play');
+    } else {
+      activeButtons.push('pause');
+    }
+
     return (
       <div className="index">
         <Modal ref='welcomeModal' startActive={true}>
@@ -305,6 +314,7 @@ class AppComponent extends React.Component {
               cassetteLabel={this.state.audioSource}
               speed={this.state.speed*(this.state.fast?3:1)*(this.state.backwards?-1:1)}
               playing={this.state.playing}
+              activeButtons={activeButtons}
               loadingAudio={this.state.loadingAudio}
             />
             <br/><br/>

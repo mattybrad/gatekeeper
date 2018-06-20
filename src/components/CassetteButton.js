@@ -14,8 +14,11 @@ class AppComponent extends React.Component {
 
   render() {
 
+    var className = 'cassetteButton';
+    if(this.props.active) className += ' activeCassetteButton';
+
     return (
-      <div onClick={this.props.onClick} className='cassetteButton'>
+      <div onClick={this.props.onClick} className={className}>
         {this.props.children}
       </div>
     );
@@ -23,7 +26,7 @@ class AppComponent extends React.Component {
 }
 
 AppComponent.defaultProps = {
-  color: '#999999',
+  active: false,
   onClick: function(){}
 };
 

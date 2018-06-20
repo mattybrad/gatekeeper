@@ -159,19 +159,19 @@ class AppComponent extends React.Component {
       <div className='cassetteDeck'>
         <canvas ref='canvas' width={width} height={coverHeight}></canvas>
         <div className='cassetteButtonHolder' style={{width:width}}>
-          <CassetteButton color='green' onClick={this.props.onPlay.bind(this)}>
+          <CassetteButton color='green' active={this.props.activeButtons.indexOf('play')>=0} onClick={this.props.onPlay.bind(this)}>
             <i className="fas fa-play"></i>
           </CassetteButton>
-          <CassetteButton onClick={this.props.onRewind.bind(this)}>
+          <CassetteButton active={this.props.activeButtons.indexOf('rewind')>=0} onClick={this.props.onRewind.bind(this)}>
             <i className="fas fa-backward"></i>
           </CassetteButton>
-          <CassetteButton onClick={this.props.onFastForward.bind(this)}>
+          <CassetteButton active={this.props.activeButtons.indexOf('fastForward')>=0} onClick={this.props.onFastForward.bind(this)}>
             <i className="fas fa-forward"></i>
           </CassetteButton>
           <CassetteButton onClick={this.props.onEject.bind(this)}>
             <i className="fas fa-eject"></i>
           </CassetteButton>
-          <CassetteButton onClick={this.props.onPause.bind(this)}>
+          <CassetteButton active={this.props.activeButtons.indexOf('pause')>=0} onClick={this.props.onPause.bind(this)}>
             <i className="fas fa-pause"></i>
           </CassetteButton>
         </div>
