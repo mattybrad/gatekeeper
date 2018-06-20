@@ -34,7 +34,7 @@ class AppComponent extends React.Component {
       ];
     }
     this.state = {
-      audioSource: 'strings',
+      audioSource: 'piano',
       patternIndex: 0,
       patterns: patternArray,
       loadingAudio: true
@@ -311,7 +311,7 @@ class AppComponent extends React.Component {
             <PatternSelector numPatterns={this.state.patterns.length} activePattern={this.state.patternIndex} onChange={this.changePattern.bind(this)} />
             <SlideSwitch onChange={this.updateParam.bind(this)} label='signature' options={[4,5,6]} start={this.state.timeSignature} />
             <br/><br/><br/>
-            <Knob onChange={this.updateParam.bind(this)} label='volume' min={0} max={2} start={1} />
+            <Knob onChange={this.updateParam.bind(this)} label='volume' min={0} max={3} start={2} />
             <Knob onChange={this.updateParam.bind(this)} label='mix' min={0} max={1} start={1} />
             <Knob onChange={this.updateParam.bind(this)} label='tempo' min={50} max={250} start={120} />
             <Knob onChange={this.updateParam.bind(this)} label='speed' min={0.1} max={4} start={1} />

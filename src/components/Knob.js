@@ -26,24 +26,33 @@ class AppComponent extends React.Component {
   }
 
   renderCanvas() {
+    // outer circle
     var ctx = this.refs.canvas.getContext('2d');
+    ctx.clearRect(0,0,ctx.canvas.width,ctx.canvas.height);
     ctx.fillStyle = 'black';
     ctx.beginPath();
     ctx.arc(ctx.canvas.width/2,ctx.canvas.width/2,ctx.canvas.width/2,0,2*Math.PI);
     ctx.fill();
-    ctx.fillStyle = 'silver';
-    ctx.beginPath();
-    ctx.arc(ctx.canvas.width/2,ctx.canvas.width/2,ctx.canvas.width/3,0,2*Math.PI);
-    ctx.fill();
-    ctx.fillStyle = 'white';
+
+    // indicator
     ctx.save();
     ctx.translate(ctx.canvas.width/2,ctx.canvas.width/2);
     ctx.rotate(1.5*Math.PI*(this.state.value-0.5));
     ctx.translate(-ctx.canvas.width/2,-ctx.canvas.width/2);
     ctx.beginPath();
-    ctx.arc(ctx.canvas.width/2,ctx.canvas.width/10,3,0,2*Math.PI);
-    ctx.fill();
+    ctx.strokeStyle = 'white';
+    ctx.lineWidth = 3;
+    ctx.moveTo(ctx.canvas.width/2, ctx.canvas.width/2);
+    ctx.lineTo(ctx.canvas.width/2, 0);
+    ctx.stroke();
     ctx.restore();
+
+    // inner circle
+    ctx.fillStyle = 'silver';
+    ctx.beginPath();
+    ctx.arc(ctx.canvas.width/2,ctx.canvas.width/2,ctx.canvas.width/3,0,2*Math.PI);
+    ctx.fill();
+    ctx.fillStyle = 'white';
   }
 
   startListening(ev) {

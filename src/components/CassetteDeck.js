@@ -169,7 +169,6 @@ class AppComponent extends React.Component {
             <i className="fas fa-forward"></i>
           </CassetteButton>
           <CassetteButton onClick={this.props.onEject.bind(this)}>
-            <i className="fas fa-stop"></i>&nbsp;
             <i className="fas fa-eject"></i>
           </CassetteButton>
           <CassetteButton onClick={this.props.onPause.bind(this)}>
