@@ -26,7 +26,7 @@ class AppComponent extends React.Component {
         <div className='modalBackground' onClick={this.dismiss.bind(this)}>
           <div className='modalDialog'>
             <div className='modalScrollContent'>
-              {this.props.children}
+              {this.content || this.props.children}
             </div>
           </div>
         </div>

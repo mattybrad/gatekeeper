@@ -97,6 +97,8 @@ class AppComponent extends React.Component {
     Tone.Transport.loopStart = '0:0';
     Tone.Transport.loopEnd = '1:0';
     Tone.Transport.start();
+
+    EmbossedLabel.infoModal = this.refs.labelModal;
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -298,6 +300,7 @@ class AppComponent extends React.Component {
             {sourceItems}
           </ul>
         </Modal>
+        <Modal ref='labelModal' />
         <div className='topLeft'>
           <div>
             <div className='title' onClick={this.showHelp.bind(this)}>
