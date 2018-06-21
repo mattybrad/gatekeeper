@@ -103,7 +103,7 @@ class AppComponent extends React.Component {
           height={knobSize}
           onMouseDown={this.startListening.bind(this)}
         ></canvas><br/>
-        <EmbossedLabel>{this.props.label}</EmbossedLabel>
+        <EmbossedLabel info={this.props.info}>{this.props.label}</EmbossedLabel>
       </div>
     );
   }

@@ -77,7 +77,7 @@ class AppComponent extends React.Component {
     return (
       <div className='slideSwitch'>
         <canvas ref='canvas' width={70} height={30} onClick={this.tempOnClick.bind(this)}></canvas><br/>
-        <EmbossedLabel>{this.props.label}</EmbossedLabel>
+        <EmbossedLabel info={this.props.info}>{this.props.label}</EmbossedLabel>
       </div>
     );
   }

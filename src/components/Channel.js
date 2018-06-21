@@ -10,7 +10,8 @@ class AppComponent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      hold: this.props.hold
+      hold: this.props.hold,
+      initialised: false
     }
     this.ampEnv = new Tone.AmplitudeEnvelope({
       'attack': 0.001,
@@ -95,11 +96,14 @@ class AppComponent extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if(prevProps.notes.toString() != this.props.notes.toString()) {
+    if((prevProps.notes.toString() != this.props.notes.toString()) || !this.state.initialised) {
       this.part.removeAll();
       for(var i=0; i<this.props.notes.length; i++) {
         this.part.add(this.props.notes[i]);
       }
+      this.setState({
+        initialised: true
+      })
     }
     if(prevState.volume != this.state.volume) {
       this.volume.volume.value = ToneUtils.linearToDecibels(this.state.volume);
@@ -132,15 +136,15 @@ class AppComponent extends React.Component {
       <div className='channel'>
         <EmbossedLabel>{this.props.channelName}</EmbossedLabel><br/><br/>
         <LedGroup onNewNote={this.props.addNote.bind(this)} onRemoveNote={this.props.removeNote.bind(this)} notes={this.props.notes} />
-        <Knob onChange={this.updateParam.bind(this)} label='volume' min={0} max={1} start={this.props.volume} />
-        <Knob onChange={this.updateParam.bind(this)} label='freq' min={20} max={10000} start={this.props.frequency} />
-        <Knob onChange={this.updateParam.bind(this)} label='q-factor' min={0.0001} max={30} start={this.props.Q} />
-        <Knob onChange={this.updateParam.bind(this)} label='attack' min={0} max={1} start={this.props.attack} />
-        <Knob onChange={this.updateParam.bind(this)} label='decay' min={0} max={1} start={this.props.decay} />
-        <Knob onChange={this.updateParam.bind(this)} label='sustain' min={0} max={1} start={this.props.sustain} />
-        <Knob onChange={this.updateParam.bind(this)} label='hold' min={0} max={1} start={this.props.hold} />
-        <Knob onChange={this.updateParam.bind(this)} label='release' min={0} max={4} start={this.props.release} />
-        <SlideSwitch onChange={this.updateParam.bind(this)} label='filter' options={['lowpass','bandpass','highpass']} start={this.props.filter} />
+        <Knob onChange={this.updateParam.bind(this)} label='volume' info='Channel volume control.' min={0} max={1} start={this.props.volume} />
+        <Knob onChange={this.updateParam.bind(this)} label='freq' info='Filter cutoff frequency control - alters the frequency at which the filter operates. Behaviour will depend on the type of filter current being used (the "filter" slide switch)' min={20} max={10000} start={this.props.frequency} />
+        <Knob onChange={this.updateParam.bind(this)} label='q-factor' info='Q-factor control - similar to the "resonance" control on some filters, adds a ringing effect at the cutoff frequency when in low-pass or high-pass mode, and changes the bandwidth in band-pass mode.' min={0.0001} max={30} start={this.props.Q} />
+        <Knob onChange={this.updateParam.bind(this)} label='attack' info='Attack control - affects how quickly a note fades in. 0% is instant, 100% is a slow fade-in.' min={0} max={1} start={this.props.attack} />
+        <Knob onChange={this.updateParam.bind(this)} label='decay' info='Decay control - affects how quickly the note drops to its sustain level after the attack phase.' min={0} max={1} start={this.props.decay} />
+        <Knob onChange={this.updateParam.bind(this)} label='sustain' info='Sustain control - the volume at which the note is held after the decay phase.' min={0} max={1} start={this.props.sustain} />
+        <Knob onChange={this.updateParam.bind(this)} label='hold' info='Hold control - how long the note is held after the decay phase.' min={0} max={1} start={this.props.hold} />
+        <Knob onChange={this.updateParam.bind(this)} label='release' info='Release control - how quickly the note fades out to silence. 0% is instant, 100% is a long fade-out.' min={0} max={4} start={this.props.release} />
+        <SlideSwitch onChange={this.updateParam.bind(this)} label='filter' info='Filter type control - the left setting is a low-pass filter (which only lets frequencies through if they are below the cutoff frequency), the middle setting is band-pass (only frequencies near the cutoff freqency are allowed through), and the right setting is a high-pass filter (only frequencies above the cutoff allowed through).' options={['lowpass','bandpass','highpass']} start={this.props.filter} />
       </div>
     );
   }

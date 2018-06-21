@@ -33,6 +33,11 @@ class AppComponent extends React.Component {
         [],[],[]
       ];
     }
+    patternArray[0] = [
+      ['0:0:0', '0:0:8', '0:0:10'],
+      ['0:0:2', '0:0:9'],
+      ['0:0:4', '0:0:12']
+    ];
     this.state = {
       audioSource: 'piano',
       patternIndex: 0,
@@ -225,47 +230,6 @@ class AppComponent extends React.Component {
     })
   }
 
-  loadDemo() {
-    this.setState({
-      playing: true,
-      fast: false,
-      backwards: false,
-      speed: 1,
-      audioSource: 'four',
-      demo: true,
-      patternIndex: 0,
-      patterns: [
-        [
-          ['0:0:0','0:2:0','0:2:2'],
-          [],
-          ['0:1:0','0:3:0','0:3:3']
-        ],
-        [
-          [],
-          [],
-          []
-        ],
-        [
-          [],
-          [],
-          []
-        ]
-      ]
-    })
-  }
-
-  reset() {
-    this.setState({
-      audioSource: 'one',
-      patternIndex: 0,
-      patterns: [
-        [[],[],[]],
-        [[],[],[]],
-        [[],[],[]]
-      ]
-    });
-  }
-
   render() {
     var sourceItems = [];
     for(var k in audioSources) {
@@ -324,10 +288,10 @@ class AppComponent extends React.Component {
             <PatternSelector numPatterns={this.state.patterns.length} activePattern={this.state.patternIndex} onChange={this.changePattern.bind(this)} />
             <SlideSwitch onChange={this.updateParam.bind(this)} label='signature' options={[4,5,6]} start={this.state.timeSignature} />
             <br/><br/><br/>
-            <Knob onChange={this.updateParam.bind(this)} label='volume' min={0} max={3} start={2} />
-            <Knob onChange={this.updateParam.bind(this)} label='mix' min={0} max={1} start={1} />
-            <Knob onChange={this.updateParam.bind(this)} label='tempo' min={50} max={250} start={120} />
-            <Knob onChange={this.updateParam.bind(this)} label='speed' min={0.1} max={4} start={1} />
+            <Knob onChange={this.updateParam.bind(this)} label='volume' info='Main volume control.' min={0} max={6} start={4} />
+            <Knob onChange={this.updateParam.bind(this)} label='mix' info='Mix control - fades between the raw signal from the tape at 0% and the gated signal at 100%. Try slowly fading in the original signal for a less rhythmic sound.' min={0} max={1} start={0.95} />
+            <Knob onChange={this.updateParam.bind(this)} label='tempo' info='Tempo control - alters the tempo of the pattern.' min={50} max={250} start={90} />
+            <Knob onChange={this.updateParam.bind(this)} label='speed' info='Tape speed control - alters the speed of the tape motor, resulting in lower or higher pitch.' min={0.1} max={4} start={1} />
           </div>
         </div>
         <div className='right'>
@@ -338,7 +302,10 @@ class AppComponent extends React.Component {
               addNote={this.addNote.bind(this,0)}
               removeNote={this.removeNote.bind(this,0)}
               notes={this.state.patterns[this.state.patternIndex][0]}
-              frequency={150}
+              frequency={120}
+              release={0.1}
+              hold={0.02}
+              volume={0.7}
               filter={'lowpass'}
             />
             <Channel
@@ -357,7 +324,11 @@ class AppComponent extends React.Component {
               addNote={this.addNote.bind(this,2)}
               removeNote={this.removeNote.bind(this,2)}
               notes={this.state.patterns[this.state.patternIndex][2]}
-              frequency={2000}
+              frequency={3000}
+              release={3.5}
+              sustain={0.3}
+              volume={0.8}
+              decay={0.2}
               filter={'highpass'}
             />
           </div>
