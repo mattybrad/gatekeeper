@@ -109,7 +109,7 @@ class AppComponent extends React.Component {
       this.volume.volume.value = ToneUtils.linearToDecibels(this.state.volume);
     }
     if(prevState.attack != this.state.attack) {
-      this.ampEnv.attack = Math.max(0.0001, this.state.attack)
+      this.ampEnv.attack = Math.max(0.0005, this.state.attack)
     }
     if(prevState.decay != this.state.decay) {
       this.ampEnv.decay = Math.max(0.0001, this.state.decay);

@@ -288,7 +288,7 @@ class AppComponent extends React.Component {
             <PatternSelector numPatterns={this.state.patterns.length} activePattern={this.state.patternIndex} onChange={this.changePattern.bind(this)} />
             <SlideSwitch onChange={this.updateParam.bind(this)} label='signature' options={[4,5,6]} start={this.state.timeSignature} />
             <br/><br/><br/>
-            <Knob onChange={this.updateParam.bind(this)} label='volume' info='Main volume control.' min={0} max={6} start={4} />
+            <Knob onChange={this.updateParam.bind(this)} label='volume' info='Main volume control.' min={0} max={5} start={3} />
             <Knob onChange={this.updateParam.bind(this)} label='mix' info='Mix control - fades between the raw signal from the tape at 0% and the gated signal at 100%. Try slowly fading in the original signal for a less rhythmic sound.' min={0} max={1} start={0.95} />
             <Knob onChange={this.updateParam.bind(this)} label='tempo' info='Tempo control - alters the tempo of the pattern.' min={50} max={250} start={90} />
             <Knob onChange={this.updateParam.bind(this)} label='speed' info='Tape speed control - alters the speed of the tape motor, resulting in lower or higher pitch.' min={0.1} max={4} start={1} />
@@ -302,10 +302,10 @@ class AppComponent extends React.Component {
               addNote={this.addNote.bind(this,0)}
               removeNote={this.removeNote.bind(this,0)}
               notes={this.state.patterns[this.state.patternIndex][0]}
-              frequency={120}
+              frequency={150}
               release={0.1}
               hold={0.02}
-              volume={0.7}
+              volume={0.5}
               filter={'lowpass'}
             />
             <Channel
