@@ -108,7 +108,10 @@ class AppComponent extends React.Component {
 
   componentDidUpdate(prevProps, prevState) {
     if(prevState.playing != this.state.playing) {
-      if(this.state.playing) this.player.start();
+      if(this.state.playing) {
+        this.player.start();
+        Tone.Transport.start(Tone.now(), '0:0:0');
+      }
       else this.player.stop();
     }
     if(prevState.speed != this.state.speed || prevState.fast != this.state.fast) {
