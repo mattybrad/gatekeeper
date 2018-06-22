@@ -86,7 +86,19 @@ class AppComponent extends React.Component {
 
   handleMovement(ev) {
     ev.preventDefault();
-    var newValue = Math.max(0, Math.min(1, this.state.initDragValue + -0.005 * (ev.clientY - this.state.anchorY)));
+
+    var canvasRect = this.refs.canvas.getBoundingClientRect();
+    var middle = {
+      x: canvasRect.left + this.refs.canvas.width / 2,
+      y: canvasRect.top + this.refs.canvas.height / 2
+    }
+    var initMouseAngle = Math.atan2(this.state.anchorY - middle.y, this.state.anchorX - middle.x);
+    var newMouseAngle = Math.atan2(ev.clientY - middle.y, ev.clientX - middle.x);
+    var initKnobAngle = this.state.initDragValue * 1.5 * Math.PI - 0.75 * Math.PI;
+    var angleSubtented = newMouseAngle - initMouseAngle;
+    while(angleSubtented>Math.PI) angleSubtented -= 2 * Math.PI; // mild hack to fix pos/neg switching issues
+    var newKnobAngle = initKnobAngle + angleSubtented;
+    var newValue = Math.min(1, Math.max(0, (newKnobAngle + 0.75 * Math.PI) / (1.5 * Math.PI)));
     this.props.onChange(this.props.label, this.calculateKnobValue(newValue));
     this.setState({
       value: newValue

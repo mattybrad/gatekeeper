@@ -316,6 +316,7 @@ class AppComponent extends React.Component {
               notes={this.state.patterns[this.state.patternIndex][1]}
               frequency={600}
               Q={20}
+              volume={0.7}
               filter={'bandpass'}
             />
             <Channel
