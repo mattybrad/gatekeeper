@@ -4,10 +4,10 @@ Gatekeeper is a drum machine that aims to move beyond the traditional drum sound
 
 ## Instructions
 
-First, choose a "tape" to be your sound source. Click the eject button on the tape player, and select the sound you would like to use. Press the play button on the tape player to start the tape playing.
+Start by pressing the "play" button on the cassette player. This will feed a sound into the three rhythm channels. Try playing with the cassette player buttons first: you can rewind or fast-forward the tape, or eject it to try a different sound.
 
-Next, add some beats to your pattern. Start with channel one, and click the first beat button (labelled "one"). You should hear a sound on the first beat of the bar. Try adding more beats to the other channels, and listen for the difference between them.
+Next, try pressing the coloured buttons to toggle each step of a channel's pattern on or off. You can also create a new, blank pattern by pressing the "pattern 2" or "pattern 3" buttons.
 
-Now try adjusting the knobs on each channel. Start with the frequency ("freq") - turn it slowly up and down and listen for the difference it makes. Next, try changing the attack and release knobs, and see how they affect the sound.
+Finally, try changing all the other controls - "speed" and "freq" are probably the most fun to get started with, before moving onto the subtler ones. If you would like to know more about a particular control, click on its label.
 
 Have fun!

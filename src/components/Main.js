@@ -286,7 +286,7 @@ class AppComponent extends React.Component {
             />
             <br/><br/>
             <PatternSelector numPatterns={this.state.patterns.length} activePattern={this.state.patternIndex} onChange={this.changePattern.bind(this)} />
-            <SlideSwitch onChange={this.updateParam.bind(this)} label='signature' options={[4,5,6]} start={this.state.timeSignature} />
+            <SlideSwitch onChange={this.updateParam.bind(this)} label='signature' info='Time signature control - selects how many steps are used in the pattern. Left is 16 (4/4 time), middle is 20 (5/4 time) and right is 24 (3/4 or 6/8).' options={[4,5,6]} start={this.state.timeSignature} />
             <br/><br/><br/>
             <Knob onChange={this.updateParam.bind(this)} label='volume' info='Main volume control.' min={0} max={5} start={3} />
             <Knob onChange={this.updateParam.bind(this)} label='mix' info='Mix control - fades between the raw signal from the tape at 0% and the gated signal at 100%. Try slowly fading in the original signal for a less rhythmic sound.' min={0} max={1} start={0.95} />
