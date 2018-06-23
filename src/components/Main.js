@@ -15,7 +15,7 @@ import ToneUtils from './ToneUtils';
 import welcomeText from '../markdown/welcome.md';
 import recordText from '../markdown/record.md';
 
-var audioSources = {
+var defaultAudioSources = {
   'strings': require('../audio/strings.mp3'),
   'drums': require('../audio/drums.mp3'),
   'drums (hectic)': require('../audio/drums2.mp3'),
@@ -42,7 +42,8 @@ class AppComponent extends React.Component {
       audioSource: 'piano',
       patternIndex: 0,
       patterns: patternArray,
-      loadingAudio: true
+      loadingAudio: true,
+      audioSources: defaultAudioSources
     }
     this.initToneThings();
   }
@@ -60,7 +61,7 @@ class AppComponent extends React.Component {
       loadingAudio: true
     })
     this.player.stop();
-    this.player.load(audioSources[sourceName], function(){
+    this.player.load(this.state.audioSources[sourceName], function(){
       this.setState({
         loadingAudio: false
       })
@@ -234,9 +235,15 @@ class AppComponent extends React.Component {
     })
   }
 
-  readUploadFiles(file) {
-    //<input id="audioFileChooser" name="audioFileChooser" type="file" accept="audio/*" multiple>
-    console.log(this.refs.fileChooser.files);
+  readUploadFiles() {
+    var newAudioSources = Object.assign({}, this.state.audioSources);
+    for(var i = 0; i < this.refs.fileChooser.files.length; i++) {
+      var thisFile = URL.createObjectURL(this.refs.fileChooser.files[i]);
+      newAudioSources[this.refs.fileChooser.files[i].name] = thisFile
+    }
+    this.setState({
+      audioSources: newAudioSources
+    })
   }
 
   render() {
@@ -244,8 +251,8 @@ class AppComponent extends React.Component {
     sourceItems.push(
       <li key={'addSource'}>Upload audio file<input ref='fileChooser' onChange={this.readUploadFiles.bind(this)} type="file" accept="audio/*" multiple /></li>
     );
-    for(var k in audioSources) {
-      if(audioSources.hasOwnProperty(k)) {
+    for(var k in this.state.audioSources) {
+      if(this.state.audioSources.hasOwnProperty(k)) {
         sourceItems.push(<li key={'sourceItem_'+k} onClick={this.chooseSource.bind(this,k)}>{k}</li>);
       }
     }
