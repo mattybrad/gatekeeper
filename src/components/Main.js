@@ -110,6 +110,7 @@ class AppComponent extends React.Component {
     if(prevState.playing != this.state.playing) {
       if(this.state.playing) {
         this.player.start();
+        Tone.Transport.stop();
         Tone.Transport.start(Tone.now(), '0:0:0');
       }
       else this.player.stop();
@@ -233,8 +234,16 @@ class AppComponent extends React.Component {
     })
   }
 
+  readUploadFiles(file) {
+    //<input id="audioFileChooser" name="audioFileChooser" type="file" accept="audio/*" multiple>
+    console.log(this.refs.fileChooser.files);
+  }
+
   render() {
     var sourceItems = [];
+    sourceItems.push(
+      <li key={'addSource'}>Upload audio file<input ref='fileChooser' onChange={this.readUploadFiles.bind(this)} type="file" accept="audio/*" multiple /></li>
+    );
     for(var k in audioSources) {
       if(audioSources.hasOwnProperty(k)) {
         sourceItems.push(<li key={'sourceItem_'+k} onClick={this.chooseSource.bind(this,k)}>{k}</li>);

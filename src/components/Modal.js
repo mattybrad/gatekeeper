@@ -20,11 +20,15 @@ class AppComponent extends React.Component {
     })
   }
 
+  stopPropagation(ev) {
+    ev.stopPropagation();
+  }
+
   render() {
     if(this.state.active) {
       return(
         <div className='modalBackground' onClick={this.dismiss.bind(this)}>
-          <div className='modalDialog'>
+          <div className='modalDialog' onClick={this.stopPropagation}>
             <div className='modalScrollContent'>
               {this.content || this.props.children}
             </div>
