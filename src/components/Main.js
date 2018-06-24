@@ -54,6 +54,19 @@ class AppComponent extends React.Component {
     this.wetMix = new Tone.Volume();
     this.player.connect(this.dryMix);
     this.player.connect(this.wetMix);
+
+    var rec = new Recorder(Tone.Master);
+    rec.record();
+    setTimeout(function(){
+      rec.stop();
+      rec.exportWAV(function(data){
+        var textFileURL = null;
+        textFileURL = window.URL.createObjectURL(data);
+        this.setState({
+          recordingData: textFileURL
+        })
+      }.bind(this));
+    }.bind(this),20000);
   }
 
   loadAudioSource(sourceName) {
@@ -249,7 +262,7 @@ class AppComponent extends React.Component {
   render() {
     var sourceItems = [];
     sourceItems.push(
-      <li key={'addSource'}>Upload audio file<input ref='fileChooser' onChange={this.readUploadFiles.bind(this)} type="file" accept="audio/*" multiple /></li>
+      <li key={'addSource'}>Upload audio file: <input ref='fileChooser' onChange={this.readUploadFiles.bind(this)} type="file" accept="audio/*" multiple /></li>
     );
     for(var k in this.state.audioSources) {
       if(this.state.audioSources.hasOwnProperty(k)) {
@@ -289,6 +302,7 @@ class AppComponent extends React.Component {
             <div className='title' onClick={this.showHelp.bind(this)}>
               <EmbossedLabel rotation={-2}>Gatekeeper</EmbossedLabel><br/><br/>
               <EmbossedLabel rotation={3}>Folktronic Drum Machine</EmbossedLabel><br/>
+              {this.state.recordingData?<a href={this.state.recordingData} download='test.wav'>TEST DOWNLOAD</a>:null}
             </div>
             <CassetteDeck
               onRecord={this.showRecordMessage.bind(this)}
