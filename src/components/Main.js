@@ -56,7 +56,7 @@ class AppComponent extends React.Component {
     this.player.connect(this.wetMix);
 
     var rec = new Recorder(Tone.Master);
-    rec.record();
+    /*rec.record();
     setTimeout(function(){
       rec.stop();
       rec.exportWAV(function(data){
@@ -66,7 +66,7 @@ class AppComponent extends React.Component {
           recordingData: textFileURL
         })
       }.bind(this));
-    }.bind(this),20000);
+    }.bind(this),20000);*/
   }
 
   loadAudioSource(sourceName) {

@@ -37,7 +37,7 @@ class AppComponent extends React.Component {
     // indicator
     ctx.save();
     ctx.translate(ctx.canvas.width/2,ctx.canvas.width/2);
-    ctx.rotate(1.5*Math.PI*(this.state.value-0.5));
+    ctx.rotate(1.5*Math.PI*this.state.value - 0.75*Math.PI);
     ctx.translate(-ctx.canvas.width/2,-ctx.canvas.width/2);
     ctx.beginPath();
     ctx.strokeStyle = 'white';
@@ -55,33 +55,19 @@ class AppComponent extends React.Component {
     ctx.fillStyle = 'white';
   }
 
-  startListening(ev) {
-    this.handleMovement = this.handleMovement.bind(this);
-    window.addEventListener('mousemove', this.handleMovement);
+  startListening() {
     this.setState({
-      anchorX: ev.clientX,
-      anchorY: ev.clientY,
-      initDragValue: this.state.value,
       dragHappening: true
     })
+    this.handleMovement = this.handleMovement.bind(this);
+    window.addEventListener('mousemove', this.handleMovement);
   }
 
   stopListening() {
     window.removeEventListener('mousemove', this.handleMovement);
     this.setState({
-      anchorX: null,
-      anchorY: null,
-      initDragValue: null,
       dragHappening: false
     })
-  }
-
-  calculateKnobValue(raw) {
-    return this.props.min + (this.props.max-this.props.min) * raw;
-  }
-
-  calculateRawValue(knobValue) {
-    return (knobValue - this.props.min) / (this.props.max - this.props.min);
   }
 
   handleMovement(ev) {
@@ -92,17 +78,21 @@ class AppComponent extends React.Component {
       x: canvasRect.left + this.refs.canvas.width / 2,
       y: canvasRect.top + this.refs.canvas.height / 2
     }
-    var initMouseAngle = Math.atan2(this.state.anchorY - middle.y, this.state.anchorX - middle.x);
-    var newMouseAngle = Math.atan2(ev.clientY - middle.y, ev.clientX - middle.x);
-    var initKnobAngle = this.state.initDragValue * 1.5 * Math.PI - 0.75 * Math.PI;
-    var angleSubtented = newMouseAngle - initMouseAngle;
-    while(angleSubtented>Math.PI) angleSubtented -= 2 * Math.PI; // mild hack to fix pos/neg switching issues
-    var newKnobAngle = initKnobAngle + angleSubtented;
-    var newValue = Math.min(1, Math.max(0, (newKnobAngle + 0.75 * Math.PI) / (1.5 * Math.PI)));
+    var newMouseAngle = Math.atan2(ev.clientY - middle.y, ev.clientX - middle.x) - 0.75*Math.PI;
+    while(newMouseAngle < 0) newMouseAngle += 2 * Math.PI;
+    var newValue = Math.max(0, Math.min(1, (newMouseAngle) / (1.5 * Math.PI)));
     this.props.onChange(this.props.label, this.calculateKnobValue(newValue));
     this.setState({
       value: newValue
     })
+  }
+
+  calculateKnobValue(raw) {
+    return this.props.min + (this.props.max-this.props.min) * raw;
+  }
+
+  calculateRawValue(knobValue) {
+    return (knobValue - this.props.min) / (this.props.max - this.props.min);
   }
 
   render() {
