@@ -80,6 +80,7 @@ class AppComponent extends React.Component {
     }
     var newMouseAngle = Math.atan2(ev.clientY - middle.y, ev.clientX - middle.x) - 0.75*Math.PI;
     while(newMouseAngle < 0) newMouseAngle += 2 * Math.PI;
+    if(newMouseAngle > 1.75 * Math.PI) newMouseAngle -= 2 * Math.PI;
     var newValue = Math.max(0, Math.min(1, (newMouseAngle) / (1.5 * Math.PI)));
     this.props.onChange(this.props.label, this.calculateKnobValue(newValue));
     this.setState({
