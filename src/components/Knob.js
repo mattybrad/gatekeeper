@@ -55,12 +55,13 @@ class AppComponent extends React.Component {
     ctx.fillStyle = 'white';
   }
 
-  startListening() {
+  startListening(ev) {
     this.setState({
       dragHappening: true
     })
     this.handleMovement = this.handleMovement.bind(this);
     window.addEventListener('mousemove', this.handleMovement);
+    this.handleMovement(ev);
   }
 
   stopListening() {
@@ -96,6 +97,12 @@ class AppComponent extends React.Component {
     return (knobValue - this.props.min) / (this.props.max - this.props.min);
   }
 
+  reset() {
+    this.setState({
+      value: this.calculateRawValue(this.props.start)
+    })
+  }
+
   render() {
     var knobSize = 60;
     return (
@@ -105,6 +112,7 @@ class AppComponent extends React.Component {
           width={knobSize}
           height={knobSize}
           onMouseDown={this.startListening.bind(this)}
+          onDoubleClick={this.reset.bind(this)}
         ></canvas><br/>
         <EmbossedLabel info={this.props.info}>{this.props.label}</EmbossedLabel>
       </div>
