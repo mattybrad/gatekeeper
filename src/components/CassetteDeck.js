@@ -174,6 +174,9 @@ class AppComponent extends React.Component {
           <CassetteButton active={this.props.activeButtons.indexOf('pause')>=0} onClick={this.props.onPause.bind(this)}>
             <i className="fas fa-pause"></i>
           </CassetteButton>
+          <CassetteButton active={this.props.activeButtons.indexOf('record')>=0} onClick={this.props.onRecord.bind(this)}>
+            <i className="fas fa-circle"></i>
+          </CassetteButton>
         </div>
       </div>
     );

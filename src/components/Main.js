@@ -43,6 +43,7 @@ class AppComponent extends React.Component {
       patternIndex: 0,
       patterns: patternArray,
       loadingAudio: true,
+      recordings: [],
       audioSources: defaultAudioSources
     }
     this.initToneThings();
@@ -54,19 +55,28 @@ class AppComponent extends React.Component {
     this.wetMix = new Tone.Volume();
     this.player.connect(this.dryMix);
     this.player.connect(this.wetMix);
+    this.recorder = new Recorder(Tone.Master);
+  }
 
-    var rec = new Recorder(Tone.Master);
-    /*rec.record();
-    setTimeout(function(){
-      rec.stop();
-      rec.exportWAV(function(data){
-        var textFileURL = null;
-        textFileURL = window.URL.createObjectURL(data);
-        this.setState({
-          recordingData: textFileURL
-        })
-      }.bind(this));
-    }.bind(this),20000);*/
+  startRecording() {
+    this.recorder.record();
+  }
+
+  stopRecording() {
+    this.recorder.stop();
+    this.refs.recordingModal.activate();
+    this.setState({
+      processingRecording: true
+    })
+    this.recorder.exportWAV(function(data){
+      var textFileURL = null;
+      textFileURL = window.URL.createObjectURL(data);
+      this.setState({
+        processingRecording: false,
+        recordings: [...this.state.recordings, textFileURL]
+      })
+    }.bind(this));
+
   }
 
   loadAudioSource(sourceName) {
@@ -153,6 +163,10 @@ class AppComponent extends React.Component {
     }
     if(prevState.audioSource != this.state.audioSource) {
       this.loadAudioSource(this.state.audioSource);
+    }
+    if(prevState.recording != this.state.recording) {
+      if(this.state.recording) this.startRecording();
+      else this.stopRecording();
     }
   }
 
@@ -242,6 +256,12 @@ class AppComponent extends React.Component {
     })
   }
 
+  toggleRecording() {
+    this.setState({
+      recording: !this.state.recording
+    })
+  }
+
   changePattern(patternIndex) {
     this.setState({
       patternIndex: patternIndex
@@ -270,6 +290,17 @@ class AppComponent extends React.Component {
       }
     }
 
+    var recordingDownloads = [];
+    for(var i = 0; i < this.state.recordings.length; i ++) {
+      recordingDownloads.push(
+        <li key={'recordings'+i}>
+          <a href={this.state.recordings[i]} download={'gatekeeper_recording'+(i+1)+'.wav'}>
+            {'Download recording '+(i+1)}
+          </a>
+        </li>
+      )
+    }
+
     var activeButtons = [];
     if(this.state.playing) {
       if(this.state.backwards) activeButtons.push('rewind');
@@ -278,6 +309,7 @@ class AppComponent extends React.Component {
     } else {
       activeButtons.push('pause');
     }
+    if(this.state.recording) activeButtons.push('record');
 
     return (
       <div className="index">
@@ -296,13 +328,17 @@ class AppComponent extends React.Component {
             {sourceItems}
           </ul>
         </Modal>
+        <Modal ref='recordingModal'>
+          <ul>
+            {recordingDownloads}
+          </ul>
+        </Modal>
         <Modal ref='labelModal' />
         <div className='topLeft'>
           <div>
             <div className='title' onClick={this.showHelp.bind(this)}>
               <EmbossedLabel rotation={-2}>Gatekeeper</EmbossedLabel><br/><br/>
               <EmbossedLabel rotation={3}>Folktronic Drum Machine</EmbossedLabel><br/>
-              {this.state.recordingData?<a href={this.state.recordingData} download='test.wav'>TEST DOWNLOAD</a>:null}
             </div>
             <CassetteDeck
               onRecord={this.showRecordMessage.bind(this)}
@@ -311,6 +347,7 @@ class AppComponent extends React.Component {
               onFastForward={this.fastForwardTape.bind(this)}
               onEject={this.showSources.bind(this)}
               onPause={this.pauseTape.bind(this)}
+              onRecord={this.toggleRecording.bind(this)}
               cassetteLabel={this.state.audioSource}
               speed={this.state.speed*(this.state.fast?3:1)*(this.state.backwards?-1:1)}
               playing={this.state.playing}
